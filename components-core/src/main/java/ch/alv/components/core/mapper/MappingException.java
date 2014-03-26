@@ -1,4 +1,4 @@
-package mapper;
+package ch.alv.components.core.mapper;
 
 /**
  * Exception to be used for Mapper Exceptions.

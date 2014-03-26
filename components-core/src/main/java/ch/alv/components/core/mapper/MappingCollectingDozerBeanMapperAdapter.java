@@ -1,11 +1,10 @@
-package mapper;
+package ch.alv.components.core.mapper;
 
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
@@ -19,12 +18,11 @@ import java.util.List;
  * @author seco-hrf
  * @since 1.0.0
  */
-@Component
-public class DozerBeanMapperAdapter extends DozerBeanMapper implements BeanMapper, Serializable {
+public class MappingCollectingDozerBeanMapperAdapter extends DozerBeanMapper implements BeanMapper, Serializable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DozerBeanMapperAdapter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MappingCollectingDozerBeanMapperAdapter.class);
 
-    private static final String EXCEPTION_MSG_INIT = "Could not initialize the DozerBeanMapperAdapter.";
+    private static final String EXCEPTION_MSG_INIT = "Could not initialize the MappingCollectingDozerBeanMapperAdapter.";
 
     private static final String EXCEPTION_MSG_MAPPING = "Error while mapping objects.";
 
