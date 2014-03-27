@@ -30,6 +30,8 @@
 
     <modules>
         <module>components-core</module>
+        <module>components-persistence</module>
+        <module>components-service</module>
         <module>components-webapi</module>
     </modules>
 
@@ -42,7 +44,16 @@
                 <artifactId>components-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>ch.alv.components</groupId>
+                <artifactId>components-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.alv.components</groupId>
+                <artifactId>components-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>ch.alv.components</groupId>
                 <artifactId>components-webapi</artifactId>
