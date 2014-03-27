@@ -12,12 +12,18 @@
     </parent>
 
     <artifactId>components-core</artifactId>
+    <name>components-core</name>
 
     <dependencies>
 
+        <!-- Spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
         </dependency>
 
         <!-- Dozer -->
