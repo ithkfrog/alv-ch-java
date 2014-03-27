@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.persistence;
+package ch.alv.components.service.persistence;
 
 import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.persistence.repository.ParamValuesProvider;

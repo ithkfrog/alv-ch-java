@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.persistence;
+package ch.alv.components.service.persistence;
 
 import ch.admin.seco.tcsb.common.base.model.ModelItem;
 import ch.admin.seco.tcsb.common.base.repository.CustomRepository;

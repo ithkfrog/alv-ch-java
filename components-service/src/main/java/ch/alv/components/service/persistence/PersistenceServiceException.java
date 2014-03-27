@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.persistence;
+package ch.alv.components.service.persistence;
 
 /**
  * Thrown by the PersistenceService implementations.

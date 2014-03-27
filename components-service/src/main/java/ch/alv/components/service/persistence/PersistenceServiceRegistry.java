@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.persistence;
+package ch.alv.components.service.persistence;
 
 import ch.admin.seco.tcsb.common.base.spring.DefaultContextProvider;
 import ch.admin.seco.tcsb.common.base.utils.StringHelper;
