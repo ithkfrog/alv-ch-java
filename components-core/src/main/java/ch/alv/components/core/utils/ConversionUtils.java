@@ -73,7 +73,7 @@ public class ConversionUtils {
         try {
             return Integer.valueOf(stringValue);
         } catch (NumberFormatException nfe) {
-            LOG.error("Error while converting String value '" + stringValue + "' to an Integer -> defaultValue is returned.");
+            LOG.error("Error while converting String value '" + stringValue + "' to Integer -> defaultValue " + defaultValue + " is returned.");
             return defaultValue;
         }
     }
@@ -85,7 +85,7 @@ public class ConversionUtils {
         try {
             return Long.valueOf(stringValue);
         } catch (NumberFormatException nfe) {
-            LOG.error("Error while converting String value '" + stringValue + "' to an Long -> defaultValue is returned.");
+            LOG.error("Error while converting String value '" + stringValue + "' to Long -> defaultValue " + defaultValue + " is returned.");
             return defaultValue;
         }
     }
@@ -98,7 +98,7 @@ public class ConversionUtils {
         try {
             return Float.valueOf(stringValue);
         } catch (NumberFormatException nfe) {
-            LOG.error("Error while converting String value '" + stringValue + "' to an Long -> defaultValue is returned.");
+            LOG.error("Error while converting String value '" + stringValue + "' to Float -> defaultValue " + defaultValue + " is returned.");
             return defaultValue;
         }
     }
@@ -110,7 +110,7 @@ public class ConversionUtils {
         try {
             return Double.valueOf(stringValue);
         } catch (NumberFormatException nfe) {
-            LOG.error("Error while converting String value '" + stringValue + "' to an Long -> defaultValue is returned.");
+            LOG.error("Error while converting String value '" + stringValue + "' to Double -> defaultValue " + defaultValue + " is returned.");
             return defaultValue;
         }
     }
