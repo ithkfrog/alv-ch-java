@@ -9,8 +9,6 @@ import java.util.Map;
  */
 public interface ParamValuesProvider {
 
-    void setSource(Map<String, String[]> source);
-
     Map<String, Object> getParams();
 
 }
