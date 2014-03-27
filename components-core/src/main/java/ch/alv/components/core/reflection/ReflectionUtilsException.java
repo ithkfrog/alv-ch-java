@@ -3,7 +3,6 @@ package ch.alv.components.core.reflection;
 /**
  * Custom Exception for the ReflectionUtils
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class ReflectionUtilsException extends Exception {

@@ -3,7 +3,6 @@ package ch.alv.components.web.endpoint;
 /**
  * The result of a http method filter check
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class EndpointHttpMethodFilterResult {

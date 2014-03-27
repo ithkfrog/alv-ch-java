@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 /**
  * Fetches the related entity with help of the matching {@link ch.alv.components.service.persistence.PersistenceService}.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 @Component

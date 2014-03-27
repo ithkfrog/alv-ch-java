@@ -8,10 +8,8 @@ import javax.persistence.*;
 /**
  * Base implementation of an entity.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
-
 @MappedSuperclass
 public class BaseJpaModelItem implements ModelItem<String, Integer> {
 

@@ -14,7 +14,6 @@ import java.util.Map;
 /**
  * Dynamic query renderer
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class JpaQueryRenderer {

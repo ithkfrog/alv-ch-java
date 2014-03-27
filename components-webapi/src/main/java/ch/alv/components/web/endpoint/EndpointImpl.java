@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * Configure endpoints with objects of this class.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class EndpointImpl implements Endpoint {

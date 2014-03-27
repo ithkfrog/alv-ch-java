@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * ApplicationContextAware, enabled to fetch beans
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface SecurityContextProvider {

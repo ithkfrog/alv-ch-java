@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * Interface for BeanMappers
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface BeanMapper {

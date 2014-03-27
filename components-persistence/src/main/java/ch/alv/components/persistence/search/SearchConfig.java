@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
 /**
  * Configuration beans with this annotation will be created if their reached by a component scan.
  *
- * @author seco-hrf
  * @version 1.0.0
  */
 @Target({ElementType.TYPE})

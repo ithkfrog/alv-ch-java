@@ -14,7 +14,6 @@ import java.util.Arrays;
 /**
  * Default implementation of the {@link SecurityFilter} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class SecurityFilterImpl implements SecurityFilter {

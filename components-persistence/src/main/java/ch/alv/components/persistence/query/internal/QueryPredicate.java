@@ -3,7 +3,6 @@ package ch.alv.components.persistence.query.internal;
 /**
  * Predicates are used to filter the result of a query.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class QueryPredicate implements QueryPredicateItem {

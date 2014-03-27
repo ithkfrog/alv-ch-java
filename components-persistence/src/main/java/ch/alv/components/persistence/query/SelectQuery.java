@@ -11,7 +11,6 @@ import java.util.Map;
 /**
  * Abstracted model of a select query.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class SelectQuery {

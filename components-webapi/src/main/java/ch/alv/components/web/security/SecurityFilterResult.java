@@ -3,7 +3,6 @@ package ch.alv.components.web.security;
 /**
  * The result of a security filter check.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class SecurityFilterResult {

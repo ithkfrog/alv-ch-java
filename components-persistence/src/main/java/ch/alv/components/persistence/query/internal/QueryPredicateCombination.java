@@ -3,7 +3,6 @@ package ch.alv.components.persistence.query.internal;
 /**
  * List of allowed predicate combinations.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public enum QueryPredicateCombination {

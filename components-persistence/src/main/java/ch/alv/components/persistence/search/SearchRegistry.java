@@ -7,7 +7,6 @@ import java.util.Map;
 /**
  * Provides easy access to search configurations / definitions.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class SearchRegistry {

@@ -3,7 +3,6 @@ package ch.alv.components.persistence.search;
 /**
  * Parameters of custom search configurations (see {@link Search}) are defined by objects of this class.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class SearchParam {

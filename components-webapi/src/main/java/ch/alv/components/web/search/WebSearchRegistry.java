@@ -8,7 +8,6 @@ import java.util.Map;
 /**
  * Provides easy access to WebSearches.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class WebSearchRegistry {

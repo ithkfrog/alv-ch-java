@@ -12,7 +12,6 @@ import java.util.UUID;
 /**
  * Aspect to handle all exceptions
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 @ControllerAdvice

@@ -26,7 +26,6 @@ import java.util.List;
 /**
  * Base implementation of the {@link CustomRepository} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public abstract class CustomRepositoryImpl<TYPE> implements CustomRepository<TYPE> {

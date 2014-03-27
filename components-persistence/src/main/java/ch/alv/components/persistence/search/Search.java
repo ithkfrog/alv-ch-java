@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * Holds a definition of a custom search algorithm.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface Search {

@@ -7,7 +7,6 @@ import java.util.Map;
 /**
  * Registry to retrieve beans.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class QueryFactoryRegistry {

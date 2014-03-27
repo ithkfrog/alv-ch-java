@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 /**
  * Custom repositories should provide custom find methods.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface CustomRepository<TYPE> {

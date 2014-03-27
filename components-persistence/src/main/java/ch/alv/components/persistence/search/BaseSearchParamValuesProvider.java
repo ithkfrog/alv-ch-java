@@ -11,7 +11,6 @@ import java.util.Map;
 /**
  * Base implementation of the {@link ParamValuesProvider} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public abstract class BaseSearchParamValuesProvider implements ParamValuesProvider {

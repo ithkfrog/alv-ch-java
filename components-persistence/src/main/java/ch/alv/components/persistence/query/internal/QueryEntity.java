@@ -3,7 +3,6 @@ package ch.alv.components.persistence.query.internal;
 /**
  * Represents an entity used in a dynamic query.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class QueryEntity {

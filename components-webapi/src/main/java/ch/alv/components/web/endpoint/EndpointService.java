@@ -7,7 +7,6 @@ import java.util.Map;
 /**
  * Methods which an endpoint service has to provide.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface EndpointService {

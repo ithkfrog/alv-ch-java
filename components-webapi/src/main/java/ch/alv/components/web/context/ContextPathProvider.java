@@ -1,11 +1,9 @@
 package ch.alv.components.web.context;
 
 /**
- * Created with IntelliJ IDEA.
- * User: TYWUG
- * Date: 18.03.14
- * Time: 14:13
- * To change this template use File | Settings | File Templates.
+ * Provides a method to easily fetch the current context path
+ *
+ * @since 1.0.0
  */
 public interface ContextPathProvider {
 

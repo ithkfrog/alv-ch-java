@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Utility class to ease the configuration of {@link Endpoint} objects.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class EndpointHelper {

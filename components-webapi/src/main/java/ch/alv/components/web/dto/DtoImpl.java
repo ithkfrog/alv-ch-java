@@ -3,7 +3,6 @@ package ch.alv.components.web.dto;
 /**
  * Base implementation of the {@link Dto}.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public abstract class DtoImpl implements Dto {

@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 /**
  * Default implementation of the {@link DtoFactory} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class DtoFactoryImpl implements DtoFactory {

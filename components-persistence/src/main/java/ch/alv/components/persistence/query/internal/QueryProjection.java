@@ -5,7 +5,6 @@ import ch.alv.components.core.utils.StringHelper;
 /**
  * Define which attributes are selected with the QueryProjection
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class QueryProjection {

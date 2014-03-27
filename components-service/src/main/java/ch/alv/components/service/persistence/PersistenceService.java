@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * Persistence Service interface for {@link ModelItem} entities
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface PersistenceService<TYPE extends ModelItem, IDTYPE extends Serializable> {

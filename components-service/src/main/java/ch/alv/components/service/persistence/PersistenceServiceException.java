@@ -3,7 +3,6 @@ package ch.alv.components.service.persistence;
 /**
  * Thrown by the PersistenceService implementations.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class PersistenceServiceException extends Exception {

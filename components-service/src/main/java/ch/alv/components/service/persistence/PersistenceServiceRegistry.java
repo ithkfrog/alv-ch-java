@@ -1,12 +1,11 @@
 package ch.alv.components.service.persistence;
 
-import ch.admin.seco.tcsb.common.base.spring.DefaultContextProvider;
-import ch.admin.seco.tcsb.common.base.utils.StringHelper;
+import ch.alv.components.core.spring.context.DefaultContextProvider;
+import ch.alv.components.core.utils.StringHelper;
 
 /**
  * Provides easy access to PersistenceService beans.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class PersistenceServiceRegistry {

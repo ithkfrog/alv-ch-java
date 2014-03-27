@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Default implementation of the {@link SecurityContextProvider} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class SecurityContextProviderImpl implements SecurityContextProvider {

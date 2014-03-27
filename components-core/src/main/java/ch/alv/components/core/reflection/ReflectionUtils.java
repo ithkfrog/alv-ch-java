@@ -5,7 +5,6 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Utility class for reflection concerns
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class ReflectionUtils {

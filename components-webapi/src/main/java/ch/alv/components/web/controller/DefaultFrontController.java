@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Base implementation of a {@link FrontController}.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class DefaultFrontController implements FrontController {

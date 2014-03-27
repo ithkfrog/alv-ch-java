@@ -26,7 +26,6 @@ import java.util.Map;
 /**
  * Default implementation of the {@link EndpointService} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class EndpointServiceImpl implements EndpointService {

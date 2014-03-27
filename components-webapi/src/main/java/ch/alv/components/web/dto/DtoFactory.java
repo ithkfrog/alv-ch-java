@@ -7,7 +7,6 @@ import ch.alv.components.web.endpoint.Endpoint;
 /**
  * Factory to create Dtos.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface DtoFactory {

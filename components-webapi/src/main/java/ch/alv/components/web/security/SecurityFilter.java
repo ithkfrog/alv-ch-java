@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Security Filter for requests.
  *
- * @author seco-hrf
  * @since  1.0.0
  */
 public interface SecurityFilter {

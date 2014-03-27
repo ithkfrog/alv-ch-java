@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Interface for WebApi endpoints
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface Endpoint {

@@ -34,6 +34,7 @@
         <module>components-persistence</module>
         <module>components-service</module>
         <module>components-webapi</module>
+        <module>components-iam</module>
     </modules>
 
     <dependencyManagement>
@@ -58,6 +59,11 @@
             <dependency>
                 <groupId>ch.alv.components</groupId>
                 <artifactId>components-webapi</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.alv.components</groupId>
+                <artifactId>components-iam</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

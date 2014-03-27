@@ -5,7 +5,6 @@ import org.springframework.http.HttpMethod;
 /**
  * Default implementation of the {@link ch.alv.components.web.security.SecurityFilter} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class EndpointHttpMethodFilterImpl implements EndpointHttpMethodFilter {

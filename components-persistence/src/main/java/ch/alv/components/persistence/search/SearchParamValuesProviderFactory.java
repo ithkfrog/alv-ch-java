@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Registry to retrieve beans.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class SearchParamValuesProviderFactory {

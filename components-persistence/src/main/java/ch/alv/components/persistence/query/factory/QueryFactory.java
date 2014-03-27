@@ -7,7 +7,6 @@ import ch.alv.components.persistence.search.Search;
 /**
  * Interface for query creation strategies.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface QueryFactory {

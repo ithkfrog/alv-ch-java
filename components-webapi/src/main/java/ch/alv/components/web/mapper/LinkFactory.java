@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 /**
  * Converts modelItems to Links targeting the matching endpoint.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 @Component

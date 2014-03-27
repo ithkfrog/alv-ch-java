@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * Group predicates with objects of this class.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class QueryPredicateGroup implements QueryPredicateItem {

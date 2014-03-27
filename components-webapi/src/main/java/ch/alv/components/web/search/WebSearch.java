@@ -6,7 +6,6 @@ import ch.alv.components.persistence.search.Search;
 /**
  * Web specific extension of the {@link Search} interface.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface WebSearch extends Search {

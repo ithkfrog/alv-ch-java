@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * Combines all parameters to an OR-related query.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class OrQueryFactoryImpl implements QueryFactory {

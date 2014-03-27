@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Interface for dynamic WebApi controllers
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public interface FrontController {

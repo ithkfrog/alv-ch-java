@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * Adds the required BeanMapper-Functions to the {@link org.dozer.DozerBeanMapper}.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class MappingCollectingDozerBeanMapperAdapter extends DozerBeanMapper implements BeanMapper, Serializable {

@@ -10,7 +10,6 @@ import java.util.Map;
 /**
  * ApplicationContextAware, enabled to fetch beans
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class DefaultContextProvider implements ApplicationContextAware {

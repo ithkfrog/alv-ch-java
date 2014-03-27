@@ -3,7 +3,6 @@ package ch.alv.components.core.mapper;
 /**
  * Exception to be used for Mapper Exceptions.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class MappingException extends RuntimeException {
