@@ -7,7 +7,6 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Encodes a String with the MD5 algorithm
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public final class Md5Encoder {
@@ -21,8 +20,8 @@ public final class Md5Encoder {
     /**
      * Convert a String into its md5 representation
      *
-     * @param source
-     * @return
+     * @param source the String to convert
+     * @return the String as Md5 hash
      */
     public static String convertToMd5(String source) {
         if (source == null) {
@@ -39,7 +38,7 @@ public final class Md5Encoder {
     /**
      * Do the encoding with {@link java.security.MessageDigest}
      *
-     * @param source
+     * @param source the String to convert
      * @return md5 representation of the source
      * @throws java.security.NoSuchAlgorithmException
      *
@@ -57,15 +56,15 @@ public final class Md5Encoder {
     /**
      * Convert the byte array to the final String
      *
-     * @param bytes
-     * @return
+     * @param bytes the bytes to convert
+     * @return the resulting HEX-String
      */
     private static String convertToHexString(byte[] bytes) {
         // TODO take solution from jobroom...
         if (bytes == null)
             throw new IllegalArgumentException();
 
-        StringBuffer hex = new StringBuffer();
+        StringBuilder hex = new StringBuilder();
         for (byte b : bytes) {
             int i = (b & 0xff); // copy the byte bit pattern into int value
             hex.append(String.format("%02x", i));

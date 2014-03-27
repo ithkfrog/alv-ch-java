@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Utility class for data conversion concerns.
  *
- * @author seco-hrf
  * @since 1.0.0
  */
 public class ConversionUtils {
@@ -20,6 +19,7 @@ public class ConversionUtils {
 
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T convert(String value, Class<T> type) {
         if (type == String.class) {
             return (T) value;
@@ -42,6 +42,7 @@ public class ConversionUtils {
         return null;
     }
 
+    @SuppressWarnings("unchecked, unused")
     public static <T> T convert(String value, Class<T> type, Object defaultValue) {
         if (type == String.class) {
             return (T) value;
@@ -64,6 +65,7 @@ public class ConversionUtils {
         return (T) defaultValue;
     }
 
+    @SuppressWarnings("unchecked")
     public static Integer toIntValue(String stringValue, int defaultValue) {
         if (StringHelper.isEmpty(stringValue)) {
             return defaultValue;
@@ -87,6 +89,7 @@ public class ConversionUtils {
             return defaultValue;
         }
     }
+
 
     public static Float toFloatValue(String stringValue, float defaultValue) {
         if (StringHelper.isEmpty(stringValue)) {
