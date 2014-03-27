@@ -10,8 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>components-persistence</artifactId>
-    <dependencies>
+    <name>components-persistence</name>
 
+    <dependencies>
+        <!-- other components -->
         <dependency>
             <groupId>ch.alv.components</groupId>
             <artifactId>components-core</artifactId>
@@ -31,7 +33,16 @@
             <artifactId>hibernate-core</artifactId>
         </dependency>
 
+        <!-- Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
     </dependencies>
 
-    <name>components-persistence</name>
 </project>
