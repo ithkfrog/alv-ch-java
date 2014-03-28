@@ -1,7 +1,8 @@
 package ch.alv.components.iam.search;
 
 import ch.alv.components.iam.IamConstant;
-import ch.alv.components.persistence.search.BaseSearchParamValuesProvider;
+import ch.alv.components.web.search.BaseWebParamValuesProvider;
+import ch.alv.components.web.search.WebParamValuesProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
-public class ApplicationSearchParamValuesProvider extends BaseSearchParamValuesProvider {
+public class ApplicationSearchParamValuesProvider extends BaseWebParamValuesProvider implements WebParamValuesProvider {
 
     @Override
     public Map<String, Object> getParams() {

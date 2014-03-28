@@ -9,6 +9,7 @@ import ch.alv.components.service.persistence.PersistenceService;
 import ch.alv.components.service.persistence.PersistenceServiceRegistry;
 import ch.alv.components.web.dto.Dto;
 import ch.alv.components.web.dto.DtoFactory;
+import ch.alv.components.web.search.WebParamValuesProvider;
 import ch.alv.components.web.search.WebSearchRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,7 @@ public class EndpointServiceImpl implements EndpointService {
                 page = service.findAll(pageable);
             } else {
                 Class<? extends ParamValuesProvider> paramValuesProviderClass = WebSearchRegistry.getWebSearch(searchName).getParamValuesProviderClass();
-                ParamValuesProvider provider = SearchParamValuesProviderFactory.createProvider(paramValuesProviderClass);
+                WebParamValuesProvider provider = (WebParamValuesProvider) SearchParamValuesProviderFactory.createProvider(paramValuesProviderClass);
                 if (provider == null) {
                     LOG.error("Error while executing search: No SearchPramValuesProvider " + paramValuesProviderClass.getName() + " found.");
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,7 +71,7 @@ public class EndpointServiceImpl implements EndpointService {
                 page = service.findAll(pageable);
             } else {
                 Class<? extends ParamValuesProvider> paramValuesProviderClass = WebSearchRegistry.getWebSearch(searchName).getParamValuesProviderClass();
-                ParamValuesProvider provider = SearchParamValuesProviderFactory.createProvider(paramValuesProviderClass);
+                WebParamValuesProvider provider = (WebParamValuesProvider) SearchParamValuesProviderFactory.createProvider(paramValuesProviderClass);
                 if (provider == null) {
                     LOG.error("Error while executing search: No SearchPramValuesProvider " + paramValuesProviderClass.getName() + " found.");
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
