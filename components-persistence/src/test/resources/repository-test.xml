@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<jpa:repositories base-package="ch.alv.components.persistence.repository"/>
+
+
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+        <list>
+            <value>${test-context.config.dir}/components-persistence-test.properties</value>
+        </list>
+    </property>
+</bean>
+
+<!--<bean class="ch.admin.seco.tcsb.common.base.query.factory.AndQueryFactoryImpl" />
+<bean class="ch.admin.seco.tcsb.common.base.query.factory.OrQueryFactoryImpl" />-->
+
+<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+    <property name="driverClassName" value="${db.driver}"/>
+    <property name="url" value="${db.url}"/>
+    <property name="username" value="${db.username}"/>
+    <property name="password" value="${db.password}"/>
+</bean>
+
+<!-- *** Transaction Manager *** -->
+<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="emf"/>
+</bean>
+
+<!-- *** EntityManagerFactory *** -->
+<bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="persistenceUnitName" value="sm-iam"/>
+    <property name="packagesToScan">
+        <list>
+            <value>ch.alv.components.persistence.repository</value>
+        </list>
+    </property>
+    <property name="jpaVendorAdapter">
+        <bean class="${jpa.vendoradapter}">
+            <property name="showSql" value="${jpa.showSql}"/>
+            <property name="generateDdl" value="${jpa.generateDdl}"/>
+            <property name="databasePlatform" value="${jpa.databasePlatform}"/>
+        </bean>
+    </property>
+</bean>
+
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>
+
+

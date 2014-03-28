@@ -17,6 +17,7 @@
         <dozer.version>5.4.0</dozer.version>
         <spring.version>4.0.2.RELEASE</spring.version>
         <spring-data.version>1.7.0.RELEASE</spring-data.version>
+        <spring-data-jpa.version>1.5.0.RELEASE</spring-data-jpa.version>
         <spring-security.version>3.2.0.RELEASE</spring-security.version>
         <spring-hateoas.version>0.9.0.RELEASE</spring-hateoas.version>
         <aspect-j-tools.version>1.6.12</aspect-j-tools.version>
@@ -28,6 +29,8 @@
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.6</slf4j.version>
         <gson.version>1.7.1</gson.version>
+        <mysql-driver.version>5.1.27</mysql-driver.version>
+        <postgre-driver.version>9.1-901.jdbc4</postgre-driver.version>
     </properties>
 
     <modules>
@@ -100,6 +103,11 @@
                 <version>${spring-data.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data-jpa.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>
                 <version>${spring-security.version}</version>
@@ -132,6 +140,17 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
                 <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-driver.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgre-driver.version}</version>
             </dependency>
 
             <!-- Mapper -->
@@ -195,11 +214,13 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
