@@ -46,7 +46,7 @@ public class UsersEndpoint implements Endpoint {
 
     @Override
     public String getServiceName() {
-        return "iam.user";
+        return "iam.user.service";
     }
 
     @Override
