@@ -118,6 +118,7 @@
                                 <basedir>${basedir}/src/test/resources/sql</basedir>
                                 <includes>
                                     <include>prepare-int-tests.sql</include>
+                                    <include>prepare-test-data.sql</include>
                                 </includes>
                             </fileset>
                         </configuration>
