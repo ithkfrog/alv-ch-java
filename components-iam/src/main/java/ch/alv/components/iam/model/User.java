@@ -12,12 +12,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The User entity (works with table 'am_iam_user')
+ * The User entity (works with table 'module_iam_user')
  *
  * @since 1.0.0
  */
 @Entity
-@Table(name = "am_iam_user")
+@Table(name = "module_iam_user")
 public class User extends BaseJpaModelItem implements UserDetails {
 
     @Column(nullable = false)
@@ -60,7 +60,7 @@ public class User extends BaseJpaModelItem implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "sm_sec_role_to_user",
+            name = "module_iam_role_to_user",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;

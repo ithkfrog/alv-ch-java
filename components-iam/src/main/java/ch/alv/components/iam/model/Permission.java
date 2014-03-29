@@ -7,12 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * The Permission entity (works with table 'am_iam_permission')
+ * The Permission entity (works with table 'module_iam_permission')
  *
  * @since 1.0.0
  */
 @Entity
-@Table(name = "am_iam_permission")
+@Table(name = "module_iam_permission")
 public class Permission extends BaseJpaModelItem {
 
     @Column(nullable = false)

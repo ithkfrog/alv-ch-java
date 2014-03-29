@@ -7,12 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * The Application entity (works with table 'am_iam_application')
+ * The Application entity (works with table 'module_iam_application')
  *
  * @since 1.0.0
  */
 @Entity
-@Table(name = "am_iam_application")
+@Table(name = "module_iam_application")
 public class Application extends BaseJpaModelItem {
 
     @Column(nullable = false)

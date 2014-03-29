@@ -8,12 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * The Role entity (works with table 'am_iam_role')
+ * The Role entity (works with table 'module_iam_role')
  *
  * @since 1.0.0
  */
 @Entity
-@Table(name = "am_iam_role")
+@Table(name = "module_iam_role")
 public class Role extends BaseJpaModelItem {
 
     @Column(nullable = false)
