@@ -2,35 +2,31 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:sec="http://www.springframework.org/schema/security"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                             http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+                            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- scan for repositories -->
+    <jpa:repositories base-package="ch.alv.components.iam.repository"/>
     <context:component-scan base-package="ch.alv.components.iam.repository"/>
 
+    <!-- we use component scan and let spring doing the integration of the user service -->
+    <context:component-scan base-package="ch.alv.components.iam.service"/>
+
     <!-- no user service required, that one's configured with annotations (Spring Security) -->
-    <bean id="iam.service.application" name="iam.application"
+    <bean id="iam.application.service" name="iam.application"
           class="ch.alv.components.service.persistence.PersistenceServiceImpl">
         <constructor-arg ref="applicationRepository"/>
     </bean>
-    <bean id="iam.service.permission" name="iam.permission"
+    <bean id="iam.permission.service" name="iam.permission"
           class="ch.alv.components.service.persistence.PersistenceServiceImpl">
         <constructor-arg ref="permissionRepository"/>
     </bean>
-    <bean id="iam.service.role" name="iam.role" class="ch.alv.components.service.persistence.PersistenceServiceImpl">
+    <bean id="iam.role.service" name="iam.role" class="ch.alv.components.service.persistence.PersistenceServiceImpl">
         <constructor-arg ref="roleRepository"/>
     </bean>
-
-    <sec:authentication-manager alias="authenticationManager">
-        <sec:authentication-provider user-service-ref="iam.service.user">
-            <sec:password-encoder hash="md5"/>
-        </sec:authentication-provider>
-    </sec:authentication-manager>
-
-    <sec:http pattern="/api/iam/**" use-expressions="true" auto-config="true" create-session="never">
-        <sec:http-basic entry-point-ref="authenticationEntryPoint"/>
-        <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
-    </sec:http>
 
 </beans>
