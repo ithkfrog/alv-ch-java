@@ -1,9 +1,10 @@
+drop database if exists testDataBase;
 create database testDataBase;
 
-create table testDataBase.test_entity (
-  id varchar(50),
+drop table if exists `testDataBase`.`test_entity`;
+create table `testDataBase`.`test_entity` (
+  id varchar(50) not null unique,
   myAttribute text,
-  version int
+  version int,
+  PRIMARY KEY (id)
 );
-
-insert into testDataBase.test_entity values ('abcd-1234', 'testString', 0);
