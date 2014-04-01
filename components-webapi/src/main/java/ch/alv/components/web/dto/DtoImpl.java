@@ -1,6 +1,5 @@
 package ch.alv.components.web.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.Link;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ public abstract class DtoImpl implements Dto {
 
     private List<Link> links = new ArrayList<>();
 
-    @JsonIgnore
     private String id;
 
     private int version;
