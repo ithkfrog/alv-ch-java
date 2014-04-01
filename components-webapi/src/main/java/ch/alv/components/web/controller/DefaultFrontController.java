@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,7 @@ public class DefaultFrontController implements FrontController {
 
 
     @RequestMapping(value = "/{moduleName}/{storeName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public Object handleRequest(HttpServletRequest request,
                                 @PathVariable String moduleName,
                                 @PathVariable String storeName,
@@ -77,6 +79,7 @@ public class DefaultFrontController implements FrontController {
     }
 
     @RequestMapping(value = "/{moduleName}/{storeName}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public Object handleRequest(HttpServletRequest request,
                                 @PathVariable String moduleName,
                                 @PathVariable String storeName,
