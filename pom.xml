@@ -26,9 +26,11 @@
         <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
         <javax-inject.version>1</javax-inject.version>
         <javax-servlet.version>3.1.0</javax-servlet.version>
+        <logback.version>1.0.13</logback.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.6</slf4j.version>
         <gson.version>1.7.1</gson.version>
+        <jackson.version>2.3.0</jackson.version>
         <mysql-driver.version>5.1.27</mysql-driver.version>
         <postgre-driver.version>9.1-901.jdbc4</postgre-driver.version>
     </properties>
@@ -159,15 +161,28 @@
             </dependency>
 
             <!-- Mapper -->
+            <!-- Dozer: Java bean to Java bean -->
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
             </dependency>
+
+            <!-- Jackson: Java bean to JSON vice versa -->
             <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>${gson.version}</version>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
 
              <!--Injection -->
@@ -187,6 +202,13 @@
             </dependency>
 
             <!-- Logging -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
