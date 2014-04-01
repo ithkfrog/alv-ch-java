@@ -4,6 +4,7 @@ import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.iam.endpoint.dto.UserDto;
 import ch.alv.components.iam.model.User;
 import ch.alv.components.web.dto.Dto;
+import ch.alv.components.web.endpoint.BaseWebApiEndpoint;
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointHelper;
 import org.springframework.http.HttpMethod;
@@ -17,7 +18,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-public class UsersEndpoint implements Endpoint {
+public class UsersEndpoint extends BaseWebApiEndpoint {
 
     @Override
     public String getModuleName() {
@@ -37,36 +38,6 @@ public class UsersEndpoint implements Endpoint {
     @Override
     public Class<? extends ModelItem> getEntityClass() {
         return User.class;
-    }
-
-    @Override
-    public List<HttpMethod> getAllowedMethods() {
-        return EndpointHelper.createAllMethodsList();
-    }
-
-    @Override
-    public String getServiceName() {
-        return "iam.user.service";
-    }
-
-    @Override
-    public String getRolesGET() {
-        return "";
-    }
-
-    @Override
-    public String getRolesPOST() {
-        return "";
-    }
-
-    @Override
-    public String getRolesPUT() {
-        return "";
-    }
-
-    @Override
-    public String getRolesDELETE() {
-        return "";
     }
 
 }
