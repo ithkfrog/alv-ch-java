@@ -62,27 +62,32 @@
     <build>
         <plugins>
 
-            <!-- Test cases will use config files put in the config.dir folder (Spring propertyPlaceHolders with ${test-context.config.dir} prefix -->
+            <!-- Integration Test cases will settings from .properties files stored in ${test.config.dir} folder --> 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
-                <configuration>
-                    <systemProperties>
-                        <property>
-                            <name>test-context.config.dir</name>
-                            <value>${config.dir}</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>  <!-- TODO clarify Tests vs Integration Tests phases -->
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                              <file>${test.config.dir}/components-persistence-${test.dbms}.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
-            <!-- create & destroy test db -->
+            <!-- create & destroy integration test db -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
                 <version>1.5</version>
-
+ 
                 <configuration>
                     <driver>${db.driver}</driver>
                     <url>${db.url}</url>
@@ -108,7 +113,7 @@
                     <!--  It creates integration test data before running the tests -->
                     <execution>
                         <id>create-integration-test-data</id>
-                        <phase>process-test-resources</phase>
+                        <phase>pre-integration-test</phase>
                         <goals>
                             <goal>execute</goal>
                         </goals>

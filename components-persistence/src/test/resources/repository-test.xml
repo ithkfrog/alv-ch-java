@@ -13,7 +13,7 @@
 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
         <list>
-            <value>${test-context.config.dir}/components-persistence-test.properties</value>
+            <value>file:///${test.config.dir}/components-persistence-${test.dbms}.properties</value>
         </list>
     </property>
 </bean>
@@ -24,7 +24,7 @@
 <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
     <property name="driverClassName" value="${db.driver}"/>
     <property name="url" value="${db.url}"/>
-    <property name="username" value="${db.username}"/>
+    <property name="username" value="${db.user}"/>
     <property name="password" value="${db.password}"/>
 </bean>
 

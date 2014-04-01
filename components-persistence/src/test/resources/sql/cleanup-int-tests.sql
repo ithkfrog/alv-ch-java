@@ -1,1 +1,1 @@
-drop database testDataBase;
+drop table test_entity;
