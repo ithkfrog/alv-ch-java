@@ -25,7 +25,8 @@
           class="ch.alv.components.service.persistence.PersistenceServiceImpl">
         <constructor-arg ref="permissionRepository"/>
     </bean>
-    <bean id="iam.role.service" name="iam.role" class="ch.alv.components.service.persistence.PersistenceServiceImpl">
+    <bean id="iam.role.service" name="iam.role"
+          class="ch.alv.components.service.persistence.PersistenceServiceImpl">
         <constructor-arg ref="roleRepository"/>
     </bean>
 
