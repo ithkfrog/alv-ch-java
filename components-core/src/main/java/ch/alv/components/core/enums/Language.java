@@ -27,6 +27,15 @@ public enum Language {
         return key;
     }
 
+    public static Language getByCode(String code) {
+        for (Language language : Language.values()) {
+            if (language.getLocale().getLanguage().equalsIgnoreCase(code)) {
+                return language;
+            }
+        }
+        return null;
+    }
+
     public Locale getLocale() {
         return locale;
     }
