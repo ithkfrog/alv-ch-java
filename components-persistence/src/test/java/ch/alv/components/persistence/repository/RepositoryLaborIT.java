@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:repository-test.xml")
-public class RepositoryLaborTest {
+public class RepositoryLaborIT {
 
     @Resource
     private TestRepository repository;

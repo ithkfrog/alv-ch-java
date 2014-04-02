@@ -1,0 +1,29 @@
+language: java
+jdk:
+  - oraclejdk8
+  - openjdk7
+
+addons:
+  postgresql: "9.3"
+
+# Consider merging postgresql+mysql test run to reduce the size of build matrix
+env:
+  - DBMS=mysql
+  - DBMS=postgresql
+
+before_script:
+  - mysql -e 'create database testdatabase;'
+  - psql -c 'create database testdatabase;' -U postgres
+
+# Build everything in 'script' phase
+install: /bin/true
+
+script: mvn install -B -Dtest.config.dir=`pwd`/test/travis-ci -Dtest.dbms=$DBMS
+
+matrix:
+  allow_failures:
+    - env: DBMS=postgresql
+  exclude:
+    - jdk: openjdk7
+      env: DBMS=postgresql
+
