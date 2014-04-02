@@ -1,13 +1,11 @@
 package ch.alv.components.web.mapper;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.core.spring.context.DefaultContextProvider;
 import ch.alv.components.web.context.ServletRequestProvider;
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointRegistry;
 import org.dozer.BeanFactory;
 import org.springframework.hateoas.Link;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
@@ -16,7 +14,6 @@ import javax.annotation.Resource;
  *
  * @since 1.0.0
  */
-@Component
 public class LinkFactory implements BeanFactory {
 
     @Resource
