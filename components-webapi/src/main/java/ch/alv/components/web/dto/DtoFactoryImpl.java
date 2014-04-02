@@ -49,6 +49,10 @@ public class DtoFactoryImpl implements DtoFactory {
     }
 
     private String createURL(ModelItem entity, Endpoint endpoint) {
-        return requestProvider.getBasePath() + endpoint.getModuleName() + "/" + endpoint.getStoreName() + "/" + entity.getId();
+        String languageSuffix = "";
+        if (requestProvider.getLanguage() != null) {
+            languageSuffix = "?language=" + requestProvider.getLanguage();
+        }
+        return requestProvider.getBasePath() + endpoint.getModuleName() + "/" + endpoint.getStoreName() + "/" + entity.getId() + languageSuffix;
     }
 }
