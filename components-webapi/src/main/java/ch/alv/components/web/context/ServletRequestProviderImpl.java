@@ -1,7 +1,6 @@
 package ch.alv.components.web.context;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ServletRequestProviderImpl implements ServletRequestProvider {
 
-    @Autowired
+    @Resource
     private HttpServletRequest request;
 
     public String getLanguage() {
