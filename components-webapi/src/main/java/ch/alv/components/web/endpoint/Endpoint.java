@@ -1,6 +1,7 @@
 package ch.alv.components.web.endpoint;
 
 import ch.alv.components.core.model.ModelItem;
+import ch.alv.components.persistence.search.ValuesProvider;
 import ch.alv.components.web.dto.Dto;
 import org.springframework.http.HttpMethod;
 
@@ -20,6 +21,8 @@ public interface Endpoint {
     Class<? extends Dto> getDtoClass();
 
     Class<? extends ModelItem> getEntityClass();
+
+    Class<? extends ValuesProvider> getValuesProviderClass();
 
     List<HttpMethod> getAllowedMethods();
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class EntityFactory implements BeanFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(EntityFactory.class);

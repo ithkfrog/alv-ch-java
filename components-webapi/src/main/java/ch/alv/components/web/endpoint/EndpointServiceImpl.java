@@ -3,14 +3,14 @@ package ch.alv.components.web.endpoint;
 import ch.alv.components.core.mapper.BeanMapper;
 import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.core.utils.StringHelper;
-import ch.alv.components.persistence.repository.ParamValuesProvider;
-import ch.alv.components.persistence.search.SearchParamValuesProviderFactory;
+import ch.alv.components.persistence.search.ValuesProvider;
+import ch.alv.components.persistence.search.ValuesProviderFactory;
 import ch.alv.components.service.persistence.PersistenceService;
 import ch.alv.components.service.persistence.PersistenceServiceRegistry;
 import ch.alv.components.web.dto.Dto;
 import ch.alv.components.web.dto.DtoFactory;
-import ch.alv.components.web.search.WebParamValuesProvider;
 import ch.alv.components.web.search.WebSearchRegistry;
+import ch.alv.components.web.search.WebValuesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,6 +32,8 @@ import java.util.Map;
 public class EndpointServiceImpl implements EndpointService {
 
     private static final String PARAM_SEARCH_NAME = "searchName";
+
+    private static final String DEFAULT_SEARCH_NAME = "defaultSearch";
 
     private static final Logger LOG = LoggerFactory.getLogger(EndpointServiceImpl.class);
 
@@ -55,10 +57,13 @@ public class EndpointServiceImpl implements EndpointService {
             if (params.isEmpty()) {
                 page = service.findAll(pageable);
             } else {
-                Class<? extends ParamValuesProvider> paramValuesProviderClass = WebSearchRegistry.getWebSearch(searchName).getParamValuesProviderClass();
-                WebParamValuesProvider provider = (WebParamValuesProvider) SearchParamValuesProviderFactory.createProvider(paramValuesProviderClass);
+                if (StringHelper.isEmpty(searchName)) {
+                    searchName = DEFAULT_SEARCH_NAME;
+                }
+                Class<? extends ValuesProvider> paramValuesProviderClass = endpoint.getValuesProviderClass();
+                WebValuesProvider provider = (WebValuesProvider) ValuesProviderFactory.createProvider(paramValuesProviderClass);
                 if (provider == null) {
-                    LOG.error("Error while executing search: No SearchPramValuesProvider " + paramValuesProviderClass.getName() + " found.");
+                    LOG.error("Error while executing search: No valuesProvider of class " + paramValuesProviderClass.getName() + " found.");
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 provider.setSource(params);
@@ -70,10 +75,10 @@ public class EndpointServiceImpl implements EndpointService {
             if (params.isEmpty()) {
                 page = service.findAll(pageable);
             } else {
-                Class<? extends ParamValuesProvider> paramValuesProviderClass = WebSearchRegistry.getWebSearch(searchName).getParamValuesProviderClass();
-                WebParamValuesProvider provider = (WebParamValuesProvider) SearchParamValuesProviderFactory.createProvider(paramValuesProviderClass);
+                Class<? extends ValuesProvider> paramValuesProviderClass = endpoint.getValuesProviderClass();
+                WebValuesProvider provider = (WebValuesProvider) ValuesProviderFactory.createProvider(paramValuesProviderClass);
                 if (provider == null) {
-                    LOG.error("Error while executing search: No SearchPramValuesProvider " + paramValuesProviderClass.getName() + " found.");
+                    LOG.error("Error while executing search: No valuesProvider of class '" + paramValuesProviderClass.getName() + "' found.");
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 provider.setSource(params);
