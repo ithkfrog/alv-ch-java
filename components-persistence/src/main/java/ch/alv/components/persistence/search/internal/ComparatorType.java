@@ -1,11 +1,11 @@
-package ch.alv.components.persistence.query.internal;
+package ch.alv.components.persistence.search.internal;
 
 /**
- * List of all operators that can be used in a dynamic query.
+ * List of all operators / comparisons that can be used in a dynamic search.
  *
  * @since 1.0.0
  */
-public enum QueryOperator {
+public enum ComparatorType {
 
     EQUALS(" = "),
     NOT_EQUALS(" != "),
@@ -20,7 +20,7 @@ public enum QueryOperator {
 
     private final String sqlRepresentation;
 
-    private QueryOperator(String sqlRepresentation) {
+    private ComparatorType(String sqlRepresentation) {
         this.sqlRepresentation = sqlRepresentation;
     }
 

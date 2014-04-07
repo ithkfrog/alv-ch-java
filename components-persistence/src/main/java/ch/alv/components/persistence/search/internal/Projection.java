@@ -1,13 +1,13 @@
-package ch.alv.components.persistence.query.internal;
+package ch.alv.components.persistence.search.internal;
 
 import ch.alv.components.core.utils.StringHelper;
 
 /**
- * Define which attributes are selected with the QueryProjection
+ * Define which attributes are selected.
  *
  * @since 1.0.0
  */
-public class QueryProjection {
+public class Projection {
 
     private Class<?> entityClass;
 
@@ -15,7 +15,7 @@ public class QueryProjection {
 
     private String attributeName;
 
-    public QueryProjection(String entityToken, Class<?> entityClass, String attributeName) {
+    public Projection(String entityToken, Class<?> entityClass, String attributeName) {
         this.entityToken = entityToken;
         this.entityClass = entityClass;
         this.attributeName = attributeName;

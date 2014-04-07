@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Base implementation of the {@link WebParamValuesProvider} interface.
+ * Base implementation of the {@link WebValuesProvider} interface.
  *
  * @since 1.0.0
  */
-public abstract class BaseWebParamValuesProvider implements WebParamValuesProvider {
+public abstract class BaseWebValuesProvider implements WebValuesProvider {
 
     protected Map<String, String[]> source = new HashMap<>();
 
@@ -25,11 +25,11 @@ public abstract class BaseWebParamValuesProvider implements WebParamValuesProvid
         return source;
     }
 
-    protected Object getStringValue(String key) {
-        return getSingleValue(key, String.class);
+    protected String getStringValue(String key) {
+        return (String) getSingleValue(key, String.class);
     }
 
-    protected Object getSingleValue(String key, Class<?> type) {
+    protected <T> T getSingleValue(String key, Class<T> type) {
         if (!source.containsKey(key)) {
             return null;
         }
@@ -40,7 +40,7 @@ public abstract class BaseWebParamValuesProvider implements WebParamValuesProvid
         return convert(values[0], type);
     }
 
-    protected Object getMultiValue(String key, Class<?> type) {
+    protected <T> List<T> getMultiValue(String key, Class<T> type) {
         if (!source.containsKey(key)) {
             return null;
         }
@@ -48,14 +48,14 @@ public abstract class BaseWebParamValuesProvider implements WebParamValuesProvid
         if (values.length == 0) {
             return null;
         }
-        List<Object> target = new ArrayList<>();
+        List<T> target = new ArrayList<>();
         for (String value : values) {
             target.add(convert(value, type));
         }
         return target;
     }
 
-    protected Object convert(String value, Class<?> type) {
+    protected <T> T convert(String value, Class<T> type) {
         return ConversionUtils.convert(value, type);
     }
 
