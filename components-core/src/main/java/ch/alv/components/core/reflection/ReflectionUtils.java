@@ -7,6 +7,7 @@ import java.lang.reflect.ParameterizedType;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class ReflectionUtils {
 
     // do not instantiate this class...

@@ -21,7 +21,7 @@
         <spring-security.version>3.2.0.RELEASE</spring-security.version>
         <spring-hateoas.version>0.9.0.RELEASE</spring-hateoas.version>
         <aspect-j-tools.version>1.6.12</aspect-j-tools.version>
-        <junit.version>4.8.1</junit.version>
+        <junit.version>4.11</junit.version>
         <hibernate.version>4.3.4.Final</hibernate.version>
         <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
         <javax-inject.version>1</javax-inject.version>
@@ -33,6 +33,7 @@
         <jackson.version>2.3.0</jackson.version>
         <mysql-driver.version>5.1.27</mysql-driver.version>
         <postgre-driver.version>9.1-901.jdbc4</postgre-driver.version>
+        <hsql.version>2.3.1</hsql.version>
     </properties>
 
     <modules>
@@ -234,6 +235,18 @@
                 <version>${spring.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>2.3.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>c3p0</groupId>
+                <artifactId>c3p0</artifactId>
+                <version>0.9.1.2</version>
+                <scope>test</scope>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -243,6 +256,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- reuse forks to have the same hsql db in every test -->
+                    <reuseForks>false</reuseForks>
+                    <forkCount>1</forkCount>
+                </configuration>
                 <version>2.17</version>
             </plugin>
             <plugin>

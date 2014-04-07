@@ -56,20 +56,29 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+        </dependency>
 
     </dependencies>
 
-    <build>
+    <!--<build>
         <plugins>
 
-            <!-- Integration Test cases will settings from .properties files stored in ${test.config.dir} folder --> 
+            &lt;!&ndash; Integration Test cases will settings from .properties files stored in ${test.config.dir} folder &ndash;&gt;
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
                 <version>1.0-alpha-2</version>
                 <executions>
                     <execution>
-                        <phase>pre-integration-test</phase>  <!-- TODO clarify Tests vs Integration Tests phases -->
+                        <phase>pre-integration-test</phase>  &lt;!&ndash; TODO clarify Tests vs Integration Tests phases &ndash;&gt;
                         <goals>
                             <goal>read-project-properties</goal>
                         </goals>
@@ -82,21 +91,25 @@
                 </executions>
             </plugin>
 
-            <!-- create & destroy integration test db -->
+            &lt;!&ndash; create & destroy integration test db &ndash;&gt;
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
                 <version>1.5</version>
  
                 <configuration>
-                    <driver>${db.driver}</driver>
-                    <url>${db.url}</url>
+                    <driver>org.hsqldb.jdbcDriver</driver>
+                    <url>jdbc:hsqldb:mem://localhost/testdb;shutdown=false</url>
+                    <settingsKey>hsql-db-test</settingsKey>
                     <skip>${db.skip}</skip>
-                    <username>${db.user}</username>
-                    <password>${db.pw}</password>
                 </configuration>
 
                 <dependencies>
+                    <dependency>
+                        <groupId>org.hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>${hsql.version}</version>
+                    </dependency>
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
@@ -110,7 +123,7 @@
                 </dependencies>
 
                 <executions>
-                    <!--  It creates integration test data before running the tests -->
+                    &lt;!&ndash;  It creates integration test data before running the tests &ndash;&gt;
                     <execution>
                         <id>create-integration-test-data</id>
                         <phase>pre-integration-test</phase>
@@ -129,7 +142,7 @@
                         </configuration>
                     </execution>
 
-                    <!--  It drops data after executing tests -->
+                    &lt;!&ndash;  It drops data after executing tests &ndash;&gt;
                     <execution>
                         <id>drop-db-after-test</id>
                         <phase>post-integration-test</phase>
@@ -149,6 +162,6 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 </project>

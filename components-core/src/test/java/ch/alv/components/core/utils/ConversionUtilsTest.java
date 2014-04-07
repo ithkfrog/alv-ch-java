@@ -1,10 +1,8 @@
 package ch.alv.components.core.utils;
 
-import ch.alv.components.core.reflection.*;
-import junit.framework.Assert;
-import org.junit.Rule;
+import ch.alv.components.core.reflection.ReflectionUtilsException;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 
 /**

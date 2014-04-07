@@ -2,7 +2,7 @@ package ch.alv.components.core.spring;
 
 import ch.alv.components.core.mapper.BeanMapper;
 import ch.alv.components.core.spring.context.DefaultContextProvider;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

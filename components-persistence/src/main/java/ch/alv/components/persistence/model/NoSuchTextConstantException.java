@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.i18n;
+package ch.alv.components.persistence.model;
 
 import ch.alv.components.core.enums.Language;
 

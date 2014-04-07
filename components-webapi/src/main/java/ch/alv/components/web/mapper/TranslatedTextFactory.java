@@ -1,21 +1,13 @@
 package ch.alv.components.web.mapper;
 
 import ch.alv.components.core.enums.Language;
-import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.core.utils.StringHelper;
-import ch.alv.components.persistence.i18n.MultiLanguageText;
-import ch.alv.components.persistence.i18n.NoSuchTextConstantException;
-import ch.alv.components.web.context.ServletRequestProvider;
+import ch.alv.components.persistence.model.MultiLanguageText;
 import ch.alv.components.web.context.ServletRequestProviderImpl;
 import ch.alv.components.web.dto.TranslatedText;
-import ch.alv.components.web.endpoint.Endpoint;
-import ch.alv.components.web.endpoint.EndpointRegistry;
 import org.dozer.BeanFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 

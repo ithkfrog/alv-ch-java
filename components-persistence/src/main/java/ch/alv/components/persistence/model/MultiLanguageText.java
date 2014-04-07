@@ -1,8 +1,7 @@
-package ch.alv.components.persistence.i18n;
+package ch.alv.components.persistence.model;
 
 
 import ch.alv.components.core.enums.Language;
-import ch.alv.components.persistence.model.BaseJpaModelItem;
 
 import javax.persistence.*;
 import java.util.ArrayList;
