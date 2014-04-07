@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class ConversionUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConversionUtils.class);
