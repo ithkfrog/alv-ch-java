@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
- * TODO: put some comment
+ * Default search for testing purposes.
  *
  * @since 1.0.0
  */

@@ -7,20 +7,22 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
- * TODO: put some comment
+ * Default implementation of a dynamic search.
  *
  * @since 1.0.0
  */
 @Component
 public class DefaultSearchImpl extends DynamicSearchImpl {
 
+    private String[] attributes = { "" };
+
     @PostConstruct
     private void init() {
         setName("defaultSearch");
-        select()
-        .where("a", "uuid")
-        .and("a", "version")
-        .and("a", "name")
-        .orderBy(new Sorting("a", "name", SortType.DESC));
+        select();
+        where("a", "uuid");
+        and("a", "version");
+        and("a", "name");
+        orderBy(new Sorting("a", "name", SortType.DESC));
     }
 }

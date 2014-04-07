@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO: put some comment
+ * Used to silently instantiate subclasses of the {@link ValuesProvider} interface.
  *
  * @since 1.0.0
  */

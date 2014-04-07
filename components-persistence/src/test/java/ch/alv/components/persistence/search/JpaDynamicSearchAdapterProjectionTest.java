@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TODO: put some comment
+ * Projection-related tests of the JpaDynamicSearchAdapter
  *
  * @since 1.0.0
  */

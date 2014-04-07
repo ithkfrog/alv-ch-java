@@ -1,7 +1,7 @@
 package ch.alv.components.persistence.search;
 
 /**
- * TODO: put some comment
+ * Default implementation of the {@link HardCodedSearch} interface.
  *
  * @since 1.0.0
  */

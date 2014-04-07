@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: put some comment
+ * Extends the search interface to have a builder-like search interface.
  *
  * @since 1.0.0
  */

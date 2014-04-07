@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TODO: put some comment
+ * Base tests for the JpaDynamicSearchAdapter
  *
  * @since 1.0.0
  */

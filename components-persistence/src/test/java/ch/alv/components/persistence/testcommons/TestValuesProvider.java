@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: put some comment
+ * ValuesProvider implementation for testing purposes.
  *
  * @since 1.0.0
  */
