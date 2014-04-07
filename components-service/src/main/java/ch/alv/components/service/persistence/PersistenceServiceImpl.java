@@ -2,7 +2,7 @@ package ch.alv.components.service.persistence;
 
 import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.persistence.repository.CustomRepository;
-import ch.alv.components.persistence.repository.ParamValuesProvider;
+import ch.alv.components.persistence.search.ValuesProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -31,22 +31,22 @@ public class PersistenceServiceImpl<TYPE extends ModelItem, IDTYPE extends Seria
     }
 
     @Override
-    public Page<TYPE> find(Pageable pageable, ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider) {
         return repo.find(pageable, valuesProvider);
     }
 
     @Override
-    public Page<TYPE> find(Pageable pageable, String searchName, ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
         return repo.find(pageable, searchName, valuesProvider);
     }
 
     @Override
-    public Page<TYPE> find(ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(ValuesProvider valuesProvider) {
         return repo.find(valuesProvider);
     }
 
     @Override
-    public Page<TYPE> find(String searchName, ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(String searchName, ValuesProvider valuesProvider) {
         return repo.find(searchName, valuesProvider);
     }
 

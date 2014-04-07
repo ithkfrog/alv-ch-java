@@ -1,20 +1,20 @@
 package ch.alv.components.iam.search;
 
 import ch.alv.components.iam.IamConstant;
-import ch.alv.components.web.search.BaseWebParamValuesProvider;
+import ch.alv.components.web.search.BaseWebValuesProvider;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * {@link ch.alv.components.persistence.repository.ParamValuesProvider} for {@link ch.alv.components.iam.model.Role} entities.
+ * {@link ch.alv.components.persistence.search.ValuesProvider} for {@link ch.alv.components.iam.model.Permission} entities.
  *
  * @since 1.0.0
  */
-public class RoleSearchParamValuesProvider extends BaseWebParamValuesProvider {
+public class PermissionSearchValuesProvider extends BaseWebValuesProvider {
 
     @Override
-    public Map<String, Object> getParams() {
+    public Map<String, Object> getValues() {
         Map<String, Object> map = new HashMap<>();
         map.put(IamConstant.PARAM_NAME, getStringValue("name"));
         return map;

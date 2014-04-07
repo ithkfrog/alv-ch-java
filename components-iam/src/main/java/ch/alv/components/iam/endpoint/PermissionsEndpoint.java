@@ -3,6 +3,8 @@ package ch.alv.components.iam.endpoint;
 import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.iam.endpoint.dto.PermissionDto;
 import ch.alv.components.iam.model.Permission;
+import ch.alv.components.iam.search.PermissionSearchValuesProvider;
+import ch.alv.components.persistence.search.ValuesProvider;
 import ch.alv.components.web.dto.Dto;
 import ch.alv.components.web.endpoint.BaseWebApiEndpoint;
 import ch.alv.components.web.endpoint.Endpoint;
@@ -38,6 +40,11 @@ public class PermissionsEndpoint extends BaseWebApiEndpoint {
     @Override
     public Class<? extends ModelItem> getEntityClass() {
         return Permission.class;
+    }
+
+    @Override
+    public Class<? extends ValuesProvider> getValuesProviderClass() {
+        return PermissionSearchValuesProvider.class;
     }
 
 }

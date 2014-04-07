@@ -1,7 +1,7 @@
 package ch.alv.components.service.persistence;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.persistence.repository.ParamValuesProvider;
+import ch.alv.components.persistence.search.ValuesProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,13 +17,13 @@ public interface PersistenceService<TYPE extends ModelItem, IDTYPE extends Seria
 
     Page<TYPE> findAll(Pageable pageable);
 
-    Page<TYPE> find(ParamValuesProvider valuesProvider);
+    Page<TYPE> find(ValuesProvider valuesProvider);
 
-    Page<TYPE> find(String searchName, ParamValuesProvider valuesProvider);
+    Page<TYPE> find(String searchName, ValuesProvider valuesProvider);
 
-    Page<TYPE> find(Pageable pageable, ParamValuesProvider valuesProvider);
+    Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider);
 
-    Page<TYPE> find(Pageable pageable, String searchName, ParamValuesProvider valuesProvider);
+    Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider);
 
     TYPE getById(IDTYPE id);
 

@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.query;
+package ch.alv.components.persistence.search;
 
 /**
  * TestBean for the QueryRendererTest

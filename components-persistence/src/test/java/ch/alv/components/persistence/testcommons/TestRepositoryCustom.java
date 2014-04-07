@@ -1,4 +1,6 @@
-package ch.alv.components.persistence.repository;
+package ch.alv.components.persistence.testcommons;
+
+import ch.alv.components.persistence.repository.CustomRepository;
 
 /**
  * Custom interface for {@link TestEntity} entities.

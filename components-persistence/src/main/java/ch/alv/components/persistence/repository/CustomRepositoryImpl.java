@@ -3,13 +3,11 @@ package ch.alv.components.persistence.repository;
 import ch.alv.components.core.reflection.ReflectionUtils;
 import ch.alv.components.core.reflection.ReflectionUtilsException;
 import ch.alv.components.core.utils.StringHelper;
-import ch.alv.components.persistence.query.SelectQuery;
-import ch.alv.components.persistence.query.factory.QueryFactory;
-import ch.alv.components.persistence.query.factory.QueryFactoryRegistry;
-import ch.alv.components.persistence.query.renderer.JpaQueryRenderer;
-import ch.alv.components.persistence.search.NoSuchSearchConfigException;
-import ch.alv.components.persistence.search.Search;
+import ch.alv.components.persistence.search.JpaDynamicSearchAdapter;
+import ch.alv.components.persistence.search.*;
+import ch.alv.components.persistence.search.internal.NoSuchSearchException;
 import ch.alv.components.persistence.search.SearchRegistry;
+import ch.alv.components.persistence.search.ValuesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -22,12 +20,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Base implementation of the {@link CustomRepository} interface.
  *
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public abstract class CustomRepositoryImpl<TYPE> implements CustomRepository<TYPE> {
 
     private static final String DEFAULT_SEARCH = "defaultSearch";
@@ -40,25 +40,25 @@ public abstract class CustomRepositoryImpl<TYPE> implements CustomRepository<TYP
     protected EntityManager em;
 
     @Override
-    public Page<TYPE> find(Pageable pageable, ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider) {
         return findInternal(pageable, null, valuesProvider);
     }
 
-    public Page<TYPE> find(Pageable pageable, String searchName, ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
         return findInternal(pageable, searchName, valuesProvider);
     }
 
     @Override
-    public Page<TYPE> find(ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(ValuesProvider valuesProvider) {
         return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), null, valuesProvider);
     }
 
     @Override
-    public Page<TYPE> find(String searchName, ParamValuesProvider valuesProvider) {
+    public Page<TYPE> find(String searchName, ValuesProvider valuesProvider) {
         return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), searchName, valuesProvider);
     }
 
-    private Page<TYPE> findInternal(Pageable pageable, String searchName, ParamValuesProvider valuesProvider) {
+    private Page<TYPE> findInternal(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
         try {
             TypedQuery<TYPE> query = createTypedQuery(searchName, valuesProvider);
             List<TYPE> result = query.getResultList();
@@ -73,18 +73,33 @@ public abstract class CustomRepositoryImpl<TYPE> implements CustomRepository<TYP
         }
     }
 
-    private TypedQuery<TYPE> createTypedQuery(String searchName, ParamValuesProvider valuesProvider) throws NoSuchSearchConfigException, ReflectionUtilsException {
+    private TypedQuery<TYPE> createTypedQuery(String searchName, ValuesProvider valuesProvider) throws NoSuchSearchException, ReflectionUtilsException {
         if (StringHelper.isEmpty(searchName)) {
             searchName = DEFAULT_SEARCH;
         }
-        Search config = findSearchConfig(searchName);
+        Search search = findSearch(searchName);
         Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
-        QueryFactory factory = QueryFactoryRegistry.getFactory(config.getQueryFactoryName());
-        SelectQuery select = factory.createQuery(config, entityClass, valuesProvider);
-        String queryString = JpaQueryRenderer.render(select);
+
+        String queryString = "";
+        if (search instanceof DynamicSearch) {
+            DynamicSearchImpl dynamicSearch = (DynamicSearchImpl) search;
+            if (dynamicSearch.getFroms().isEmpty()) {
+                dynamicSearch.from("a", entityClass);
+            }
+            JpaDynamicSearchAdapter adapter = new JpaDynamicSearchAdapter((DynamicSearchImpl) search);
+            queryString = adapter.render(valuesProvider);
+        } else if (search instanceof HardCodedSearch) {
+            HardCodedSearch hardCodedSearch = (HardCodedSearch) search;
+            queryString = String.format(hardCodedSearch.getTemplate(), entityClass.getSimpleName());
+        }
+        LOG.debug(queryString);
         TypedQuery<TYPE> query = em.createQuery(queryString, entityClass);
-        for (String key : select.getValues().keySet()) {
-            query.setParameter(key, select.getValues().get(key));
+        if (valuesProvider == null) {
+            return query;
+        }
+        Map<String, Object> values = valuesProvider.getValues();
+        for (String key : values.keySet()) {
+            query.setParameter(key, values.get(key));
         }
         return query;
     }
@@ -104,15 +119,7 @@ public abstract class CustomRepositoryImpl<TYPE> implements CustomRepository<TYP
         }
     }
 
-    private Search findSearchConfig(String searchName) throws NoSuchSearchConfigException {
-        if (StringHelper.isEmpty(searchName)) {
-            throw new NoSuchSearchConfigException("Param 'searchName' must not be empty.");
-        }
-        Search search = SearchRegistry.getSearch(searchName);
-
-        if (search == null) {
-            throw new NoSuchSearchConfigException("No custom search configuration for searchName '" + searchName + "' found.");
-        }
-        return search;
+    private Search findSearch(String searchName) throws NoSuchSearchException {
+        return SearchRegistry.getSearch(searchName);
     }
 }

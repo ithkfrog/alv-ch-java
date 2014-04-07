@@ -1,4 +1,6 @@
-package ch.alv.components.persistence.repository;
+package ch.alv.components.persistence.testcommons;
+
+import ch.alv.components.persistence.repository.CustomRepositoryImpl;
 
 /**
  * Default implementation of the {@link TestRepositoryCustom} interface.
