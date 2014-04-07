@@ -1,5 +1,7 @@
 package ch.alv.components.web.endpoint;
 
+import ch.alv.components.persistence.search.ValuesProvider;
+import ch.alv.components.web.search.DefaultWebValuesProvider;
 import org.springframework.http.HttpMethod;
 
 import java.util.List;
@@ -10,6 +12,11 @@ import java.util.List;
  * @since 1.0.0
  */
 public abstract class BaseWebApiEndpoint implements Endpoint {
+
+    @Override
+    public Class<? extends ValuesProvider> getValuesProviderClass() {
+        return DefaultWebValuesProvider.class;
+    }
 
     @Override
     public List<HttpMethod> getAllowedMethods() {
