@@ -118,6 +118,7 @@ public class JpaDynamicSearchAdapter implements Renderable {
         }
     }
 
+
     private final DynamicSearch search;
 
     public JpaDynamicSearchAdapter(DynamicSearch search) {
@@ -222,27 +223,35 @@ public class JpaDynamicSearchAdapter implements Renderable {
 
 
     private boolean hasMatchingParamValues(Map<String, Object> paramValues) {
+        boolean hasMatchingValues = false;
         for (Predicate predicateItem : search.getWheres()) {
             if (predicateItem instanceof PredicateItem) {
                 if (((PredicateItem) predicateItem).getImmutableValue() != null) {
                     return true;
                 }
-                return hasMatchingParamValue((PredicateItem) predicateItem, paramValues);
+                hasMatchingValues = hasMatchingParamValue((PredicateItem) predicateItem, paramValues);
             } else if (predicateItem instanceof PredicateGroup) {
                 PredicateGroup predicateGroup = (PredicateGroup) predicateItem;
-                return hasMatchingParamValues(search.getWheres(), paramValues);
+                hasMatchingValues = hasMatchingParamValues(search.getWheres(), paramValues);
+            }
+            if (hasMatchingValues) {
+                return true;
             }
         }
         return false;
     }
 
     private boolean hasMatchingParamValues(List<Predicate> items, Map<String, Object> paramValues) {
+        boolean hasMatchingValue = false;
         for (Predicate predicateItem : items) {
             if (predicateItem instanceof PredicateItem) {
-                return hasMatchingParamValue((PredicateItem) predicateItem, paramValues);
+                hasMatchingValue = hasMatchingParamValue((PredicateItem) predicateItem, paramValues);
             } else if (predicateItem instanceof PredicateGroup) {
                 PredicateGroup predicateGroup = (PredicateGroup) predicateItem;
-                return hasMatchingParamValues(predicateGroup.getPredicates(), paramValues);
+                hasMatchingValue = hasMatchingParamValues(predicateGroup.getPredicates(), paramValues);
+            }
+            if (hasMatchingValue) {
+                return true;
             }
         }
         return false;
@@ -313,5 +322,38 @@ public class JpaDynamicSearchAdapter implements Renderable {
             }
         }
         return false;
+    }
+
+    public Object decorateValue(final String attributeName, final Object o) {
+
+        for (Predicate item : search.getWheres()) {
+            if (item instanceof PredicateItem) {
+                PredicateItem predicateItem = (PredicateItem) item;
+                String name = predicateItem.getEntityToken() + StringHelper.capitalize(predicateItem.getName());
+                if (name.equals(attributeName)) {
+                    if (o == null || (o instanceof String && StringHelper.isEmpty((String) o))) {
+                        switch (((PredicateItem) item).getValueDecorator()) {
+                            case STARTS_WITH:
+                            case ENDS_WITH:
+                            case STARTS_OR_ENDS_WITH:
+                                return "%";
+                            default:
+                                return o;
+                        }
+                    }
+                    switch (((PredicateItem) item).getValueDecorator()) {
+                        case STARTS_WITH:
+                            return o + "%";
+                        case ENDS_WITH:
+                            return "%" + o;
+                        case STARTS_OR_ENDS_WITH:
+                            return "%" + o + "%";
+                    }
+
+
+                }
+            }
+        }
+        return o;
     }
 }
