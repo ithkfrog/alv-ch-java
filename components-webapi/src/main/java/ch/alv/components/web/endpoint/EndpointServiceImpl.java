@@ -5,8 +5,8 @@ import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.core.spring.context.DefaultContextProvider;
 import ch.alv.components.core.utils.StringHelper;
+import ch.alv.components.service.common.ServiceRegistry;
 import ch.alv.components.service.persistence.PersistenceService;
-import ch.alv.components.service.persistence.PersistenceServiceRegistry;
 import ch.alv.components.service.search.SearchService;
 import ch.alv.components.web.dto.Dto;
 import ch.alv.components.web.dto.DtoFactory;
@@ -37,6 +37,9 @@ public class EndpointServiceImpl implements EndpointService {
     private static final Logger LOG = LoggerFactory.getLogger(EndpointServiceImpl.class);
 
     @Resource
+    private ServiceRegistry serviceRegistry;
+
+    @Resource
     private BeanMapper mapper;
 
     @Resource
@@ -50,7 +53,7 @@ public class EndpointServiceImpl implements EndpointService {
         if (searchNameValues != null && searchNameValues.length > 0) {
             searchName = searchNameValues[0];
         }
-        PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
+        PersistenceService service = serviceRegistry.getPersistenceService(endpoint.getServiceName());
         SearchService searchService = DefaultContextProvider.getBeanByName(endpoint.getServiceName());
         if (StringHelper.isEmpty(searchName)) {
             Page page;
@@ -100,7 +103,7 @@ public class EndpointServiceImpl implements EndpointService {
     @Override
     public Object getById(String moduleName, String storeName, String id) {
         Endpoint endpoint = EndpointRegistry.getEndpoint(moduleName, storeName);
-        PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
+        PersistenceService service = serviceRegistry.getPersistenceService(endpoint.getServiceName());
         ModelItem entity;
         entity = service.getById(id);
         if (entity == null) {
@@ -122,7 +125,7 @@ public class EndpointServiceImpl implements EndpointService {
         }
         ModelItem entity = mapper.mapObject(dto, endpoint.getEntityClass());
         entity.setId(id);
-        PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
+        PersistenceService service = serviceRegistry.getPersistenceService(endpoint.getServiceName());
         entity = service.save(entity);
         return entity;
     }
@@ -148,7 +151,7 @@ public class EndpointServiceImpl implements EndpointService {
             return new ResponseEntity<>("The id must not be null!", HttpStatus.EXPECTATION_FAILED);
         }
         Endpoint endpoint = EndpointRegistry.getEndpoint(moduleName, storeName);
-        PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
+        PersistenceService service = serviceRegistry.getPersistenceService(endpoint.getServiceName());
         service.delete(id);
         return new ResponseEntity<>("Entity successfully deleted", HttpStatus.OK);
     }

@@ -36,7 +36,7 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
      * @param queryString the search as a query string.
      * @return a list of items fetched from the data source.
      */
-    protected abstract List<TYPE> fetchFromSource(Pageable pageable, SearchImpl search, ValuesProvider valuesProvider, String queryString);
+    protected abstract List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider, String queryString);
 
     /**
      * Provides the renderer to convert a search to a query string.
@@ -51,7 +51,7 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
      * @param valuesProvider provides the values to apply.
      * @return the result page, matching the requirements of the pageable.
      */
-    protected Page<TYPE> findInternal(Pageable pageable, SearchImpl search, ValuesProvider valuesProvider) {
+    protected Page<TYPE> findInternal(Pageable pageable, Search search, ValuesProvider valuesProvider) {
         if (search != null && CollectionUtils.isEmpty(search.getSources())) {
             Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
             search.getSources().add(new SearchSource("a", entityClass.getSimpleName()));
@@ -88,7 +88,7 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
      * @see ch.alv.components.data.search.SearchRepository#findWithCustomSearch(ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.ValuesProvider)
      */
     @Override
-    public Page<TYPE> findWithCustomSearch(SearchImpl search, ValuesProvider valuesProvider) {
+    public Page<TYPE> findWithCustomSearch(Search search, ValuesProvider valuesProvider) {
         return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), search, valuesProvider);
     }
 
@@ -96,7 +96,7 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
      * @see ch.alv.components.data.search.SearchRepository#findWithCustomSearch(import org.springframework.data.domain.Pageable, ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.ValuesProvider)
      */
     @Override
-    public Page<TYPE> findWithCustomSearch(Pageable pageable, SearchImpl search, ValuesProvider valuesProvider) {
+    public Page<TYPE> findWithCustomSearch(Pageable pageable, Search search, ValuesProvider valuesProvider) {
         return findInternal(pageable, search, valuesProvider);
     }
 
@@ -107,7 +107,7 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
      * @param valuesProvider the params to use.
      * @return a query string.
      */
-    protected String renderToQueryString(SearchImpl search, ValuesProvider valuesProvider) {
+    protected String renderToQueryString(Search search, ValuesProvider valuesProvider) {
         String queryString = getRenderer().render(search, valuesProvider);
         LOG.debug("The " + getRenderer().getClass().getSimpleName() + " provided the query: '" + queryString + "'");
         return queryString;

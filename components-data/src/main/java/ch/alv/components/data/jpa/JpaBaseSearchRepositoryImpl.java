@@ -1,7 +1,8 @@
 package ch.alv.components.data.jpa;
 
 import ch.alv.components.core.reflection.ReflectionUtils;
-import ch.alv.components.core.search.SearchImpl;
+import ch.alv.components.core.search.Search;
+import ch.alv.components.core.search.SearchBuilder;
 import ch.alv.components.core.search.SearchRenderer;
 import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.data.search.BaseSearchRepositoryImpl;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.annotation.Resource;
@@ -40,7 +42,7 @@ public class JpaBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<
      *                                                                             ch.alv.components.core.search.ValuesProvider,
      *                                                                             java.lang.String)
      */
-    protected List<TYPE> fetchFromSource(Pageable pageable, SearchImpl search, ValuesProvider valuesProvider, String queryString) {
+    protected List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider, String queryString) {
         Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
         TypedQuery<TYPE> query;
         query = em.createQuery(queryString, entityClass);
@@ -63,6 +65,26 @@ public class JpaBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<
     @Override
     protected SearchRenderer getRenderer() {
         return renderer;
+    }
+
+    /* (non-Javadoc)
+     * @see ch.alv.components.data.search.BaseSearchRepositoryImpl#getAll(org.springframework.data.domain.Pageable)
+     */
+    @Override
+    public Page<TYPE> getAll(Pageable pageable) {
+        SearchBuilder builder = new SearchBuilder();
+        Class<? extends TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
+        Search search = builder.find("a", "*").in("a", entityClass.getSimpleName()).build();
+        return findWithCustomSearch(pageable, search, null);
+    }
+
+    /* (non-Javadoc)
+     * @see ch.alv.components.data.search.BaseSearchRepositoryImpl#getById(java.lang.String)
+     */
+    @Override
+    public TYPE getById(String id) {
+        Class<? extends TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
+        return em.find(entityClass, id);
     }
 
     @Override
@@ -88,5 +110,6 @@ public class JpaBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(17, 37, this);
     }
+
 
 }

@@ -12,6 +12,10 @@ import org.springframework.data.domain.Pageable;
  */
 public interface SearchService<TYPE extends ModelItem> {
 
+    TYPE getById(String id);
+
+    Page<TYPE> getAll(Pageable pageable);
+
     Page<TYPE> find(ValuesProvider valuesProvider);
 
     Page<TYPE> find(String searchName, ValuesProvider valuesProvider);

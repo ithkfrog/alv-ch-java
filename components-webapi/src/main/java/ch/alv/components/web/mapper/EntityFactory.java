@@ -1,14 +1,13 @@
 package ch.alv.components.web.mapper;
 
+import ch.alv.components.service.common.ServiceRegistry;
 import ch.alv.components.service.persistence.PersistenceService;
-import ch.alv.components.service.persistence.PersistenceServiceRegistry;
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointRegistry;
 import org.dozer.BeanFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Link;
-import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * Fetches the related entity with help of the matching {@link ch.alv.components.service.persistence.PersistenceService}.
@@ -18,7 +17,8 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("unchecked")
 public class EntityFactory implements BeanFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EntityFactory.class);
+    @Resource
+    private ServiceRegistry serviceRegistry;
 
     @Override
     public Object createBean(Object o, Class<?> aClass, String s) {
@@ -28,9 +28,9 @@ public class EntityFactory implements BeanFactory {
             if (endpoint == null) {
                 return null;
             }
-            PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
+            PersistenceService service = serviceRegistry.getPersistenceService(endpoint.getServiceName());
             String[] tokens = ((Link) o).getHref().split("/");
-            Object target = null;
+            Object target;
             target = service.getById(tokens[tokens.length - 1]);
             if (target == null) {
                 throw new IllegalStateException("No entity of type " + s + " with id " + tokens[tokens.length - 1] + " found.");

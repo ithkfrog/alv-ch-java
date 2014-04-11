@@ -30,7 +30,7 @@ public class JpaSearchToQueryRenderer extends BaseSearchRendererImpl {
      * @see ch.alv.components.core.search.BaseSearchRendererImpl#doRender(ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.ValuesProvider)
      */
     @Override
-    protected String doRender(SearchImpl search, ValuesProvider valuesProvider) {
+    protected String doRender(Search search, ValuesProvider valuesProvider) {
         StringBuilder sb = renderRootToStringBuilder(search);
         boolean hasPredicates = false;
 
@@ -52,7 +52,7 @@ public class JpaSearchToQueryRenderer extends BaseSearchRendererImpl {
         return sb.toString();
     }
 
-    private void renderSortings(SearchImpl search, StringBuilder sb) {
+    private void renderSortings(Search search, StringBuilder sb) {
         boolean isFirst = true;
         if (!CollectionUtils.isEmpty(search.getSortings())) {
             for (SearchSorting sorting : search.getSortings()) {
@@ -66,14 +66,14 @@ public class JpaSearchToQueryRenderer extends BaseSearchRendererImpl {
         }
     }
 
-    private StringBuilder renderRootToStringBuilder(SearchImpl search) {
+    private StringBuilder renderRootToStringBuilder(Search search) {
         StringBuilder sb = new StringBuilder();
         renderProjections(search, sb);
         renderTables(search, sb);
         return sb;
     }
 
-    private void renderProjections(SearchImpl search, StringBuilder sb) {
+    private void renderProjections(Search search, StringBuilder sb) {
         sb.append("SELECT ");
         boolean isFirst = true;
         for (Projection projection : search.getProjections()) {
@@ -92,7 +92,7 @@ public class JpaSearchToQueryRenderer extends BaseSearchRendererImpl {
         }
     }
 
-    private void renderTables(SearchImpl search, StringBuilder sb) {
+    private void renderTables(Search search, StringBuilder sb) {
         sb.append(" FROM ");
         boolean isFirst = true;
         for (SearchSource source : search.getSources()) {
@@ -105,7 +105,7 @@ public class JpaSearchToQueryRenderer extends BaseSearchRendererImpl {
         }
     }
 
-    private boolean renderPredicates(SearchImpl search, Map<String, Object> values, boolean hasPredicates, StringBuilder localStringBuilder) {
+    private boolean renderPredicates(Search search, Map<String, Object> values, boolean hasPredicates, StringBuilder localStringBuilder) {
         if (search.getPredicates().size() > 0 && hasMatchingParamValues(search, values)) {
             for (Predicate predicateItem : search.getPredicates()) {
                 hasPredicates = renderPredicateItem(predicateItem, localStringBuilder, values, hasPredicates);
@@ -115,7 +115,7 @@ public class JpaSearchToQueryRenderer extends BaseSearchRendererImpl {
     }
 
 
-    private boolean hasMatchingParamValues(SearchImpl search, Map<String, Object> paramValues) {
+    private boolean hasMatchingParamValues(Search search, Map<String, Object> paramValues) {
         boolean hasMatchingValues = false;
         for (Predicate predicateItem : search.getPredicates()) {
             if (predicateItem instanceof SinglePredicate) {
@@ -220,7 +220,7 @@ public class JpaSearchToQueryRenderer extends BaseSearchRendererImpl {
      * @see ch.alv.components.core.search.BaseSearchRendererImpl#decorateValue(java.lang.String, java.lang.Object)
      */
     @Override
-    public Object decorateValue(SearchImpl search, String attributeName, Object value) {
+    public Object decorateValue(Search search, String attributeName, Object value) {
         for (Predicate item : search.getPredicates()) {
             if (item instanceof SinglePredicate) {
                 SinglePredicate predicateItem = (SinglePredicate) item;

@@ -14,13 +14,13 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
     /**
      * The default search to be used if no custom search is provided.
      */
-    private final SearchImpl defaultSearch;
+    private final Search defaultSearch;
 
     /**
      * Constructor
      * @param defaultSearch search configuration that should be used if no custom configuration is passed to rendering method.
      */
-    public BaseSearchRendererImpl(SearchImpl defaultSearch) {
+    public BaseSearchRendererImpl(Search defaultSearch) {
         this.defaultSearch = defaultSearch;
     }
 
@@ -31,7 +31,7 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
      * @param valuesProvider provides the parameter values that should be used.
      * @return a query string that considers a certain technology.
      */
-    protected abstract String doRender(SearchImpl search, ValuesProvider valuesProvider);
+    protected abstract String doRender(Search search, ValuesProvider valuesProvider);
 
     /**
      * Single point of execution for all public render requests.
@@ -39,9 +39,9 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
      * @param valuesProvider the params to consider.
      * @return the query string which has been rendered with the subclass' doRender() implementation.
      */
-    protected String renderInternal(SearchImpl search, ValuesProvider valuesProvider) {
+    protected String renderInternal(Search search, ValuesProvider valuesProvider) {
 
-        SearchImpl localSearch = search;
+        Search localSearch = search;
         if (localSearch == null) {
             localSearch = getDefaultSearch();
         }
@@ -64,7 +64,7 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
      * @see ch.alv.components.core.search.SearchRenderer#render(ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.ValuesProvider)
      */
     @Override
-    public String render(SearchImpl search, ValuesProvider valuesProvider) {
+    public String render(Search search, ValuesProvider valuesProvider) {
         return renderInternal(search, valuesProvider);
     }
 
@@ -72,7 +72,7 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
      * @see ch.alv.components.core.search.SearchRenderer#render(ch.alv.components.core.search.SearchImpl)
      */
     @Override
-    public String render(SearchImpl search) {
+    public String render(Search search) {
         return renderInternal(search, new NullObjectValuesProvider());
     }
 
@@ -80,7 +80,7 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
      * @see ch.alv.components.core.search.SearchRenderer#getDefaultSearch()
      */
     @Override
-    public SearchImpl getDefaultSearch() {
+    public Search getDefaultSearch() {
         return defaultSearch;
     }
 

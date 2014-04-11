@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
+
 public class SearchServiceImpl<TYPE extends ModelItem> implements SearchService<TYPE> {
 
     private final SearchRepository repository;
@@ -31,21 +33,37 @@ public class SearchServiceImpl<TYPE extends ModelItem> implements SearchService<
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<TYPE> getAll(Pageable pageable) {
+        return getRepository().getAll(pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public TYPE getById(String id) {
+        return (TYPE) getRepository().getById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Page<TYPE> find(ValuesProvider valuesProvider) {
         return getRepository().findWithDefaultSearch(valuesProvider);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TYPE> find(String searchName, ValuesProvider valuesProvider) {
         return getRepository().findWithCustomSearch(findSearch(searchName), valuesProvider);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider) {
         return getRepository().findWithDefaultSearch(pageable, valuesProvider);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
         return getRepository().findWithCustomSearch(pageable, findSearch(searchName), valuesProvider);
     }
