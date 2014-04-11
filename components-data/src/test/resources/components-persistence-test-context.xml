@@ -10,11 +10,15 @@
                             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- Put the shared classes into package ch.alv.components.persistence.testcommons -->
-    <jpa:repositories base-package="ch.alv.components.persistence.testcommons"/>
-    <context:component-scan base-package="ch.alv.components.persistence.testcommons"/>
+    <jpa:repositories base-package="ch.alv.components.data.testcommons"/>
+    <context:component-scan base-package="ch.alv.components.data.testcommons"/>
 
     <!-- Infrastructure -->
     <bean class="ch.alv.components.core.spring.context.DefaultContextProvider"/>
+    <bean id="defaultSearch" class="ch.alv.components.core.search.DefaultSearch" />
+    <bean class="ch.alv.components.data.jpa.JpaSearchToQueryRenderer">
+           <constructor-arg ref="defaultSearch" />
+    </bean>
 
     <!-- HSQLDB datasource -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -36,7 +40,7 @@
         <property name="persistenceUnitName" value="persistenceUnitTest"/>
         <property name="packagesToScan">
             <list>
-                <value>ch.alv.components.persistence.testcommons</value>
+                <value>ch.alv.components.data.testcommons</value>
             </list>
         </property>
         <property name="dataSource" ref="dataSource"/>
