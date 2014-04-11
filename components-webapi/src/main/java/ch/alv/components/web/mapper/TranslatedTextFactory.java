@@ -2,12 +2,10 @@ package ch.alv.components.web.mapper;
 
 import ch.alv.components.core.enums.Language;
 import ch.alv.components.core.utils.StringHelper;
-import ch.alv.components.persistence.model.MultiLanguageText;
+import ch.alv.components.data.jpa.MultiLanguageText;
 import ch.alv.components.web.context.ServletRequestProviderImpl;
 import ch.alv.components.web.dto.TranslatedText;
 import org.dozer.BeanFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 
@@ -19,8 +17,6 @@ import javax.annotation.Resource;
 public class TranslatedTextFactory implements BeanFactory {
 
     private static final Language LANGUAGE_DEFAULT = Language.GERMAN;
-
-    private static final Logger LOG = LoggerFactory.getLogger(TranslatedTextFactory.class);
 
     @Resource
     private ServletRequestProviderImpl requestProvider;
