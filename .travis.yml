@@ -10,6 +10,7 @@ addons:
 env:
   - DBMS=mysql
   - DBMS=postgresql
+  - DBMS=hsql
 
 before_script:
   - mysql -e 'create database testdatabase;'
@@ -21,9 +22,8 @@ install: /bin/true
 script: mvn install -B -Dtest.config.dir=`pwd`/test/travis-ci -Dtest.dbms=$DBMS
 
 matrix:
-  allow_failures:
-    - env: DBMS=postgresql
   exclude:
     - jdk: openjdk7
       env: DBMS=postgresql
-
+    - jdk: openjdk7
+      env: DBMS=hsql
