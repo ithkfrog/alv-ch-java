@@ -1,7 +1,7 @@
-package ch.alv.components.persistence.laboratory;
+package ch.alv.components.data.laboratory;
 
-import ch.alv.components.persistence.testcommons.TestEntity;
-import ch.alv.components.persistence.testcommons.TestRepository;
+import ch.alv.components.data.testcommons.TestEntity;
+import ch.alv.components.data.testcommons.TestRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

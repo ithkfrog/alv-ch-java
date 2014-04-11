@@ -1,8 +1,7 @@
-package ch.alv.components.persistence.model;
+package ch.alv.components.data.jpa;
 
 
 import ch.alv.components.core.enums.Language;
-import ch.alv.components.persistence.model.BaseJpaModelItem;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
-package ch.alv.components.persistence.testcommons;
+package ch.alv.components.data.testcommons;
 
-import ch.alv.components.persistence.model.BaseJpaModelItem;
+import ch.alv.components.data.jpa.BaseJpaModelItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
