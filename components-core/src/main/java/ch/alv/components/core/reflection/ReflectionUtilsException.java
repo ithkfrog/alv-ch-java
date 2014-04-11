@@ -5,7 +5,7 @@ package ch.alv.components.core.reflection;
  *
  * @since 1.0.0
  */
-public class ReflectionUtilsException extends Exception {
+public class ReflectionUtilsException extends RuntimeException {
 
     public ReflectionUtilsException() {
     }

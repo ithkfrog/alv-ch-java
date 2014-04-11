@@ -21,7 +21,7 @@ public class ReflectionUtils {
      *
      * @return The first type parameter for the particular class
      */
-    public static <T> Class<T> determineFirstParameterClassOfParameterizedSuperClass(Class<?> classUnderExamination) throws ReflectionUtilsException {
+    public static <T> Class<T> determineFirstParameterClassOfParameterizedSuperClass(Class<?> classUnderExamination)  {
         return determineParameterClassOfParameterizedSuperClass(classUnderExamination, 0);
     }
 
@@ -32,7 +32,7 @@ public class ReflectionUtils {
      *
      * @return The type parameter with the given index for the particular class
      */
-    public static <T> Class<T> determineParameterClassOfParameterizedSuperClass(Class<?> classUnderExamination, int index) throws ReflectionUtilsException {
+    public static <T> Class<T> determineParameterClassOfParameterizedSuperClass(Class<?> classUnderExamination, int index) {
         if (index < 0) {
             throw new ReflectionUtilsException("Param 'index' must not be lower than 0!");
         }
