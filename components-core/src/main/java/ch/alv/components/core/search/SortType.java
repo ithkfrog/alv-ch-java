@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.search.internal;
+package ch.alv.components.core.search;
 
 /**
  * Types of sorting.
@@ -7,6 +7,6 @@ package ch.alv.components.persistence.search.internal;
  */
 public enum SortType {
 
-    ASC, DESC;
+    ASC, DESC
 
 }
