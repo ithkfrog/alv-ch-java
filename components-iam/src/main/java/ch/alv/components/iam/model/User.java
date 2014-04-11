@@ -1,6 +1,6 @@
 package ch.alv.components.iam.model;
 
-import ch.alv.components.persistence.model.BaseJpaModelItem;
+import ch.alv.components.data.jpa.BaseJpaModelItem;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
