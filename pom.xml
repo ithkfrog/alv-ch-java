@@ -38,7 +38,7 @@
 
     <modules>
         <module>components-core</module>
-        <module>components-persistence</module>
+        <module>components-data</module>
         <module>components-service</module>
         <module>components-webapi</module>
         <module>components-iam</module>
@@ -55,7 +55,7 @@
             </dependency>
             <dependency>
                 <groupId>ch.alv.components</groupId>
-                <artifactId>components-persistence</artifactId>
+                <artifactId>components-data</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

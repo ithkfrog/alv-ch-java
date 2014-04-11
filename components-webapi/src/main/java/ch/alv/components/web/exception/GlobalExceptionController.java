@@ -1,6 +1,6 @@
 package ch.alv.components.web.exception;
 
-import ch.alv.components.persistence.model.NoSuchTextConstantException;
+import ch.alv.components.data.jpa.NoSuchTextConstantException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

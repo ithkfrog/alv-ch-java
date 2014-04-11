@@ -1,8 +1,6 @@
 package ch.alv.components.service.persistence;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.persistence.repository.CustomRepository;
-import ch.alv.components.persistence.search.ValuesProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -16,38 +14,18 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public class PersistenceServiceImpl<TYPE extends ModelItem, IDTYPE extends Serializable, REPO extends PagingAndSortingRepository<TYPE, IDTYPE> & CustomRepository<TYPE>> implements PersistenceService<TYPE, IDTYPE> {
+public class PersistenceServiceImpl<TYPE extends ModelItem, IDTYPE extends Serializable, REPO extends PagingAndSortingRepository<TYPE, IDTYPE>> implements PersistenceService<TYPE, IDTYPE> {
 
     private final REPO repo;
 
-    protected PersistenceServiceImpl(REPO repo) {
+    public PersistenceServiceImpl(REPO repo) {
         this.repo = repo;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> findAll(Pageable pageable) {
+    public Page<TYPE> getAll(Pageable pageable) {
         return getRepository().findAll(pageable);
-    }
-
-    @Override
-    public Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider) {
-        return repo.find(pageable, valuesProvider);
-    }
-
-    @Override
-    public Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
-        return repo.find(pageable, searchName, valuesProvider);
-    }
-
-    @Override
-    public Page<TYPE> find(ValuesProvider valuesProvider) {
-        return repo.find(valuesProvider);
-    }
-
-    @Override
-    public Page<TYPE> find(String searchName, ValuesProvider valuesProvider) {
-        return repo.find(searchName, valuesProvider);
     }
 
     @Override
@@ -64,7 +42,7 @@ public class PersistenceServiceImpl<TYPE extends ModelItem, IDTYPE extends Seria
 
     @Override
     @Transactional
-    public Iterable<TYPE> save(List<TYPE> items) {
+    public Iterable<TYPE> saveAll(List<TYPE> items) {
         return getRepository().save(items);
     }
 

@@ -1,7 +1,7 @@
 package ch.alv.components.web.endpoint;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.persistence.search.ValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.web.dto.Dto;
 import org.springframework.http.HttpMethod;
 

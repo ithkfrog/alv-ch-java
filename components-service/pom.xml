@@ -17,7 +17,7 @@
         <!-- Components -->
         <dependency>
             <groupId>ch.alv.components</groupId>
-            <artifactId>components-persistence</artifactId>
+            <artifactId>components-data</artifactId>
         </dependency>
 
         <!-- Spring -->

@@ -1,4 +1,4 @@
-package ch.alv.components.core;
+package ch.alv.components.core.utils;
 
 /**
  * TODO: put some comment

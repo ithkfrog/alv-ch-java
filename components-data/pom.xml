@@ -10,8 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>components-persistence</artifactId>
-    <name>components-persistence</name>
+    <artifactId>components-data</artifactId>
+    <name>components-data</name>
 
     <dependencies>
         <!-- other components -->

@@ -2,14 +2,14 @@ package ch.alv.components.web.endpoint;
 
 import ch.alv.components.core.mapper.BeanMapper;
 import ch.alv.components.core.model.ModelItem;
+import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.spring.context.DefaultContextProvider;
 import ch.alv.components.core.utils.StringHelper;
-import ch.alv.components.persistence.search.ValuesProvider;
-import ch.alv.components.persistence.search.ValuesProviderFactory;
 import ch.alv.components.service.persistence.PersistenceService;
 import ch.alv.components.service.persistence.PersistenceServiceRegistry;
+import ch.alv.components.service.search.SearchService;
 import ch.alv.components.web.dto.Dto;
 import ch.alv.components.web.dto.DtoFactory;
-import ch.alv.components.web.search.WebSearchRegistry;
 import ch.alv.components.web.search.WebValuesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +29,10 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class EndpointServiceImpl implements EndpointService {
 
     private static final String PARAM_SEARCH_NAME = "searchName";
-
-    private static final String DEFAULT_SEARCH_NAME = "defaultSearch";
 
     private static final Logger LOG = LoggerFactory.getLogger(EndpointServiceImpl.class);
 
@@ -52,37 +51,35 @@ public class EndpointServiceImpl implements EndpointService {
             searchName = searchNameValues[0];
         }
         PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
+        SearchService searchService = DefaultContextProvider.getBeanByName(endpoint.getServiceName());
         if (StringHelper.isEmpty(searchName)) {
             Page page;
             if (params.isEmpty()) {
-                page = service.findAll(pageable);
+                page = service.getAll(pageable);
             } else {
-                if (StringHelper.isEmpty(searchName)) {
-                    searchName = DEFAULT_SEARCH_NAME;
-                }
                 Class<? extends ValuesProvider> paramValuesProviderClass = endpoint.getValuesProviderClass();
-                WebValuesProvider provider = (WebValuesProvider) ValuesProviderFactory.createProvider(paramValuesProviderClass);
+                WebValuesProvider provider = (WebValuesProvider) createProvider(paramValuesProviderClass);
                 if (provider == null) {
                     LOG.error("Error while executing search: No valuesProvider of class " + paramValuesProviderClass.getName() + " found.");
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 provider.setSource(params);
-                page = service.find(pageable, provider);
+                page = searchService.find(pageable, provider);
             }
             return new ResponseEntity<>(new PageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements()), HttpStatus.OK);
         } else {
             Page page;
             if (params.isEmpty()) {
-                page = service.findAll(pageable);
+                page = service.getAll(pageable);
             } else {
                 Class<? extends ValuesProvider> paramValuesProviderClass = endpoint.getValuesProviderClass();
-                WebValuesProvider provider = (WebValuesProvider) ValuesProviderFactory.createProvider(paramValuesProviderClass);
+                WebValuesProvider provider = (WebValuesProvider) createProvider(paramValuesProviderClass);
                 if (provider == null) {
                     LOG.error("Error while executing search: No valuesProvider of class '" + paramValuesProviderClass.getName() + "' found.");
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 provider.setSource(params);
-                page = service.find(pageable, searchName, provider);
+                page = searchService.find(pageable, searchName, provider);
             }
             return new ResponseEntity<>(new PageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements()), HttpStatus.OK);
         }
@@ -104,7 +101,7 @@ public class EndpointServiceImpl implements EndpointService {
     public Object getById(String moduleName, String storeName, String id) {
         Endpoint endpoint = EndpointRegistry.getEndpoint(moduleName, storeName);
         PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
-        ModelItem entity = null;
+        ModelItem entity;
         entity = service.getById(id);
         if (entity == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -124,6 +121,7 @@ public class EndpointServiceImpl implements EndpointService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         ModelItem entity = mapper.mapObject(dto, endpoint.getEntityClass());
+        entity.setId(id);
         PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
         entity = service.save(entity);
         return entity;
@@ -153,6 +151,15 @@ public class EndpointServiceImpl implements EndpointService {
         PersistenceService service = PersistenceServiceRegistry.getService(endpoint.getServiceName());
         service.delete(id);
         return new ResponseEntity<>("Entity successfully deleted", HttpStatus.OK);
+    }
+
+    protected ValuesProvider createProvider(Class<? extends ValuesProvider> providerClass) {
+        try {
+            return providerClass.newInstance();
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            throw new IllegalStateException(e);
+        }
     }
 
 
