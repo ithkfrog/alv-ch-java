@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: put some comment
+ * A default ValuesProvider for web requests.
  *
  * @since 1.0.0
  */
@@ -17,17 +17,17 @@ public class DefaultWebValuesProvider extends BaseWebValuesProvider {
 
         String uuid = getStringValue("uuid");
         if (StringHelper.isNotEmpty(uuid)) {
-            values.put("uuid", uuid);
+            values.put("aUuid", uuid);
         }
 
         Integer version = getSingleValue("version", Integer.class);
         if (version != null) {
-            values.put("version", version);
+            values.put("aVersion", version);
         }
 
         String name = getStringValue("name");
         if (StringHelper.isNotEmpty(name)) {
-            values.put("name", name);
+            values.put("aName", name);
         }
 
         return values;
