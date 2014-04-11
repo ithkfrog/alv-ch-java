@@ -1,11 +1,10 @@
-package ch.alv.components.persistence.repository;
+package ch.alv.components.data.repository;
 
-import ch.alv.components.persistence.testcommons.TestEntity;
-import ch.alv.components.persistence.testcommons.TestRepository;
+import ch.alv.components.data.testcommons.TestEntity;
+import ch.alv.components.data.testcommons.TestRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -27,16 +26,12 @@ public class CustomRepositoryImplSimpleSearchTest {
 
     @Test
     public void testUnParameterizedSearch() {
-        String[] attributes = { "b", "a" };
+        String[] attributes = { "a" };
         TestEntity hsqlEntity = new TestEntity();
         hsqlEntity.setMyAttribute(attributes[0]);
         repository.save(hsqlEntity);
 
-        TestEntity mysqlEntity = new TestEntity();
-        mysqlEntity.setMyAttribute(attributes[1]);
-        repository.save(mysqlEntity);
-
-        Iterable<TestEntity> result = repository.find(new PageRequest(0, 100), null);
+        Iterable<TestEntity> result = repository.findWithDefaultSearch(null);
         Iterator<TestEntity> it = result.iterator();
         int counter = 0;
         while (it.hasNext()) {
@@ -44,7 +39,7 @@ public class CustomRepositoryImplSimpleSearchTest {
             Assert.assertEquals(attributes[counter], currentPos.getMyAttribute());
             counter++;
         }
-        Assert.assertEquals(2, counter);
+        Assert.assertEquals(1, counter);
     }
 
 }

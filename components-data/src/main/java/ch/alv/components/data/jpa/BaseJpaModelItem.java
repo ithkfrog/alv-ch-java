@@ -1,4 +1,4 @@
-package ch.alv.components.persistence.model;
+package ch.alv.components.data.jpa;
 
 import ch.alv.components.core.model.ModelItem;
 import org.hibernate.annotations.GenericGenerator;

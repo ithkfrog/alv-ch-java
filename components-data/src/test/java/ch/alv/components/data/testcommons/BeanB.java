@@ -1,20 +1,20 @@
-package ch.alv.components.persistence.search;
+package ch.alv.components.data.testcommons;
 
 /**
  * TestBean for the QueryRendererTest
  *
  * @since 1.0.0
  */
-public class BeanA {
+public class BeanB {
 
     private String key;
 
     private String value;
 
-    public BeanA() {
+    public BeanB() {
     }
 
-    public BeanA(String key, String value) {
+    public BeanB(String key, String value) {
         this.key = key;
         this.value = value;
     }
