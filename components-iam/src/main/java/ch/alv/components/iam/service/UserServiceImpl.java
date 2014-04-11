@@ -89,10 +89,9 @@ public class UserServiceImpl extends PersistenceServiceImpl<User, String, UserRe
         Map<String, String[]> sourceMap = new HashMap<>();
         sourceMap.put(IamConstant.PARAM_USER_NAME, new String[]{username});
         provider.setSource(sourceMap);
-        List<User> result = getRepository().find(provider).getContent();
+        List<User> result = getRepository().findWithDefaultSearch(provider).getContent();
         if (result.size() > 0) {
-            User user = result.get(0);
-            return user;
+            return result.get(0);
         } else {
             return null;
         }
