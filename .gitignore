@@ -1,5 +1,7 @@
 .idea/*
 .idea/**/*
 *.iml
+components-data/*.iml
+**/*.iml
 target/
 
