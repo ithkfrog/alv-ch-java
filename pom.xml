@@ -7,11 +7,11 @@
 
     <groupId>ch.alv.components</groupId>
     <artifactId>components-parent</artifactId>
-    <name>components-parent</name>
-
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <version>1.0.0-SNAPSHOT</version>
+    <name>components-parent</name>
+
 
     <properties>
         <dozer.version>5.4.0</dozer.version>
@@ -167,6 +167,12 @@
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>slf4j-log4j12</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- Jackson: Java bean to JSON vice versa -->
@@ -205,21 +211,19 @@
             <!-- Logging -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- Testing -->
@@ -247,7 +251,6 @@
                 <version>0.9.1.2</version>
                 <scope>test</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -256,12 +259,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
                 <configuration>
-                    <!-- reuse forks to have the same hsql db in every test -->
+                    <!-- don't reuse forks to have the a fresh hsql db in every test -->
                     <reuseForks>false</reuseForks>
                     <forkCount>1</forkCount>
                 </configuration>
-                <version>2.17</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -269,6 +272,7 @@
                 <version>2.17</version>
                 <executions>
                     <execution>
+                        <id>integrationTest</id>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
@@ -304,6 +308,33 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
+            <!-- check the quality of poms-->
+            <plugin>
+                <groupId>com.lewisd</groupId>
+                <artifactId>lint-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <failOnViolation>true</failOnViolation>
+                    <onlyRunRules>
+                        <rule>DotVersionProperty</rule>
+                        <rule>DuplicateDep</rule>
+                        <rule>ExecutionId</rule>
+                        <rule>GAVOrder</rule>
+                        <rule>RedundantDepVersion</rule>
+                        <rule>RedundantPluginVersion</rule>
+                        <rule>VersionProp</rule>
+                    </onlyRunRules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>javaLint</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -325,4 +356,16 @@
         <!-- missing for some resolution??? <downloadUrl> -->
     </distributionManagement>
 
+    <developers>
+        <developer>
+            <name>Informatik der Arbeitslosenversicherung (ALV)</name>
+            </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>http://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 </project>
