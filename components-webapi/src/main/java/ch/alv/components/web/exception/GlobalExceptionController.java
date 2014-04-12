@@ -1,6 +1,7 @@
 package ch.alv.components.web.exception;
 
 import ch.alv.components.data.jpa.NoSuchTextConstantException;
+import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,20 @@ public class GlobalExceptionController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleAllExceptions(Exception e) {
 
+        if (e instanceof UnSupportedMethodException) {
+            return new ResponseEntity<>("The current user is not allowed to execute this request.", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (e instanceof UnSupportedMethodException) {
+            return new ResponseEntity<>("This HTTP method is currently not supported.", HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
         if (e instanceof NoSuchTextConstantException) {
-            return new ResponseEntity<>("The requested language is not or at least not fully supported...", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("The requested language is not or at least not fully supported.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (e instanceof BadRequestException) {
+            return new ResponseEntity<>("The request is in a illegal state: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
         UUID uuid = UUID.randomUUID();
