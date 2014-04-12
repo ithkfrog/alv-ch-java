@@ -1,4 +1,4 @@
-package ch.alv.components.data.repository;
+package ch.alv.components.data.jpa;
 
 import ch.alv.components.data.testcommons.TestEntity;
 import ch.alv.components.data.testcommons.TestRepository;

@@ -1,7 +1,6 @@
-package ch.alv.components.data.search;
+package ch.alv.components.data.jpa;
 
 import ch.alv.components.core.search.SearchBuilder;
-import ch.alv.components.data.jpa.JpaSearchToQueryRenderer;
 import ch.alv.components.data.testcommons.TestValuesProvider;
 import org.junit.Assert;
 import org.junit.Before;
