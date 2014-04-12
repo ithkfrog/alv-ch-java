@@ -1,9 +1,11 @@
-package ch.alv.components.web.endpoint;
+package ch.alv.components.web.endpoint.filter;
 
+import ch.alv.components.web.endpoint.Endpoint;
+import ch.alv.components.web.endpoint.EndpointRegistry;
 import org.springframework.http.HttpMethod;
 
 /**
- * Default implementation of the {@link ch.alv.components.web.security.SecurityFilter} interface.
+ * Default implementation of the {@link SecurityFilter} interface.
  *
  * @since 1.0.0
  */

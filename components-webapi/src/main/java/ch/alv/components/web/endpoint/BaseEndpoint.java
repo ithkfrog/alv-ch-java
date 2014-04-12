@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public abstract class BaseWebApiEndpoint implements Endpoint {
+public abstract class BaseEndpoint implements Endpoint {
 
     @Override
     public Class<? extends ValuesProvider> getValuesProviderClass() {

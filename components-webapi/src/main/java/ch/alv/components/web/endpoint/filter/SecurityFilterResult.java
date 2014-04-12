@@ -1,4 +1,4 @@
-package ch.alv.components.web.security;
+package ch.alv.components.web.endpoint.filter;
 
 /**
  * The result of a security filter check.

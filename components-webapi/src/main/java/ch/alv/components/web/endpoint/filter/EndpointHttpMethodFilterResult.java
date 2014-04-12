@@ -1,4 +1,4 @@
-package ch.alv.components.web.endpoint;
+package ch.alv.components.web.endpoint.filter;
 
 /**
  * The result of a http method filter check

@@ -1,4 +1,4 @@
-package ch.alv.components.web.security;
+package ch.alv.components.web.endpoint.filter;
 
 import ch.alv.components.core.spring.security.SecurityContextProvider;
 import ch.alv.components.core.utils.StringHelper;
@@ -26,7 +26,7 @@ public class SecurityFilterImpl implements SecurityFilter {
     @Override
     public SecurityFilterResult doFilter(HttpServletRequest request, String moduleName, String storeName) {
         Endpoint endpoint = EndpointRegistry.getEndpoint(moduleName, storeName);
-        boolean result = false;
+        boolean result;
         switch (request.getMethod()) {
             case "POST":
                 if (StringHelper.isEmpty(endpoint.getRolesPOST())) {
