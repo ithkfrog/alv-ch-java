@@ -1,16 +1,16 @@
 language: java
 jdk:
   - oraclejdk8
-  - openjdk7
+#pending skip artifact deployment:  - openjdk7
 
 addons:
   postgresql: "9.3"
 
-# Consider merging postgresql+mysql test run to reduce the size of build matrix
 env:
-  - DBMS=mysql
-  - DBMS=postgresql
-  - DBMS=hsql
+  global:
+    # Credentials to deploy to Maven Artifacts
+    - secure: Q0LjGCaS2LIB0z1XH1Qx4uAmGgG9mIlsZAtdSGbgd4XwRbWM5zPxaRtoe5YJCt4zeAOu9+TYxpqa5kv5EyizY0zSC8dEZQu6Ur7jfre2FaJ9O0sSq72Cn2cTVVXTEQi+CPnaK/pki/NpDSN6Zt82n7ypgxZOInFT+BtcXDK8ok0=
+    - secure: Z6o9+yl9my8JeXolPQStUKLlImmLOfagRlFLFN4uSXWQ2SVP4dVhzZGB+2bVCNSmLuQqV0CRbALkOF0f8cHi+qGiwTKqIwcp1d2BUqASP6oGHH/PtuspOsYoV4NzsQ86CCpI3Kakt2C7gDRv/0ES/Qw0Vjc/Ob21Hj3zeJ9amXo=
 
 before_script:
   - mysql -e 'create database testdatabase;'
@@ -19,11 +19,12 @@ before_script:
 # Build everything in 'script' phase
 install: /bin/true
 
-script: mvn install -B -Dtest.config.dir=`pwd`/test/travis-ci -Dtest.dbms=$DBMS
+script:
+  # pending: optimize clean/test steps
+  - mvn clean install -B -Dtest.config.dir=`pwd`/test/travis-ci -Dtest.dbms=hsql
+  - mvn clean install -B -Dtest.config.dir=`pwd`/test/travis-ci -Dtest.dbms=mysql
+  - mvn clean install -B -Dtest.config.dir=`pwd`/test/travis-ci -Dtest.dbms=postgresql
 
-matrix:
-  exclude:
-    - jdk: openjdk7
-      env: DBMS=postgresql
-    - jdk: openjdk7
-      env: DBMS=hsql
+  # Deploy built artifacts
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then mvn deploy -B --settings test/travis-ci/settings.xml ; fi
+

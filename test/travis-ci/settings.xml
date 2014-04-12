@@ -1,20 +1,23 @@
-alv-ch-java [![Build Status](https://travis-ci.org/alv-ch/alv-ch-java.svg?branch=master)](https://travis-ci.org/alv-ch/alv-ch-java)
-===========
+<?xml version="1.0" encoding="UTF-8"?>
 
-Contains components for various fundamental Java concerns, including Java implementations of WebAPIs. Please be aware that all components are in a conceptual state and may be changed or even removed.
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
-Published Artifacts
--------------------
+  <servers>
+    <server>
+      <id>alvch-artifactoryonline-libs-snapshots</id>
+      <username>${env.CI_DEPLOY_USERNAME}</username>
+      <password>${env.CI_DEPLOY_PASSWORD}</password>
+    </server>
+  </servers>
 
-alv-ch-java artificats are available from http://alvch.artifactoryonline.com.
-
-Example of Snippet to add to your Maven `settings.xml`:
-
-```xml
+  <mirrors/>
+  
   <profiles>
-
     <profile>
       <id>alv-ch</id>
+
       <repositories>
         <repository>
           <snapshots>
@@ -48,13 +51,10 @@ Example of Snippet to add to your Maven `settings.xml`:
         </pluginRepository>
       </pluginRepositories>
     </profile>
-
   </profiles>
 
   <activeProfiles>
     <activeProfile>alv-ch</activeProfile>
   </activeProfiles>
 
-```
-
-For more advanced Maven configuration, or integration with Gradle or Ivy, you can use [online Artifactory Settings Generators](http://alvch.artifactoryonline.com/alvch/webapp/mavensettings.html).
+</settings>
