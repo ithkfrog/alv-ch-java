@@ -312,11 +312,17 @@
     </scm>
 
     <distributionManagement>
+        <repository>
+            <id>alvch-artifactoryonline-libs-releases</id>
+            <name>ALV Switzerland Libraries Releases</name>
+            <url>http://alvch.artifactoryonline.com/alvch/libs-releases-local</url>
+        </repository>
         <snapshotRepository>
-            <id>alvch</id>
-            <name>alvch-snapshots</name>
+            <id>alvch-artifactoryonline-libs-snapshots</id>
+            <name>ALV Switzerland Libraries Snapshots</name>
             <url>http://alvch.artifactoryonline.com/alvch/libs-snapshots-local</url>
         </snapshotRepository>
+        <!-- missing for some resolution??? <downloadUrl> -->
     </distributionManagement>
 
 </project>
