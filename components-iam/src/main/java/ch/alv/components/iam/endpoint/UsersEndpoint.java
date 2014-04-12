@@ -6,7 +6,7 @@ import ch.alv.components.iam.endpoint.dto.UserDto;
 import ch.alv.components.iam.model.User;
 import ch.alv.components.iam.search.UserSearchValuesProvider;
 import ch.alv.components.web.dto.Dto;
-import ch.alv.components.web.endpoint.BaseWebApiEndpoint;
+import ch.alv.components.web.endpoint.BaseEndpoint;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Component
-public class UsersEndpoint extends BaseWebApiEndpoint {
+public class UsersEndpoint extends BaseEndpoint {
 
     @Override
     public String getModuleName() {

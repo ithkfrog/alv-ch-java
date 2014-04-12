@@ -6,7 +6,7 @@ import ch.alv.components.iam.endpoint.dto.RoleDto;
 import ch.alv.components.iam.model.Role;
 import ch.alv.components.iam.search.RoleSearchValuesProvider;
 import ch.alv.components.web.dto.Dto;
-import ch.alv.components.web.endpoint.BaseWebApiEndpoint;
+import ch.alv.components.web.endpoint.BaseEndpoint;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Component
-public class RolesEndpoint extends BaseWebApiEndpoint {
+public class RolesEndpoint extends BaseEndpoint {
 
     @Override
     public String getModuleName() {
