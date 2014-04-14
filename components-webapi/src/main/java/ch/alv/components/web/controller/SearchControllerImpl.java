@@ -53,7 +53,7 @@ public class SearchControllerImpl extends BaseController implements SearchContro
                                 @PathVariable String id) throws UnSupportedMethodException, UnauthorizedException {
 
         runFilters(request, moduleName, storeName);
-        return getById(storeName, moduleName, id);
+        return getById(moduleName, storeName, id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{moduleName}/{storeName}", produces = MediaType.APPLICATION_JSON_VALUE)
