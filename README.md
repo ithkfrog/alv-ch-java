@@ -8,53 +8,33 @@ Published Artifacts
 
 alv-ch-java artificats are available from http://alvch.artifactoryonline.com.
 
-Example of Snippet to add to your Maven `settings.xml`:
+Example of Snippet to add to your Maven `settings.xml` (or `pom.xml`):
 
 ```xml
   <profiles>
 
     <profile>
       <id>alv-ch</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <repositories>
         <repository>
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
-          <id>central</id>
-          <name>libs-releases</name>
+          <id>alvch-libs-releases</id>
+          <name>ALV Switzerland Releases</name>
           <url>http://alvch.artifactoryonline.com/alvch/libs-releases</url>
         </repository>
         <repository>
           <snapshots />
-          <id>snapshots</id>
-          <name>libs-snapshot-repos</name>
+          <id>alvch-libs-snapshots</id>
+          <name>ALV Swizterland Snapshots</name>
           <url>http://alvch.artifactoryonline.com/alvch/libs-snapshots</url>
         </repository>
       </repositories>
-      <pluginRepositories>
-        <pluginRepository>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-          <id>central</id>
-          <name>plugins-releases</name>
-          <url>http://alvch.artifactoryonline.com/alvch/plugins-releases</url>
-        </pluginRepository>
-        <pluginRepository>
-          <snapshots />
-          <id>snapshots</id>
-          <name>plugins-snapshots</name>
-          <url>http://alvch.artifactoryonline.com/alvch/plugins-snapshots</url>
-        </pluginRepository>
-      </pluginRepositories>
     </profile>
 
   </profiles>
-
-  <activeProfiles>
-    <activeProfile>alv-ch</activeProfile>
-  </activeProfiles>
-
 ```
-
-For more advanced Maven configuration, or integration with Gradle or Ivy, you can use [online Artifactory Settings Generators](http://alvch.artifactoryonline.com/alvch/webapp/mavensettings.html).
