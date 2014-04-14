@@ -13,6 +13,7 @@
     <name>components-parent</name>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dozer.version>5.4.0</dozer.version>
         <spring.version>4.0.2.RELEASE</spring.version>
         <spring-data.version>1.7.0.RELEASE</spring-data.version>
@@ -320,6 +321,11 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>2.2.0</version>
+            </plugin>
             <!-- check the quality of poms-->
             <plugin>
                 <groupId>com.lewisd</groupId>
@@ -346,6 +352,21 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <maxmem>256m</maxmem>
+                    <!-- aggregated reports for multi-module projects -->
+                    <aggregate>true</aggregate>
+                    <formats>
+                        <format>xml</format>
+                        <!-- <format>html</format> -->
+                    </formats>
+                    <check/>
+                </configuration>
             </plugin>
         </plugins>
     </build>
