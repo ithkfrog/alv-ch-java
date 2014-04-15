@@ -3,38 +3,39 @@ alv-ch-java [![Build Status](https://travis-ci.org/alv-ch/alv-ch-java.svg?branch
 
 Contains components for various fundamental Java concerns, including Java implementations of WebAPIs. Please be aware that all components are in a conceptual state and may be changed or even removed.
 
-Published Artifacts
+Maven Configuration
 -------------------
 
-alv-ch-java artificats are available from http://alvch.artifactoryonline.com.
+alv-ch-java final and snapshot releases are available from http://alvch.artifactoryonline.com.
 
-Example of Snippet to add to your Maven `settings.xml` (or `pom.xml`):
+A dependency on a final release might look like:
 
 ```xml
-  <profiles>
+        <dependency>
+            <groupId>ch.alv.components</groupId>
+            <artifactId>components-webapi</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
-    <profile>
-      <id>alv-ch</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <repositories>
         <repository>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-          <id>alvch-libs-releases</id>
-          <name>ALV Switzerland Releases</name>
-          <url>http://alvch.artifactoryonline.com/alvch/libs-releases</url>
+            <id>alvch-libs-releases</id>
+            <name>ALV Switzerland Releases</name>
+            <url>http://alvch.artifactoryonline.com/alvch/libs-releases</url>
         </repository>
+```
+
+A dependency on a snapshot release might look like:
+
+```xml
+        <dependency>
+            <groupId>ch.alv.components</groupId>
+            <artifactId>components-iam</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
         <repository>
-          <snapshots />
           <id>alvch-libs-snapshots</id>
-          <name>ALV Swizterland Snapshots</name>
+          <name>ALV Switzerland Snapshots</name>
           <url>http://alvch.artifactoryonline.com/alvch/libs-snapshots</url>
         </repository>
-      </repositories>
-    </profile>
-
-  </profiles>
 ```
