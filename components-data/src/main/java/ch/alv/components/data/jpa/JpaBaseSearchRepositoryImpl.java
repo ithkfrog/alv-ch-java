@@ -42,21 +42,22 @@ public class JpaBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<
      *                                                                             ch.alv.components.core.search.ValuesProvider,
      *                                                                             java.lang.String)
      */
-    protected List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider, String queryString) {
+    protected List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider) {
         Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
-        TypedQuery<TYPE> query;
-        query = em.createQuery(queryString, entityClass);
+        String queryString = (String) renderer.render(search, valuesProvider);
+        TypedQuery<TYPE> typedQuery;
+        typedQuery = em.createQuery(queryString, entityClass);
         if (valuesProvider != null) {
             Map<String, Object> values = valuesProvider.getValues();
             for (String key : values.keySet()) {
                 try {
-                    query.setParameter(key, renderer.decorateValue(search, key, values.get(key)));
+                    typedQuery.setParameter(key, renderer.decorateValue(search, key, values.get(key)));
                 } catch (IllegalArgumentException e) {
                     LOG.info("Error while trying to set a parameter value.");
                 }
             }
         }
-        return query.getResultList();
+        return typedQuery.getResultList();
     }
 
     /* (non-Javadoc)

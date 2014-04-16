@@ -24,7 +24,7 @@ public class JpaSearchToQueryRendererProjectionTest {
     public void testNoProjectionQuery() {
         searchBuilder.find("a", "*").in("a", "BeanA");
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a", queryString);
     }
 
@@ -32,7 +32,7 @@ public class JpaSearchToQueryRendererProjectionTest {
     public void testSingleProjectionQuery() {
         searchBuilder.find("a", "key").in("a", "BeanA");
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a.key FROM BeanA a", queryString);
     }
 
@@ -40,7 +40,7 @@ public class JpaSearchToQueryRendererProjectionTest {
     public void testMultipleProjectionQuery() {
         searchBuilder.find("a", "key").find("a", "value").in("a", "BeanA");
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a.key, a.value FROM BeanA a", queryString);
     }
 
@@ -48,7 +48,7 @@ public class JpaSearchToQueryRendererProjectionTest {
     public void testJoinedProjectionQuery() {
         searchBuilder.find("a", "*").find("b", "value").in("a", "BeanA").in("b", "BeanB");
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a, b.value FROM BeanA a, BeanB b", queryString);
     }
 

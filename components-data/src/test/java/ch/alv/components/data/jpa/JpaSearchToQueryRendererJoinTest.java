@@ -31,7 +31,7 @@ public class JpaSearchToQueryRendererJoinTest {
 
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
 
-        String queryString = renderer.render(searchBuilder.build(), new NullObjectValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new NullObjectValuesProvider());
 
         Assert.assertEquals("SELECT a, b FROM BeanA a, BeanB b WHERE a.key = b.key", queryString);
     }
@@ -44,7 +44,7 @@ public class JpaSearchToQueryRendererJoinTest {
                 .in("b", "BeanB")
                 .where("a", "key", "b.key", ComparatorType.LIKE);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new NullObjectValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new NullObjectValuesProvider());
 
         Assert.assertEquals("SELECT a, b FROM BeanA a, BeanB b WHERE a.key LIKE b.key", queryString);
     }

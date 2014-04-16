@@ -27,7 +27,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "key");
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.key = :aKey", queryString);
     }
 
@@ -37,7 +37,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "value", ComparatorType.NOT_EQUALS);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.value != :aValue", queryString);
     }
 
@@ -48,7 +48,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "key", ComparatorType.LIKE);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.key LIKE :aKey", queryString);
     }
 
@@ -58,7 +58,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "key", ComparatorType.NOT_LIKE);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.key NOT LIKE :aKey", queryString);
     }
 
@@ -68,7 +68,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "value", ComparatorType.GT);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.value > :aValue", queryString);
     }
 
@@ -78,7 +78,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "value", ComparatorType.GE);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.value >= :aValue", queryString);
     }
 
@@ -88,7 +88,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "key", ComparatorType.LT);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.key < :aKey", queryString);
     }
 
@@ -98,7 +98,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "value", ComparatorType.LE);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.value <= :aValue", queryString);
     }
 
@@ -108,7 +108,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "list", ComparatorType.IN);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.list IN :aList", queryString);
     }
 
@@ -118,7 +118,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .in("a", "BeanA")
                 .where("a", "list", ComparatorType.NOT_IN);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.list NOT IN :aList", queryString);
     }
 
@@ -129,7 +129,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .where("a", "key", ComparatorType.LIKE)
                 .and("a", "value");
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.key LIKE :aKey AND a.value = :aValue", queryString);
     }
 
@@ -140,7 +140,7 @@ public class JpaSearchToQueryRendererBaseTest {
                 .where("a", "key", ComparatorType.LT)
                 .or("a", "value");
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = renderer.render(searchBuilder.build(), new TestValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new TestValuesProvider());
         Assert.assertEquals("SELECT a FROM BeanA a WHERE a.key < :aKey OR a.value = :aValue", queryString);
     }
 }
