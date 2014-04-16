@@ -5,8 +5,6 @@ import ch.alv.components.core.search.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +22,6 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository<TYPE> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BaseSearchRepositoryImpl.class);
-
     protected static final int DEFAULT_PAGE_SIZE = 100;
 
     /**
@@ -33,10 +29,9 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
      * @param pageable the pageable to fulfill.
      * @param search the search configuration to apply.
      * @param valuesProvider provides the values to apply.
-     * @param queryString the search as a query string.
      * @return a list of items fetched from the data source.
      */
-    protected abstract List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider, String queryString);
+    protected abstract List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider);
 
     /**
      * Provides the renderer to convert a search to a query string.
@@ -59,8 +54,7 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
             Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
             search = new SearchBuilder().find("a", "*").in("a", entityClass.getSimpleName()).build();
         }
-        String queryString = renderToQueryString(search, valuesProvider);
-        List<TYPE> result = fetchFromSource(pageable, search, valuesProvider, queryString);
+        List<TYPE> result = fetchFromSource(pageable, search, valuesProvider);
         if (result == null || result.size() == 0) {
             return new PageImpl(new ArrayList(), pageable, 0);
         } else {
@@ -98,19 +92,6 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
     @Override
     public Page<TYPE> findWithCustomSearch(Pageable pageable, Search search, ValuesProvider valuesProvider) {
         return findInternal(pageable, search, valuesProvider);
-    }
-
-    /**
-     * Uses the SearchRenderer to render the search to a query string.
-     *
-     * @param search         the search to render.
-     * @param valuesProvider the params to use.
-     * @return a query string.
-     */
-    protected String renderToQueryString(Search search, ValuesProvider valuesProvider) {
-        String queryString = getRenderer().render(search, valuesProvider);
-        LOG.debug("The " + getRenderer().getClass().getSimpleName() + " provided the query: '" + queryString + "'");
-        return queryString;
     }
 
     /**
