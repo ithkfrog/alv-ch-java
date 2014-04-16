@@ -1,0 +1,26 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- we use dozer default settings and don't want to see the corresponding message each startup... -->
+    <logger name="org.dozer.config.GlobalSettings" level="error" />
+
+    <!-- suppress message on tomcat startup -->
+    <logger name="org.jboss.logging" level="info" />
+
+    <!-- noisy guys... -->
+    <logger name="org.hibernate" level="warn" />
+    <logger name="org.springframework" level="warn" />
+    <logger name="org.dozer" level="warn" />
+    <logger name="org.apache.commons.beanutils.converters" level="warn" />
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
