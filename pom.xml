@@ -12,7 +12,6 @@
 
     <name>components-parent</name>
 
-
     <properties>
         <dozer.version>5.4.0</dozer.version>
         <spring.version>4.0.2.RELEASE</spring.version>
@@ -20,6 +19,7 @@
         <spring-data-jpa.version>1.5.0.RELEASE</spring-data-jpa.version>
         <spring-security.version>3.2.0.RELEASE</spring-security.version>
         <spring-hateoas.version>0.9.0.RELEASE</spring-hateoas.version>
+        <spring-data-elastic.version>1.0.0.M2</spring-data-elastic.version>
         <aspect-j-tools.version>1.6.12</aspect-j-tools.version>
         <junit.version>4.11</junit.version>
         <hibernate.version>4.3.4.Final</hibernate.version>
@@ -34,6 +34,7 @@
         <mysql-driver.version>5.1.27</mysql-driver.version>
         <postgre-driver.version>9.1-901.jdbc4</postgre-driver.version>
         <hsql.version>2.3.1</hsql.version>
+        <elastic.version>1.1.0</elastic.version>
     </properties>
 
     <modules>
@@ -126,6 +127,11 @@
                 <version>${spring-hateoas.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>${spring-data-elastic.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
                 <version>${spring.version}</version>
@@ -137,7 +143,7 @@
                 <version>${aspect-j-tools.version}</version>
             </dependency>
 
-            <!-- Persistence -->
+            <!-- Data access / management -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
@@ -159,6 +165,12 @@
                 <groupId>postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgre-driver.version}</version>
+            </dependency>
+            <!-- ElasticSearch support -->
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elastic.version}</version>
             </dependency>
 
             <!-- Mapper -->
@@ -355,6 +367,14 @@
         </snapshotRepository>
         <!-- missing for some resolution??? <downloadUrl> -->
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>spring-libs-milestone</id>
+            <name>Spring Milestone Repository</name>
+            <url>http://repo.spring.io/libs-milestone</url>
+        </repository>
+    </repositories>
 
     <developers>
         <developer>
