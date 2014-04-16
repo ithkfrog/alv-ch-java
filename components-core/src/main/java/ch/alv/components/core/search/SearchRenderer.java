@@ -14,7 +14,7 @@ public interface SearchRenderer {
      * @param valuesProvider provides the values which should be used in the query.
      * @return a technology dependent representation of the search.
      */
-    String render(ValuesProvider valuesProvider);
+    Object render(ValuesProvider valuesProvider);
 
     /**
      * Renders the given search configuration (see {@link SearchImpl}) with the provided values.
@@ -23,7 +23,7 @@ public interface SearchRenderer {
      * @param valuesProvider provides the values which should be used in the query.
      * @return a technology dependent representation of the search.
      */
-    String render(Search search, ValuesProvider valuesProvider);
+    Object render(Search search, ValuesProvider valuesProvider);
 
     /**
      * Renders the given search configuration (see {@link SearchImpl}) without any params / values.
@@ -31,7 +31,7 @@ public interface SearchRenderer {
      * @param search an abstract description of the search.
      * @return a technology dependent representation of the search.
      */
-    String render(Search search);
+    Object render(Search search);
 
     /**
      * Provides a search configuration that should be used if no custom configuration is passed to the renderer.
