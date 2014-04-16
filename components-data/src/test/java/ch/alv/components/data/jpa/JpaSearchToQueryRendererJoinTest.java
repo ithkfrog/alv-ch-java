@@ -1,7 +1,7 @@
 package ch.alv.components.data.jpa;
 
 import ch.alv.components.core.search.ComparatorType;
-import ch.alv.components.core.search.NullObjectValuesProvider;
+import ch.alv.components.core.search.EmptyValuesProvider;
 import ch.alv.components.core.search.SearchBuilder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,7 +31,7 @@ public class JpaSearchToQueryRendererJoinTest {
 
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
 
-        String queryString = (String) renderer.render(searchBuilder.build(), new NullObjectValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new EmptyValuesProvider());
 
         Assert.assertEquals("SELECT a, b FROM BeanA a, BeanB b WHERE a.key = b.key", queryString);
     }
@@ -44,7 +44,7 @@ public class JpaSearchToQueryRendererJoinTest {
                 .in("b", "BeanB")
                 .where("a", "key", "b.key", ComparatorType.LIKE);
         JpaSearchToQueryRenderer renderer = new JpaSearchToQueryRenderer(null);
-        String queryString = (String) renderer.render(searchBuilder.build(), new NullObjectValuesProvider());
+        String queryString = (String) renderer.render(searchBuilder.build(), new EmptyValuesProvider());
 
         Assert.assertEquals("SELECT a, b FROM BeanA a, BeanB b WHERE a.key LIKE b.key", queryString);
     }

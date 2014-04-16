@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
-public class NullObjectValuesProvider implements ValuesProvider {
+public class EmptyValuesProvider implements ValuesProvider {
 
     /* (non-Javadoc)
      * @see ch.alv.components.core.search.ValuesProvider#getValues()

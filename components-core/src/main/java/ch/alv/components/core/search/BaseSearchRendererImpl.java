@@ -47,7 +47,7 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
         }
         ValuesProvider localValuesProvider = valuesProvider;
         if (localValuesProvider == null) {
-            localValuesProvider = new NullObjectValuesProvider();
+            localValuesProvider = new EmptyValuesProvider();
         }
         return doRender(localSearch, localValuesProvider);
     }
@@ -73,7 +73,7 @@ public abstract class BaseSearchRendererImpl implements SearchRenderer {
      */
     @Override
     public Object render(Search search) {
-        return renderInternal(search, new NullObjectValuesProvider());
+        return renderInternal(search, new EmptyValuesProvider());
     }
 
     /* (non-Javadoc)
