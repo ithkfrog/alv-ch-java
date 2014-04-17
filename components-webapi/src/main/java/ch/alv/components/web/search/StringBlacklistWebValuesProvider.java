@@ -35,4 +35,5 @@ public class StringBlackListWebValuesProvider extends BaseWebSearchValuesProvide
     public void setBlacklist(List<String> blacklist) {
         this.blacklist = blacklist;
     }
+
 }

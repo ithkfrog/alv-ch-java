@@ -35,4 +35,5 @@ public class StringWhiteListWebValuesProvider extends BaseWebSearchValuesProvide
     public void setWhiteList(List<String> whiteList) {
         this.whiteList = whiteList;
     }
+
 }
