@@ -1,6 +1,6 @@
 package ch.alv.components.web.controller;
 
-import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.search.SearchValuesProvider;
 import ch.alv.components.core.spring.context.DefaultContextProvider;
 import ch.alv.components.core.utils.ConversionUtils;
 import ch.alv.components.web.WebConstant;
@@ -61,7 +61,7 @@ public abstract class BaseController {
         return new PageRequest(page, pageSize);
     }
 
-    protected ValuesProvider createProvider(Class<? extends ValuesProvider> providerClass) {
+    protected SearchValuesProvider createProvider(Class<? extends SearchValuesProvider> providerClass) {
         try {
             return providerClass.newInstance();
         } catch (Exception e) {

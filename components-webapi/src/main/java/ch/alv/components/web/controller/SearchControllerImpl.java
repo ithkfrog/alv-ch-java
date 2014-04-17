@@ -1,7 +1,7 @@
 package ch.alv.components.web.controller;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.search.SearchValuesProvider;
 import ch.alv.components.core.spring.context.DefaultContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.service.search.SearchService;
@@ -12,7 +12,7 @@ import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointRegistry;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import ch.alv.components.web.endpoint.filter.UnauthorizedException;
-import ch.alv.components.web.search.WebValuesProvider;
+import ch.alv.components.web.search.WebSearchValuesProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -102,18 +102,18 @@ public class SearchControllerImpl extends BaseController implements SearchContro
     }
 
     protected ResponseEntity<?> handleNamedSearch(Pageable pageable, Map<String, String[]> params, Endpoint endpoint, String searchName) throws NoSuchValuesProviderException {
-        ValuesProvider provider = initValuesProvider(endpoint, params);
+        SearchValuesProvider provider = initValuesProvider(endpoint, params);
         Page page = getService(endpoint).find(pageable, searchName, provider);
         return new ResponseEntity<>(new PageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements()), HttpStatus.OK);
     }
 
-    protected ValuesProvider initValuesProvider(Endpoint endpoint, Map<String, String[]> params) throws NoSuchValuesProviderException {
-        Class<? extends ValuesProvider> providerClass = endpoint.getValuesProviderClass();
+    protected SearchValuesProvider initValuesProvider(Endpoint endpoint, Map<String, String[]> params) throws NoSuchValuesProviderException {
+        Class<? extends SearchValuesProvider> providerClass = endpoint.getValuesProviderClass();
         try {
-            ValuesProvider provider;
+            SearchValuesProvider provider;
             provider = providerClass.newInstance();
-            if (provider instanceof WebValuesProvider) {
-                ((WebValuesProvider) provider).setSource(params);
+            if (provider instanceof WebSearchValuesProvider) {
+                ((WebSearchValuesProvider) provider).setSource(params);
             }
             return provider;
         } catch (Exception e) {

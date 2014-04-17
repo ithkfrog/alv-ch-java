@@ -1,7 +1,6 @@
 package ch.alv.components.data.search;
 
-import ch.alv.components.core.search.Search;
-import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.search.SearchValuesProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -29,40 +28,39 @@ public interface SearchRepository<TYPE> {
     TYPE getById(String id);
 
     /**
-     * Find entities with a default search configuration. The default search itself has to be configured
-     * within the corresponding {@link ch.alv.components.core.search.SearchRenderer}.
+     * Find entities with a default search configuration.
      *
-     * @param valuesProvider provides the parameters which should be used.
+     * @param searchValuesProvider provides the parameters which should be used.
      * @return a page of matching entities.
      */
-    Page<TYPE> findWithDefaultSearch(ValuesProvider valuesProvider);
+    Page<TYPE> findWithDefaultSearch(SearchValuesProvider searchValuesProvider);
 
     /**
      * Find entities with a default search configuration and adapt the result list to be conform to the given pageable.
-     * The default search itself has to be configured within the corresponding {@link ch.alv.components.core.search.SearchRenderer}.
      *
      * @param pageable       paging information to be considered when executing the search.
-     * @param valuesProvider provides the parameters which should be used.
+     * @param searchValuesProvider provides the parameters which should be used.
      * @return a page of matching entities.
      */
-    Page<TYPE> findWithDefaultSearch(Pageable pageable, ValuesProvider valuesProvider);
+    Page<TYPE> findWithDefaultSearch(Pageable pageable, SearchValuesProvider searchValuesProvider);
 
     /**
      * Find entities with the given search configuration.
      *
-     * @param valuesProvider provides the parameters which should be used
+     * @param searchName     the name of the search that should be used.
+     * @param searchValuesProvider provides the parameters which should be used
      * @return a page of matching entities
      */
-    Page<TYPE> findWithCustomSearch(Search search, ValuesProvider valuesProvider);
+    Page<TYPE> findWithCustomSearch(String searchName, SearchValuesProvider searchValuesProvider);
 
     /**
      * Find entities with the given search configuration and adapt the result list to be conform to the given pageable.
      *
      * @param pageable       paging information to be considered when executing the search.
-     * @param search         the search configuration which should be used.
-     * @param valuesProvider provides the parameters which should be used.
+     * @param searchName     the name of the search that should be used.
+     * @param searchValuesProvider provides the parameters which should be used.
      * @return a page of matching entities
      */
-    Page<TYPE> findWithCustomSearch(Pageable pageable, Search search, ValuesProvider valuesProvider);
+    Page<TYPE> findWithCustomSearch(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider);
 
 }

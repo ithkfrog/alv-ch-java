@@ -5,9 +5,9 @@ import ch.alv.components.iam.IamConstant;
 import ch.alv.components.iam.model.Role;
 import ch.alv.components.iam.model.User;
 import ch.alv.components.iam.repository.UserRepository;
-import ch.alv.components.iam.search.UserSearchValuesProvider;
+import ch.alv.components.iam.search.UserSearchSearchValuesProvider;
 import ch.alv.components.service.persistence.PersistenceServiceImpl;
-import ch.alv.components.web.search.WebValuesProvider;
+import ch.alv.components.web.search.WebSearchValuesProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -85,7 +85,7 @@ public class UserServiceImpl extends PersistenceServiceImpl<User, String, UserRe
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        WebValuesProvider provider = new UserSearchValuesProvider();
+        WebSearchValuesProvider provider = new UserSearchSearchValuesProvider();
         Map<String, String[]> sourceMap = new HashMap<>();
         sourceMap.put(IamConstant.PARAM_USER_NAME, new String[]{username});
         provider.setSource(sourceMap);

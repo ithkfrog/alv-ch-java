@@ -1,16 +1,20 @@
 package ch.alv.components.data.search;
 
 import ch.alv.components.core.reflection.ReflectionUtils;
-import ch.alv.components.core.search.*;
+import ch.alv.components.core.search.NoSuchSearchException;
+import ch.alv.components.core.search.SearchQueryFactory;
+import ch.alv.components.core.search.SearchValuesProvider;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,37 +28,41 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
 
     protected static final int DEFAULT_PAGE_SIZE = 100;
 
-    /**
-     * Implements the access to the data source.
-     * @param pageable the pageable to fulfill.
-     * @param search the search configuration to apply.
-     * @param valuesProvider provides the values to apply.
-     * @return a list of items fetched from the data source.
-     */
-    protected abstract List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider);
+    private static final Logger LOG = LoggerFactory.getLogger(BaseSearchRepositoryImpl.class);
+
+    @Resource
+    private SearchQueryFactory factory;
 
     /**
-     * Provides the renderer to convert a search to a query string.
-     * @return the searchToQuery renderer for the implemented technology.
+     * Implements the access to the data source.
+     *
+     * @param pageable the pageable to fulfill.
+     * @param search   the search / query object to apply.
+     * @return a list of items fetched from the data source.
      */
-    protected abstract SearchRenderer getRenderer();
+    protected abstract List<TYPE> fetchFromSource(Pageable pageable, Object search);
 
     /**
      * Central logic how public method requests are handled.
-     * @param pageable the pageable to fulfill.
-     * @param search the search configuration to apply.
-     * @param valuesProvider provides the values to apply.
+     *
+     * @param pageable       the pageable to fulfill.
+     * @param searchName     the name of the search to apply.
+     * @param searchValuesProvider provides the values to apply.
      * @return the result page, matching the requirements of the pageable.
      */
-    protected Page<TYPE> findInternal(Pageable pageable, Search search, ValuesProvider valuesProvider) {
-        if (search != null && CollectionUtils.isEmpty(search.getSources())) {
-            Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
-            search.getSources().add(new SearchSource("a", entityClass.getSimpleName()));
-        } else {
-            Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
-            search = new SearchBuilder().find("a", "*").in("a", entityClass.getSimpleName()).build();
+    protected Page<TYPE> findInternal(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider) {
+        Object search;
+        try {
+            search = factory.createQuery(searchName, searchValuesProvider,
+                    ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass()));
+        } catch (NoSuchSearchException e) {
+            LOG.debug(e.getMessage() + " Default search will be used.");
+            search = null;
+        } catch (java.lang.IllegalArgumentException e) {
+            LOG.debug(e.getMessage() + " Default search will be used.");
+            search = null;
         }
-        List<TYPE> result = fetchFromSource(pageable, search, valuesProvider);
+        List<TYPE> result = fetchFromSource(pageable, search);
         if (result == null || result.size() == 0) {
             return new PageImpl(new ArrayList(), pageable, 0);
         } else {
@@ -63,35 +71,35 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#findWithDefaultSearch(ch.alv.components.core.search.ValuesProvider)
+     * @see ch.alv.components.data.search.SearchRepository#findWithDefaultSearch(ch.alv.components.core.search.SearchValuesProvider)
      */
     @Override
-    public Page<TYPE> findWithDefaultSearch(ValuesProvider valuesProvider) {
-        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), null, valuesProvider);
+    public Page<TYPE> findWithDefaultSearch(SearchValuesProvider searchValuesProvider) {
+        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), null, searchValuesProvider);
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#findWithDefaultSearch(import org.springframework.data.domain.Pageable, ch.alv.components.core.search.ValuesProvider)
+     * @see ch.alv.components.data.search.SearchRepository#findWithDefaultSearch(import org.springframework.data.domain.Pageable, ch.alv.components.core.search.SearchValuesProvider)
      */
     @Override
-    public Page<TYPE> findWithDefaultSearch(Pageable pageable, ValuesProvider valuesProvider) {
-        return findInternal(pageable, null, valuesProvider);
+    public Page<TYPE> findWithDefaultSearch(Pageable pageable, SearchValuesProvider searchValuesProvider) {
+        return findInternal(pageable, null, searchValuesProvider);
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#findWithCustomSearch(ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.ValuesProvider)
+     * @see ch.alv.components.data.search.SearchRepository#findWithCustomSearch(ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.SearchValuesProvider)
      */
     @Override
-    public Page<TYPE> findWithCustomSearch(Search search, ValuesProvider valuesProvider) {
-        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), search, valuesProvider);
+    public Page<TYPE> findWithCustomSearch(String searchName, SearchValuesProvider searchValuesProvider) {
+        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), searchName, searchValuesProvider);
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#findWithCustomSearch(import org.springframework.data.domain.Pageable, ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.ValuesProvider)
+     * @see ch.alv.components.data.search.SearchRepository#findWithCustomSearch(import org.springframework.data.domain.Pageable, ch.alv.components.core.search.SearchImpl, ch.alv.components.core.search.SearchValuesProvider)
      */
     @Override
-    public Page<TYPE> findWithCustomSearch(Pageable pageable, Search search, ValuesProvider valuesProvider) {
-        return findInternal(pageable, search, valuesProvider);
+    public Page<TYPE> findWithCustomSearch(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider) {
+        return findInternal(pageable, searchName, searchValuesProvider);
     }
 
     /**
@@ -105,15 +113,66 @@ public abstract class BaseSearchRepositoryImpl<TYPE> implements SearchRepository
         int start = pageable.getPageNumber() * pageable.getPageSize();
         int end = (pageable.getPageNumber() + 1) * pageable.getPageSize() - 1;
 
-        boolean addContent = start < result.size();
-        if (end > result.size()) {
-            end = result.size();
-        }
-        if (addContent) {
+        if (start < result.size()) {
+            if (end > result.size()) {
+                end = result.size();
+            }
             return new PageImpl(result.subList(start, end), pageable, result.size());
         } else {
             return new PageImpl(new ArrayList(), pageable, result.size());
         }
+    }
+
+    /**
+     * Creates a list which considers the pageable.
+     *
+     * @param pageable the pageable requirements.
+     * @param result   list of all result items.
+     * @return a fresh, pageable-conform list.
+     */
+    protected List<TYPE> applyPageableToList(Pageable pageable, List<TYPE> result) {
+        if (pageable == null) {
+            return result;
+        }
+        int offset = pageable.getOffset();
+        int pageSize = pageable.getPageSize();
+        int numberOfElements = result.size();
+
+        if (offset > numberOfElements) {
+            return new ArrayList();
+        }
+        if (numberOfElements < offset + pageSize) {
+            return result.subList(offset, numberOfElements);
+        }
+        return result.subList(offset, offset + pageSize);
+    }
+
+    /**
+     * Creates a page which considers the pageable.
+     *
+     * @param pageable the pageable requirements.
+     * @param result   page of all result items.
+     * @return a fresh, pageable-conform page.
+     */
+    protected Page<TYPE> applyPageableToResultPage(Pageable pageable, Page<TYPE> result) {
+        if (pageable == null) {
+            return result;
+        }
+        int offset = pageable.getOffset();
+        int pageSize = pageable.getPageSize();
+        int numberOfElements = result.getNumberOfElements();
+
+        if (offset > numberOfElements) {
+            return new PageImpl(new ArrayList(), pageable, numberOfElements);
+        }
+        if (numberOfElements < offset + pageSize) {
+            return new PageImpl(result.getContent().subList(offset, numberOfElements), pageable, numberOfElements);
+        }
+        return new PageImpl(result.getContent().subList(offset, offset + pageSize), pageable, numberOfElements);
+    }
+
+    protected Class<? extends TYPE> getEntityClass() {
+        return ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
     }
 
     @Override

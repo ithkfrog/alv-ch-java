@@ -1,10 +1,6 @@
 package ch.alv.components.data.jpa;
 
 import ch.alv.components.core.reflection.ReflectionUtils;
-import ch.alv.components.core.search.Search;
-import ch.alv.components.core.search.SearchBuilder;
-import ch.alv.components.core.search.SearchRenderer;
-import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.data.search.BaseSearchRepositoryImpl;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -14,18 +10,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Base implementation of the {@link ch.alv.components.data.search.SearchRepository} interface.
  *
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class JpaBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<TYPE> {
 
     private static final Logger LOG = LoggerFactory.getLogger(JpaBaseSearchRepositoryImpl.class);
@@ -33,39 +29,35 @@ public class JpaBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<
     @PersistenceContext
     protected EntityManager em;
 
-    @Resource
-    private JpaSearchToQueryRenderer renderer;
 
     /* (non-Javadoc)
      * @see ch.alv.components.data.search.BaseSearchRepositoryImpl#fetchFromSource(org.springframework.data.domain.Pageable,
      *                                                                             ch.alv.components.core.search.SearchImpl,
-     *                                                                             ch.alv.components.core.search.ValuesProvider,
+     *                                                                             ch.alv.components.core.search.SearchValuesProvider,
      *                                                                             java.lang.String)
      */
-    protected List<TYPE> fetchFromSource(Pageable pageable, Search search, ValuesProvider valuesProvider) {
+    @Override
+    protected List<TYPE> fetchFromSource(Pageable pageable, Object search) {
         Class<TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
-        String queryString = (String) renderer.render(search, valuesProvider);
+        String queryString;
         TypedQuery<TYPE> typedQuery;
-        typedQuery = em.createQuery(queryString, entityClass);
-        if (valuesProvider != null) {
-            Map<String, Object> values = valuesProvider.getValues();
-            for (String key : values.keySet()) {
-                try {
-                    typedQuery.setParameter(key, renderer.decorateValue(search, key, values.get(key)));
-                } catch (IllegalArgumentException e) {
-                    LOG.info("Error while trying to set a parameter value.");
-                }
-            }
+
+        Object finalSearch = search;
+        if (finalSearch == null) {
+            finalSearch = "select o from " + entityClass.getSimpleName() + " o";
+        }
+        LOG.debug("Trying to execute search: " + finalSearch.toString());
+        if (finalSearch instanceof String) {
+            queryString = (String) finalSearch;
+            typedQuery = em.createQuery(queryString, entityClass);
+        } else if (finalSearch instanceof TypedQuery) {
+            typedQuery = (TypedQuery<TYPE>) finalSearch;
+        } else if (finalSearch instanceof CriteriaQuery) {
+            typedQuery = em.createQuery((CriteriaQuery<TYPE>) finalSearch);
+        } else {
+            throw new IllegalStateException("Parameter 'search' is not a known jpa query provider");
         }
         return typedQuery.getResultList();
-    }
-
-    /* (non-Javadoc)
-     * @see ch.alv.components.data.search.BaseSearchRepositoryImpl#getRenderer()
-     */
-    @Override
-    protected SearchRenderer getRenderer() {
-        return renderer;
     }
 
     /* (non-Javadoc)
@@ -73,11 +65,13 @@ public class JpaBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<
      */
     @Override
     public Page<TYPE> getAll(Pageable pageable) {
-        SearchBuilder builder = new SearchBuilder();
-        Class<? extends TYPE> entityClass = ReflectionUtils.determineFirstParameterClassOfParameterizedSuperClass(getClass());
-        Search search = builder.find("a", "*").in("a", entityClass.getSimpleName()).build();
-        return findWithCustomSearch(pageable, search, null);
+        Class<? extends TYPE> entityClass = getEntityClass();
+        String queryString = "select o from " + entityClass.getSimpleName() + " o";
+        TypedQuery<TYPE> query = (TypedQuery<TYPE>) em.createQuery(queryString, entityClass);
+        List<TYPE> result = query.getResultList();
+        return createPage(pageable, result);
     }
+
 
     /* (non-Javadoc)
      * @see ch.alv.components.data.search.BaseSearchRepositoryImpl#getById(java.lang.String)

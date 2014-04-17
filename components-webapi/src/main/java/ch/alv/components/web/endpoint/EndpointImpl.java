@@ -1,7 +1,7 @@
 package ch.alv.components.web.endpoint;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.search.SearchValuesProvider;
 import ch.alv.components.web.dto.Dto;
 import org.springframework.http.HttpMethod;
 
@@ -24,13 +24,13 @@ public class EndpointImpl implements Endpoint {
 
     private Class<? extends ModelItem> entityClass;
 
-    private Class<? extends ValuesProvider> valuesProviderClass;
+    private Class<? extends SearchValuesProvider> valuesProviderClass;
 
-    public Class<? extends ValuesProvider> getValuesProviderClass() {
+    public Class<? extends SearchValuesProvider> getValuesProviderClass() {
         return valuesProviderClass;
     }
 
-    public void setValuesProviderClass(Class<? extends ValuesProvider> valuesProviderClass) {
+    public void setValuesProviderClass(Class<? extends SearchValuesProvider> valuesProviderClass) {
         this.valuesProviderClass = valuesProviderClass;
     }
 

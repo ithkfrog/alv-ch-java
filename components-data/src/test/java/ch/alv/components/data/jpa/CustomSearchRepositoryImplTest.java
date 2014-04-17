@@ -19,7 +19,7 @@ import java.util.Iterator;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:components-persistence-test-context.xml")
-public class CustomRepositoryImplSimpleSearchTest {
+public class CustomSearchRepositoryImplTest {
 
     @Resource
     private TestRepository repository;

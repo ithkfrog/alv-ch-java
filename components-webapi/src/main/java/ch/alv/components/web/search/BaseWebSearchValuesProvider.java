@@ -1,5 +1,6 @@
 package ch.alv.components.web.search;
 
+import ch.alv.components.core.search.BaseSearchValuesProvider;
 import ch.alv.components.core.utils.ConversionUtils;
 
 import java.util.ArrayList;
@@ -8,28 +9,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Base implementation of the {@link WebValuesProvider} interface.
+ * Base implementation of the {@link WebSearchValuesProvider} interface.
  *
  * @since 1.0.0
  */
-public abstract class BaseWebValuesProvider implements WebValuesProvider {
+public abstract class BaseWebSearchValuesProvider extends BaseSearchValuesProvider implements WebSearchValuesProvider {
 
     protected Map<String, String[]> source = new HashMap<>();
 
     @Override
     public void setSource(Map<String, String[]> source) {
+        if (source == null) {
+            return;
+        }
         this.source = source;
     }
 
-    public Map<String, String[]> getSource() {
-        return source;
+    protected String getStringSourceValue(String key) {
+        return getSingleSourceValue(key, String.class);
     }
 
-    protected String getStringValue(String key) {
-        return (String) getSingleValue(key, String.class);
-    }
-
-    protected <T> T getSingleValue(String key, Class<T> type) {
+    protected <T> T getSingleSourceValue(String key, Class<T> type) {
         if (!source.containsKey(key)) {
             return null;
         }
@@ -40,7 +40,7 @@ public abstract class BaseWebValuesProvider implements WebValuesProvider {
         return convert(values[0], type);
     }
 
-    protected <T> List<T> getMultiValue(String key, Class<T> type) {
+    protected <T> List<T> getMultiSourceValue(String key, Class<T> type) {
         if (!source.containsKey(key)) {
             return null;
         }

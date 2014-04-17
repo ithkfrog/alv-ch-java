@@ -1,7 +1,7 @@
 package ch.alv.components.service.search;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.search.SearchValuesProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,12 +16,12 @@ public interface SearchService<TYPE extends ModelItem> {
 
     Page<TYPE> getAll(Pageable pageable);
 
-    Page<TYPE> find(ValuesProvider valuesProvider);
+    Page<TYPE> find(SearchValuesProvider searchValuesProvider);
 
-    Page<TYPE> find(String searchName, ValuesProvider valuesProvider);
+    Page<TYPE> find(String searchName, SearchValuesProvider searchValuesProvider);
 
-    Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider);
+    Page<TYPE> find(Pageable pageable, SearchValuesProvider searchValuesProvider);
 
-    Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider);
+    Page<TYPE> find(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider);
 
 }

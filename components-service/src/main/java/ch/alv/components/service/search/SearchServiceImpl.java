@@ -1,9 +1,7 @@
 package ch.alv.components.service.search;
 
 import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.core.search.SearchImpl;
-import ch.alv.components.core.search.SearchRegistry;
-import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.search.SearchValuesProvider;
 import ch.alv.components.data.search.SearchRepository;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -11,8 +9,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 
 /**
  * Base implementation of the {@link ch.alv.components.service.search.SearchService} interface
@@ -24,9 +20,6 @@ import javax.annotation.Resource;
 public class SearchServiceImpl<TYPE extends ModelItem> implements SearchService<TYPE> {
 
     private final SearchRepository repository;
-
-    @Resource
-    private SearchRegistry searchRegistry;
 
     public SearchServiceImpl(SearchRepository repository) {
         this.repository = repository;
@@ -46,30 +39,26 @@ public class SearchServiceImpl<TYPE extends ModelItem> implements SearchService<
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(ValuesProvider valuesProvider) {
-        return getRepository().findWithDefaultSearch(valuesProvider);
+    public Page<TYPE> find(SearchValuesProvider searchValuesProvider) {
+        return getRepository().findWithDefaultSearch(searchValuesProvider);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(String searchName, ValuesProvider valuesProvider) {
-        return getRepository().findWithCustomSearch(findSearch(searchName), valuesProvider);
+    public Page<TYPE> find(String searchName, SearchValuesProvider searchValuesProvider) {
+        return getRepository().findWithCustomSearch(searchName, searchValuesProvider);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider) {
-        return getRepository().findWithDefaultSearch(pageable, valuesProvider);
+    public Page<TYPE> find(Pageable pageable, SearchValuesProvider searchValuesProvider) {
+        return getRepository().findWithDefaultSearch(pageable, searchValuesProvider);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
-        return getRepository().findWithCustomSearch(pageable, findSearch(searchName), valuesProvider);
-    }
-
-    protected SearchImpl findSearch(String searchName) {
-        return searchRegistry.getSearch(searchName);
+    public Page<TYPE> find(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider) {
+        return getRepository().findWithCustomSearch(pageable, searchName, searchValuesProvider);
     }
 
     protected SearchRepository getRepository() {
@@ -83,8 +72,12 @@ public class SearchServiceImpl<TYPE extends ModelItem> implements SearchService<
 
     @Override
     public boolean equals(Object that) {
-        if (that == null) { return false; }
-        if (that == this) { return true; }
+        if (that == null) {
+            return false;
+        }
+        if (that == this) {
+            return true;
+        }
         if (that.getClass() != getClass()) {
             return false;
         }

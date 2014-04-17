@@ -1,7 +1,7 @@
 package ch.alv.components.web.endpoint;
 
-import ch.alv.components.core.search.ValuesProvider;
-import ch.alv.components.web.search.DefaultWebValuesProvider;
+import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.web.search.DefaultWebSearchValuesProvider;
 import org.springframework.http.HttpMethod;
 
 import java.util.List;
@@ -14,8 +14,8 @@ import java.util.List;
 public abstract class BaseEndpoint implements Endpoint {
 
     @Override
-    public Class<? extends ValuesProvider> getValuesProviderClass() {
-        return DefaultWebValuesProvider.class;
+    public Class<? extends SearchValuesProvider> getValuesProviderClass() {
+        return DefaultWebSearchValuesProvider.class;
     }
 
     @Override
