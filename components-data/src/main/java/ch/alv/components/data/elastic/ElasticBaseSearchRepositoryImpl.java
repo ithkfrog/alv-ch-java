@@ -21,7 +21,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("unused, unchecked")
+@SuppressWarnings("unchecked")
 public abstract class ElasticBaseSearchRepositoryImpl<TYPE> extends BaseSearchRepositoryImpl<TYPE> {
 
     @Resource
