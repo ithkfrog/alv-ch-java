@@ -48,4 +48,9 @@ public abstract class BaseEndpoint implements Endpoint {
         return "";
     }
 
+    @Override
+    public String getDefaultSearchName() {
+        return "";
+    }
+
 }

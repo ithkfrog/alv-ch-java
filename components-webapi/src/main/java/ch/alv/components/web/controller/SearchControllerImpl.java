@@ -74,8 +74,10 @@ public class SearchControllerImpl extends BaseController implements SearchContro
         }
 
         String searchName = extractSearchName(params);
-        if (StringHelper.isEmpty(searchName)) {
+        if (StringHelper.isEmpty(searchName) && StringHelper.isEmpty(endpoint.getDefaultSearchName())) {
             return handleDefaultSearch(pageable, params, endpoint);
+        } else if (StringHelper.isEmpty(searchName)) {
+            return handleNamedSearch(pageable, params, endpoint, endpoint.getDefaultSearchName());
         } else {
             return handleNamedSearch(pageable, params, endpoint, searchName);
         }

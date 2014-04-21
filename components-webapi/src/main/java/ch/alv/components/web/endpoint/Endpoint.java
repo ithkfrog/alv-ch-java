@@ -36,4 +36,6 @@ public interface Endpoint {
 
     String getRolesDELETE();
 
+    String getDefaultSearchName();
+
 }
