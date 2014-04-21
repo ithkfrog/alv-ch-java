@@ -1,7 +1,6 @@
 package ch.alv.components.web.controller;
 
 import ch.alv.components.core.search.SearchValuesProvider;
-import ch.alv.components.core.spring.context.DefaultContextProvider;
 import ch.alv.components.core.utils.ConversionUtils;
 import ch.alv.components.web.WebConstant;
 import ch.alv.components.web.dto.DtoFactory;
@@ -11,6 +10,7 @@ import ch.alv.components.web.endpoint.filter.EndpointHttpMethodFilter;
 import ch.alv.components.web.endpoint.filter.SecurityFilter;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import ch.alv.components.web.endpoint.filter.UnauthorizedException;
+import ch.alv.components.web.spring.WebContextProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,7 +79,7 @@ public abstract class BaseController {
     }
 
     protected <T> T getBean(String beanName) {
-        return DefaultContextProvider.getBeanByName(beanName);
+        return WebContextProvider.getBeanByName(beanName);
     }
 
     protected Endpoint getEndpoint(String moduleName, String storeName) {

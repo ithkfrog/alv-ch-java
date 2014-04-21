@@ -1,7 +1,7 @@
 package ch.alv.components.web.endpoint;
 
-import ch.alv.components.core.spring.context.DefaultContextProvider;
 import ch.alv.components.core.utils.StringHelper;
+import ch.alv.components.web.spring.WebContextProvider;
 
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public class EndpointRegistry {
         if (StringHelper.isEmpty(storeName)) {
             throw new IllegalStateException("Param 'storeName' must not be empty.");
         }
-        Map<String, Endpoint> endpointMap = DefaultContextProvider.getBeansOfType(Endpoint.class);
+        Map<String, Endpoint> endpointMap = WebContextProvider.getBeansOfType(Endpoint.class);
         if (endpointMap == null || endpointMap.isEmpty()) {
             return null;
         }
@@ -37,7 +37,7 @@ public class EndpointRegistry {
         if (entityClass == null) {
             throw new IllegalStateException("Param 'entityClass' must not be null.");
         }
-        Map<String, Endpoint> endpointMap = DefaultContextProvider.getBeansOfType(Endpoint.class);
+        Map<String, Endpoint> endpointMap = WebContextProvider.getBeansOfType(Endpoint.class);
         if (endpointMap == null || endpointMap.isEmpty()) {
             return null;
         }
