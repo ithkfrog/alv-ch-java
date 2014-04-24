@@ -31,7 +31,7 @@ script:
 notifications:
   webhooks:
     urls:
-      - 'https://webhooks.gitter.im/e/db956c161e26ff1f103f'
+      - 'https://webhooks.gitter.im/e/48a53e30f388a5d1070e'
     on_success: always
     on_failure: always
 
