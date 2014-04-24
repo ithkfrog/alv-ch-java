@@ -28,3 +28,10 @@ script:
   # Deploy built artifacts
   - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then mvn deploy -B --settings test/travis-ci/settings.xml ; fi
 
+notifications:
+  webhooks:
+    urls:
+      - secure: fRbWoEt2xeHkujU0K/3DlUKb4m9Y/FYyhxOFGcZR/7PG7uxdiPTjAqFX/ShqYvPEkzdkL00hc5qEyCtFdg5qfLrbXxHa+W1qw9RrbHzdqXJigYnb1k32/ssf+Okj5Giu2GiPUFn4FdhuvESAMiFR0U/AuFBqbhNjdEHWlO2G3vI=
+    on_success: change
+    on_failure: always
+
