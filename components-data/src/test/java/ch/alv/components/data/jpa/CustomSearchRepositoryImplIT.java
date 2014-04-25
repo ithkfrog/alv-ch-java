@@ -27,9 +27,9 @@ public class CustomSearchRepositoryImplIT {
     @Test
     public void testUnParameterizedSearch() {
         String[] attributes = { "a" };
-        TestEntity hsqlEntity = new TestEntity();
-        hsqlEntity.setMyAttribute(attributes[0]);
-        repository.save(hsqlEntity);
+        TestEntity entity = new TestEntity();
+        entity.setMyAttribute(attributes[0]);
+        repository.save(entity);
 
         Iterable<TestEntity> result = repository.findWithDefaultSearch(null);
         Iterator<TestEntity> it = result.iterator();
