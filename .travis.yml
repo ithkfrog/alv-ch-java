@@ -21,8 +21,8 @@ install: /bin/true
 
 script:
   # pending: optimize clean/test steps
-  - mvn clean install -B -Dintegration_test_settings=`pwd`/test/travis-ci/components-persistence-hsql.properties
-#  - mvn clean install -B -Dintegration_test_settings=`pwd`/test/travis-ci/components-persistence-mysql.properties
+#  - mvn clean install -B -Dintegration_test_settings=`pwd`/test/travis-ci/components-persistence-hsql.properties
+  - mvn clean install -B -Dintegration_test_settings=`pwd`/test/travis-ci/components-persistence-mysql.properties
 #  - mvn clean install -B -Dintegration_test_settings=`pwd`/test/travis-ci/components-persistence-postgresql.properties
 
   # Deploy built artifacts
