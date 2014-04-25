@@ -1,4 +1,4 @@
-package ch.alv.components.core.mapper;
+package ch.alv.components.core.beans.mapper;
 
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
@@ -91,7 +91,7 @@ public class MappingCollectingDozerBeanMapperAdapter extends DozerBeanMapper imp
         if (sourceCollection == null) {
             return null;
         }
-        List<T> target = new ArrayList<T>(sourceCollection.size());
+        List<T> target = new ArrayList<>(sourceCollection.size());
         for (Object item : sourceCollection) {
             target.add(this.mapObject(item, targetClass));
         }

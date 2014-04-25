@@ -1,20 +1,20 @@
-package ch.alv.components.core.mapper;
+package ch.alv.components.core.beans.mapper;
 
 /**
- * Second bean for Mapper tests
+ * Class for test purposes.
  *
  * @since 1.0.0
  */
-public class BeanB {
+public class BeanA {
 
     private String key;
 
     private String value;
 
-    public BeanB() {
+    public BeanA() {
     }
 
-    public BeanB(String key, String value) {
+    public BeanA(String key, String value) {
         this.key = key;
         this.value = value;
     }

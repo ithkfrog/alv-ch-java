@@ -1,6 +1,6 @@
 package ch.alv.components.core.spring;
 
-import ch.alv.components.core.mapper.BeanMapper;
+import ch.alv.components.core.beans.mapper.BeanMapper;
 import ch.alv.components.core.spring.context.DefaultContextProvider;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -28,7 +28,6 @@ public class DefaultContextProviderTest {
     public void testGetBeanByName() {
         BeanMapper mapper = DefaultContextProvider.getBeanByName("mapper");
         Assert.assertNotNull(mapper);
-        Assert.assertTrue(mapper instanceof BeanMapper);
     }
 
     @Test
@@ -36,7 +35,6 @@ public class DefaultContextProviderTest {
         String beanName = "nonExistingBean";
         exception.expect(NoSuchBeanDefinitionException.class);
         exception.expectMessage("No bean named '" + beanName + "' is defined");
-        BeanMapper mapper = DefaultContextProvider.getBeanByName(beanName);
     }
 
 }

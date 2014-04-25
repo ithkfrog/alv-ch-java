@@ -1,6 +1,6 @@
 package ch.alv.components.web.controller;
 
-import ch.alv.components.core.mapper.BeanMapper;
+import ch.alv.components.core.beans.mapper.BeanMapper;
 import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.service.persistence.PersistenceService;
 import ch.alv.components.web.dto.Dto;

@@ -1,22 +1,20 @@
-package ch.alv.components.core.mapper;
+package ch.alv.components.core.beans.mapper;
 
 /**
- * Created with IntelliJ IDEA.
- * User: TYWUG
- * Date: 28.02.14
- * Time: 14:10
- * To change this template use File | Settings | File Templates.
+ * Second bean for Mapper tests
+ *
+ * @since 1.0.0
  */
-public class BeanA {
+public class BeanB {
 
     private String key;
 
     private String value;
 
-    public BeanA() {
+    public BeanB() {
     }
 
-    public BeanA(String key, String value) {
+    public BeanB(String key, String value) {
         this.key = key;
         this.value = value;
     }

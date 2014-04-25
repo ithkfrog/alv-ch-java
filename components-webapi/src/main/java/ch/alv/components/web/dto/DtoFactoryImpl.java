@@ -1,6 +1,6 @@
 package ch.alv.components.web.dto;
 
-import ch.alv.components.core.mapper.BeanMapper;
+import ch.alv.components.core.beans.mapper.BeanMapper;
 import ch.alv.components.core.model.ModelItem;
 import ch.alv.components.web.context.ServletRequestProvider;
 import ch.alv.components.web.endpoint.Endpoint;
@@ -30,14 +30,12 @@ public class DtoFactoryImpl implements DtoFactory {
     @Override
     public Dto createDtoFromRequestBody(String requestBody, Endpoint endpoint) {
         ObjectMapper mapper = new ObjectMapper();
-        Dto result = null;
         try {
-            result = mapper.readValue(requestBody, endpoint.getDtoClass());
+            return mapper.readValue(requestBody, endpoint.getDtoClass());
         } catch (IOException e) {
             LOG.error("Error while creating Dto of type " + endpoint.getDtoClass().getName()
                     + " from requestBody " + requestBody, e);
-        } finally {
-            return result;
+            return null;
         }
     }
 

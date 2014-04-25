@@ -69,10 +69,6 @@ public class SearchControllerImpl extends BaseController implements SearchContro
 
     protected ResponseEntity<?> find(Pageable pageable, Map<String, String[]> params, String moduleName, String storeName) throws NoSuchValuesProviderException {
         Endpoint endpoint = EndpointRegistry.getEndpoint(moduleName, storeName);
-        if (params.isEmpty()) {
-            return handleGetAllSearch(pageable, endpoint);
-        }
-
         String searchName = extractSearchName(params);
         if (StringHelper.isEmpty(searchName) && StringHelper.isEmpty(endpoint.getDefaultSearchName())) {
             return handleDefaultSearch(pageable, params, endpoint);

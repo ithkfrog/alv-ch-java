@@ -1,4 +1,4 @@
-package ch.alv.components.core.mapper;
+package ch.alv.components.core.beans.mapper;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -57,7 +57,7 @@ public class DozerBeanMapperAdapterTest {
         BeanA a = new BeanA(keyA, valueA);
         BeanA b = new BeanA(keyB, valueB);
 
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         list.add(a);
         list.add(b);
 

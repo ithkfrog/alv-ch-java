@@ -29,7 +29,7 @@ public enum Language {
 
     public static Language getByCode(String code) {
         for (Language language : Language.values()) {
-            if (language.getLocale().getLanguage().equalsIgnoreCase(code)) {
+            if (language.getLocale().getLanguage().equalsIgnoreCase(code) || language.getLocale().getDisplayName(Locale.ENGLISH).equalsIgnoreCase(code)) {
                 return language;
             }
         }

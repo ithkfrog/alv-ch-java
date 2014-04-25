@@ -1,12 +1,11 @@
 package ch.alv.components.iam.endpoint;
 
-import ch.alv.components.core.mapper.BeanMapper;
+import ch.alv.components.core.beans.mapper.BeanMapper;
 import ch.alv.components.core.spring.security.SecurityContextProvider;
 import ch.alv.components.iam.endpoint.dto.CurrentUserDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -26,7 +25,7 @@ public class AuthenticationEndpoint {
     private SecurityContextProvider securityContextProvider;
 
     @RequestMapping(value = "/iam/authenticate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CurrentUserDto handleRequest(@RequestParam(required = false, defaultValue = "") String application) {
+    public CurrentUserDto handleRequest() {
         return mapper.mapObject(securityContextProvider.getUser(), CurrentUserDto.class);
     }
 
