@@ -1,7 +1,7 @@
 package ch.alv.components.data.jpa;
 
-import ch.alv.components.data.testcommons.TestEntity;
-import ch.alv.components.data.testcommons.TestRepository;
+import ch.alv.components.data.jpa.test.TestEntity;
+import ch.alv.components.data.jpa.test.TestRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,17 +26,12 @@ public class CustomSearchRepositoryImplIT {
 
     @Test
     public void testUnParameterizedSearch() {
-        String[] attributes = { "a" };
-        TestEntity entity = new TestEntity();
-        entity.setMyAttribute(attributes[0]);
-        repository.save(entity);
-
         Iterable<TestEntity> result = repository.findWithDefaultSearch(null);
         Iterator<TestEntity> it = result.iterator();
         int counter = 0;
         while (it.hasNext()) {
             TestEntity currentPos = it.next();
-            Assert.assertEquals(attributes[counter], currentPos.getMyAttribute());
+            Assert.assertEquals("testString", currentPos.getMyAttribute());
             counter++;
         }
         Assert.assertEquals(1, counter);

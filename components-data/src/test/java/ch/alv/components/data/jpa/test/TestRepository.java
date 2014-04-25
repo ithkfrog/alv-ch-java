@@ -1,4 +1,4 @@
-package ch.alv.components.data.testcommons;
+package ch.alv.components.data.jpa.test;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;

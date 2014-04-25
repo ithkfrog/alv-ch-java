@@ -1,4 +1,4 @@
-package ch.alv.components.data.testcommons;
+package ch.alv.components.data.jpa.test;
 
 import ch.alv.components.data.jpa.BaseJpaModelItem;
 

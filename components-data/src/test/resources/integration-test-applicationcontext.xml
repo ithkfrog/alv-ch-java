@@ -7,7 +7,7 @@
                             http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <jpa:repositories base-package="ch.alv.components.data.testcommons"/>
+    <jpa:repositories base-package="ch.alv.components.data.jpa.test"/>
 
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -39,17 +39,19 @@
         <property name="persistenceUnitName" value="sm-iam"/>
         <property name="packagesToScan">
             <list>
-                <value>ch.alv.components.data.testcommons</value>
+                <value>ch.alv.components.data.jpa.test</value>
             </list>
         </property>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="showSql" value="true"/>
-                <property name="generateDdl" value="false"/>
+                <property name="generateDdl" value="true"/>
                 <property name="databasePlatform" value="${jpa.databasePlatform}"/>
             </bean>
         </property>
     </bean>
+
+    <bean class="ch.alv.components.core.search.SearchQueryFactoryImpl"/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
