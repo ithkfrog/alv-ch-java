@@ -18,7 +18,7 @@ import java.util.Iterator;
  * @since 1.0.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:components-persistence-test-context.xml")
+@ContextConfiguration(locations = "classpath:integration-test-applicationcontext.xml")
 public class CustomSearchRepositoryImplIT {
 
     @Resource

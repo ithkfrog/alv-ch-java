@@ -19,7 +19,7 @@
         <spring-data-jpa.version>1.5.0.RELEASE</spring-data-jpa.version>
         <spring-security.version>3.2.0.RELEASE</spring-security.version>
         <spring-hateoas.version>0.9.0.RELEASE</spring-hateoas.version>
-        <spring-data-elastic.version>1.0.0.M2</spring-data-elastic.version>
+        <spring-data-elasticsearch.version>1.0.0.M2</spring-data-elasticsearch.version>
         <aspect-j-tools.version>1.6.12</aspect-j-tools.version>
         <junit.version>4.11</junit.version>
         <hibernate.version>4.3.4.Final</hibernate.version>
@@ -32,9 +32,9 @@
         <gson.version>1.7.1</gson.version>
         <jackson.version>2.3.0</jackson.version>
         <mysql-driver.version>5.1.27</mysql-driver.version>
-        <postgre-driver.version>9.1-901.jdbc4</postgre-driver.version>
-        <hsql.version>2.3.1</hsql.version>
-        <elastic.version>1.1.0</elastic.version>
+        <postgresql-driver.version>9.3-1101-jdbc41</postgresql-driver.version>
+        <hsql.version>2.3.2</hsql.version>
+        <elasticsearch.version>1.1.0</elasticsearch.version>
     </properties>
 
     <modules>
@@ -129,7 +129,7 @@
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-elasticsearch</artifactId>
-                <version>${spring-data-elastic.version}</version>
+                <version>${spring-data-elasticsearch.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -162,15 +162,15 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>postgresql</groupId>
+                <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>${postgre-driver.version}</version>
+                <version>${postgresql-driver.version}</version>
             </dependency>
             <!-- ElasticSearch support -->
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
-                <version>${elastic.version}</version>
+                <version>${elasticsearch.version}</version>
             </dependency>
 
             <!-- Mapper -->
@@ -254,7 +254,7 @@
             <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
-                <version>2.3.1</version>
+                <version>${hsql.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
