@@ -35,6 +35,7 @@ public class DefaultContextProviderTest {
         String beanName = "nonExistingBean";
         exception.expect(NoSuchBeanDefinitionException.class);
         exception.expectMessage("No bean named '" + beanName + "' is defined");
+        DefaultContextProvider.getBeanByName(beanName);
     }
 
 }
