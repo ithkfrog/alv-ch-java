@@ -1,12 +1,11 @@
 package ch.alv.components.core.beans.mapper;
 
 import org.dozer.DozerBeanMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,10 +18,6 @@ import java.util.List;
  */
 public class MappingCollectingDozerBeanMapperAdapter extends DozerBeanMapper implements BeanMapper, Serializable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MappingCollectingDozerBeanMapperAdapter.class);
-
-    private static final String EXCEPTION_MSG_INIT = "Could not initialize the MappingCollectingDozerBeanMapperAdapter.";
-
     private static final String EXCEPTION_MSG_MAPPING = "Error while mapping objects.";
 
     private String mappingFilesPattern = "dozer-mappings-*.xml";
@@ -30,18 +25,14 @@ public class MappingCollectingDozerBeanMapperAdapter extends DozerBeanMapper imp
     private String mappingFilesFolderPath = "dozer/";
 
     @PostConstruct
-    private void init() {
+    private void init() throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         List<String> fileNames = new ArrayList<>();
-        try {
-            Resource[] resources = resolver.getResources(mappingFilesFolderPath + mappingFilesPattern);
-            for (Resource resource : resources) {
-                fileNames.add(mappingFilesFolderPath + resource.getFilename());
-            }
-            setMappingFiles(fileNames);
-        } catch (Exception e) {
-            LOG.error(EXCEPTION_MSG_INIT, e);
+        Resource[] resources = resolver.getResources(mappingFilesFolderPath + mappingFilesPattern);
+        for (Resource resource : resources) {
+            fileNames.add(mappingFilesFolderPath + resource.getFilename());
         }
+        setMappingFiles(fileNames);
     }
 
     /**
@@ -57,7 +48,6 @@ public class MappingCollectingDozerBeanMapperAdapter extends DozerBeanMapper imp
             }
             return super.map(source, targetClass);
         } catch (org.dozer.MappingException me) {
-            LOG.error(EXCEPTION_MSG_MAPPING, me);
             throw new MappingException(EXCEPTION_MSG_MAPPING, me);
         }
     }
@@ -75,7 +65,6 @@ public class MappingCollectingDozerBeanMapperAdapter extends DozerBeanMapper imp
             }
             super.map(source, target);
         } catch (org.dozer.MappingException me) {
-            LOG.error(EXCEPTION_MSG_MAPPING, me);
             throw new MappingException(EXCEPTION_MSG_MAPPING, me);
         }
 
