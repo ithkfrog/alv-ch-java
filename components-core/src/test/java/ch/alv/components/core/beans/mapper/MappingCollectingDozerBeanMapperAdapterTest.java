@@ -1,5 +1,7 @@
 package ch.alv.components.core.beans.mapper;
 
+import ch.alv.components.core.test.BeanA;
+import ch.alv.components.core.test.BeanB;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

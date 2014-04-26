@@ -1,7 +1,8 @@
-package ch.alv.components.core.file.flat.reader;
+package ch.alv.components.core.test;
 
+import ch.alv.components.core.file.flat.reader.FlatFileColumnSeparatorType;
 import ch.alv.components.core.file.flat.reader.annotations.FlatFileColumn;
-import ch.alv.components.core.file.flat.reader.annotations.Transform;
+import ch.alv.components.core.file.flat.reader.annotations.FlatFileConversion;
 
 /**
  * This is a bean that is to be filled in from a comma (default) delimited
@@ -9,19 +10,19 @@ import ch.alv.components.core.file.flat.reader.annotations.Transform;
  *
  * @since 1.0.0
  */
-@Transform(skipFirstLine = true)
-public class DelimitedBean {
+@FlatFileConversion(skipFirstLine = true, separatorType = FlatFileColumnSeparatorType.FIXLENGTH)
+public class FixLengthBean implements FlatFileDataBean {
 
-    @FlatFileColumn(position = 0)
+    @FlatFileColumn(position = 0, start = 0, end = 5)
     private int id;
 
-    @FlatFileColumn(position = 1)
+    @FlatFileColumn(position = 1, start = 5, end = 19)
     private String firstName;
 
-    @FlatFileColumn(position = 2)
+    @FlatFileColumn(position = 2, start = 19, end = 39)
     private String lastName;
 
-    @FlatFileColumn(position = 3)
+    @FlatFileColumn(position = 3, start = 39, end = 49)
     private Boolean active;
 
 

@@ -1,4 +1,4 @@
-package ch.alv.components.core.beans.mapper;
+package ch.alv.components.core.test;
 
 /**
  * Class for test purposes.
