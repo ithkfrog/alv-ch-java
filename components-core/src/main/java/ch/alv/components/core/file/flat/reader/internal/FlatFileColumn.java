@@ -1,13 +1,11 @@
 package ch.alv.components.core.file.flat.reader.internal;
 
-import java.beans.Introspector;
-
 /**
  * Metadata about specific column.
  * 
  * @since 1.0.0
  */
-final class Column {
+final class FlatFileColumn {
 
 	/** name of column */
 	private String name;
@@ -43,8 +41,8 @@ final class Column {
 	 * @param format the dateformat of the source value.
 	 * @param skip the value is not read, if skip is true
 	 */
-	public Column(String name, String type, boolean required, int index,
-			String format, boolean skip) {
+	public FlatFileColumn(String name, String type, boolean required, int index,
+                          String format, boolean skip) {
 		setName(name);
 		this.type = type;
 		this.required = required;
@@ -75,9 +73,6 @@ final class Column {
 
 	public void setName(String nm) {
 		name = nm;
-		if (Character.isUpperCase(name.charAt(0))) {
-			name = Introspector.decapitalize(name);
-		}
 	}
 
 	public boolean isRequired() {

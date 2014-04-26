@@ -13,19 +13,16 @@ import java.io.InputStream;
  * 
  * @since 1.0.0
  */
-public interface Transformer {
-	enum ColumnSeparator {
-		CHARACTER, FIXLENGTH
-	}
+public interface StringToObjectConverter<T> {
 
 	/**
-	 * Loads the record into an instance of the specified type. In the case that
+	 * Loads a String into an instance of the specified type. In the case that
 	 * the record format cannot be located a null is returned.
 	 * 
-	 * @param line a line of the file, representing a record.
-	 * @throws TransformerException if error occurs while parsing the line
+	 * @param line a line, representing a record.
+	 * @throws ConverterException if error occurs while parsing the line
 	 */
-	public Object loadRecord(String line);
+	public T convert(String line);
 
 	/**
 	 * Parses the file and for every record matched, notifies the listener with
@@ -35,15 +32,15 @@ public interface Transformer {
 	 * @param file file to parse
 	 * @param listener listener to notify found and notfound events
 	 */
-	public void parseFlatFile(File file, RecordListener listener);
+	public void convert(File file, ObjectHandle listener);
 
 	/**
-	 * Parses the file and for every record matched, notifies the listener with
+	 * Parses the input and for every record matched, notifies the listener with
 	 * the fully loaded bean. If record could not be matched then notify the
 	 * listener with the record line so that it may do any custom processing.
 	 * 
 	 * @param stream Input stream with file contents to parse
 	 * @param listener listener to notify found and notfound events
 	 */
-	public void parseFlatFile(InputStream stream, RecordListener listener);
+	public void convert(InputStream stream, ObjectHandle<T> listener);
 }

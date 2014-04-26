@@ -18,18 +18,19 @@
 package ch.alv.components.core.file.flat.reader;
 
 /**
- * Indicates that an unrecoverable exception occured while transforming the file
+ * Indicates that an unrecoverable exception occured while transforming a String or File
  * to java objects.
  * 
- * @author Mathew Thomas
+ * @since 1.0.0
  */
 @SuppressWarnings("serial")
-public class TransformerException extends RuntimeException {
-	public TransformerException(String msg) {
+public class ConverterException extends RuntimeException {
+
+	public ConverterException(String msg) {
 		super(msg);
 	}
 
-	public TransformerException(Exception ex) {
+	public ConverterException(Exception ex) {
 		super(ex);
 	}
 
