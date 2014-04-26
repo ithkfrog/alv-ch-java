@@ -28,6 +28,9 @@ script:
   # Deploy built artifacts
   - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then mvn deploy -B --settings test/travis-ci/settings.xml ; fi
 
+after_success:
+  - mvn clean cobertura:cobertura coveralls:cobertura
+
 notifications:
   webhooks:
     urls:
