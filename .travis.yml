@@ -26,7 +26,7 @@ script:
 #  - mvn clean install -B -Dintegration_test_settings=`pwd`/test/travis-ci/components-persistence-postgresql.properties
 
   # Deploy built artifacts
-  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then mvn deploy -B --settings test/travis-ci/settings.xml ; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then mvn deploy -Dintegration_test_settings=`pwd`/test/travis-ci/components-persistence-mysql.properties -B --settings test/travis-ci/settings.xml ; fi
 
 after_success:
   - mvn clean cobertura:cobertura coveralls:cobertura
