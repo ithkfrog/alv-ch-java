@@ -21,10 +21,10 @@ public class BeanUtilsAdapterTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    private Identifiable<String> entity = new MockIdentifiable<>();
+    private Identifiable<String> entity = new MockIdentifiable();
 
     @Test
-    public void testSuccess() {
+    public void testPopulateQuietly() {
         Map<String, Object> values = new HashMap<>();
         values.put("id", "testId");
         BeanUtilsAdapter.populateQuietly(entity, values);
@@ -32,39 +32,35 @@ public class BeanUtilsAdapterTest {
     }
 
     @Test
-    public void testExceptionOnPopulate() throws InvocationTargetException, IllegalAccessException {
+    public void testPopulateQuietlyInternalException() throws InvocationTargetException, IllegalAccessException {
         Map<String, Object> values = new HashMap<>();
         values.put("id", "testId");
-        ErrorClass testObject = new ErrorClass();
+        ErrorProneMockIdentifiable testObject = new ErrorProneMockIdentifiable();
         BeanUtilsAdapter.populateQuietly(testObject, values);
         assertEquals("testId", testObject.getId());
     }
 
-    public class MockIdentifiable<TYPE> implements Identifiable<TYPE> {
-        private TYPE id;
+    public class MockIdentifiable implements Identifiable<String> {
+        private String id;
         @Override
-        public TYPE getId() {
+        public String getId() {
             return id;
         }
         @Override
-        public void setId(TYPE id) {
+        public void setId(String id) {
             this.id = id;
         }
     }
 
-    public class ErrorClass {
-
+    public class ErrorProneMockIdentifiable implements Identifiable<String> {
         private String id;
-
         public String getId() {
             return id;
         }
-
         public void setId(String id) {
             this.id = id;
             throw new IllegalStateException();
         }
-
     }
 
 }
