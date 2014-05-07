@@ -16,6 +16,7 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class MockSearchRepository extends BaseSearchRepository<ModelItem, String> {
 
 
