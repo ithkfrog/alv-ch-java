@@ -15,6 +15,10 @@ public class IoHelper {
 
     private final static Log LOG = LogFactory.getLog(IoHelper.class);
 
+    /**
+     * Close a reader without handling an eventual IOException.
+     * @param reader the reader to close
+     */
     public static void closeReaderQuietly(Reader reader) {
         try {
             reader.close();
