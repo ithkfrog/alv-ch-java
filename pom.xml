@@ -14,6 +14,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dozer.version>5.4.0</dozer.version>
         <spring.version>4.0.2.RELEASE</spring.version>
         <spring-data.version>1.7.0.RELEASE</spring-data.version>
