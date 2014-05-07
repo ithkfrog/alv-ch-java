@@ -1,6 +1,6 @@
 package ch.alv.components.iam.repository;
 
-import ch.alv.components.data.jpa.JpaBaseSearchRepositoryImpl;
+import ch.alv.components.data.jpa.JpaBaseSearchRepository;
 import ch.alv.components.iam.model.Application;
 
 /**
@@ -8,5 +8,5 @@ import ch.alv.components.iam.model.Application;
  *
  * @since 1.0.0
  */
-public class ApplicationRepositoryImpl extends JpaBaseSearchRepositoryImpl<Application> implements ApplicationRepositoryCustom {
+public class ApplicationRepositoryImpl extends JpaBaseSearchRepository<Application, String> implements ApplicationRepositoryCustom {
 }

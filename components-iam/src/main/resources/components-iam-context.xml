@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:sec="http://www.springframework.org/schema/security"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
                             http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -18,15 +16,15 @@
 
     <!-- no user service required, that one's configured with annotations (Spring Security) -->
     <bean id="iam.application.service" name="iam.application"
-          class="ch.alv.components.service.persistence.PersistenceServiceImpl">
+          class="ch.alv.components.service.internal.DefaultPersistenceService">
         <constructor-arg ref="applicationRepository"/>
     </bean>
     <bean id="iam.permission.service" name="iam.permission"
-          class="ch.alv.components.service.persistence.PersistenceServiceImpl">
+          class="ch.alv.components.service.internal.DefaultPersistenceService">
         <constructor-arg ref="permissionRepository"/>
     </bean>
     <bean id="iam.role.service" name="iam.role"
-          class="ch.alv.components.service.persistence.PersistenceServiceImpl">
+          class="ch.alv.components.service.internal.DefaultPersistenceService">
         <constructor-arg ref="roleRepository"/>
     </bean>
 

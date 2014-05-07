@@ -3,6 +3,7 @@ package ch.alv.components.web.endpoint;
 import org.springframework.http.HttpMethod;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,19 +13,12 @@ import java.util.List;
  */
 public class EndpointHelper {
 
-    /**
-     * Do not instantiate this utility class
-     */
-    private EndpointHelper() {}
-
     public static List<HttpMethod> createMethodList(HttpMethod... methods) {
         List<HttpMethod> list = new ArrayList<>();
         if (methods == null || methods.length == 0) {
             return list;
         }
-        for (HttpMethod method : methods) {
-            list.add(method);
-        }
+        Collections.addAll(list, methods);
         return list;
     }
 

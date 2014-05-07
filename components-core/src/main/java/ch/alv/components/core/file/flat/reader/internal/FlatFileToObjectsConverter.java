@@ -1,14 +1,21 @@
 package ch.alv.components.core.file.flat.reader.internal;
 
 import ch.alv.components.core.beans.factory.BeanFactory;
-import ch.alv.components.core.file.flat.reader.*;
+import ch.alv.components.core.beans.factory.StringBeanFactory;
+import ch.alv.components.core.file.flat.reader.FlatFileColumnSeparatorType;
+import ch.alv.components.core.file.flat.reader.FlatFileConverterException;
+import ch.alv.components.core.file.flat.reader.FlatFileObjectHandle;
 import ch.alv.components.core.file.flat.reader.annotations.FlatFileConversion;
+import ch.alv.components.core.utils.IoHelper;
 import ch.alv.components.core.utils.StringHelper;
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,11 +24,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Implements the {@link ch.alv.components.core.file.flat.reader.StringToObjectConverter} interface.
+ * Implements the {@link ch.alv.components.core.beans.factory.StringBeanFactory} interface.
  *
  * @since 1.0.0
  */
-public final class FlatFileToObjectsConverter<T> implements StringToObjectConverter<T> {
+public final class FlatFileToObjectsConverter<T> implements StringBeanFactory<T> {
     /**
      * Log messages into this.
      */
@@ -45,7 +52,7 @@ public final class FlatFileToObjectsConverter<T> implements StringToObjectConver
     /**
      * Column number that is the identifier for the record. An identifier is
      * used to uniquely map a record to a certain record type. This is needed
-     * when we {@link ch.alv.components.core.file.flat.reader.ObjectHandle} is used.
+     * when we {@link ch.alv.components.core.file.flat.reader.FlatFileObjectHandle} is used.
      */
     private int idColumnIndex = 0;
 
@@ -80,7 +87,7 @@ public final class FlatFileToObjectsConverter<T> implements StringToObjectConver
     private void parseGeneralMetaData() throws InstantiationException, IllegalAccessException {
         FlatFileConversion classAnnotation = targetClass.getAnnotation(FlatFileConversion.class);
         if (classAnnotation == null) {
-            throw new ConverterException("Could not find @FlatFileConversion annotation on class '" + targetClass.getName() + "'.");
+            throw new FlatFileConverterException("Could not find @FlatFileConversion annotation on class '" + targetClass.getName() + "'.");
         }
         setBeanFactory(classAnnotation.beanFactory().newInstance());
         setColumnSeparator(classAnnotation.columnSeparator());
@@ -106,7 +113,7 @@ public final class FlatFileToObjectsConverter<T> implements StringToObjectConver
                     ch.alv.components.core.file.flat.reader.annotations.FlatFileColumn annot = field.getAnnotation(ch.alv.components.core.file.flat.reader.annotations.FlatFileColumn.class);
                     // String name, String type, boolean required, int
                     // index, String format, boolean skip
-                    FlatFileColumn col = new FlatFileColumn(columnName, field.getType()
+                    FlatFileCol col = new FlatFileCol(columnName, field.getType()
                             .getName(), annot.required(), annot.position(),
                             annot.format(), annot.skip());
                     col.setStartColumn(annot.start());
@@ -118,108 +125,97 @@ public final class FlatFileToObjectsConverter<T> implements StringToObjectConver
     }
 
     /***/
-    public void convert(InputStream stream, ObjectHandle listener) {
+    public void convert(InputStream stream, FlatFileObjectHandle handle) {
         if (stream == null) {
-            throw new ConverterException("Cannot read file. Invalid InputStream.");
+            throw new FlatFileConverterException("Cannot read file. Invalid InputStream.");
         }
-        parse(new BufferedReader(new InputStreamReader(stream)), listener);
-    }
-
-    /***/
-    public void convert(File file, ObjectHandle listener) {
-        if (file == null || !file.exists() || !file.canRead() || file.isDirectory()) {
-            throw new ConverterException("Cannot read file " + file);
-        }
-        try {
-            parse(new BufferedReader(new FileReader(file)), listener);
-        } catch (FileNotFoundException e) {
-            throw new ConverterException(e);
-        }
+        parse(new BufferedReader(new InputStreamReader(stream)), handle);
     }
 
     /***/
     public T convert(String input) {
         T target = beanFactory.createBean(targetClass);
+        try {
+            BeanUtilsBean.getInstance().populate(target, prepareDataMap(input));
+        } catch (Exception e) {
+            LOG.error("Error while mapping values to bean: '" + input + "', null will be returned.", e);
+            target = null;
+        }
+        return target;
+    }
+
+    private Map<String, Object> prepareDataMap(String input) {
         Map<String, Object> map = new HashMap<>();
         FlatFileRecordTokenListAdapter tokens = new FlatFileRecordTokenListAdapter(input, this, targetClass);
         FlatFileRecord rec = recordMap.get(targetClass.getName());
         for (int i : rec.indexes()) {
-            FlatFileColumn col = rec.getColumnAt(i);
-            if (col.isSkip()) {
-                continue;
-            }
-            if (col.getType().equals(Date.class.getName())) {
-                SimpleDateFormat formatter = new SimpleDateFormat(
-                        col.getDateFormat());
-                try {
-                    map.put(col.getName(), formatter.parse(tokens.get(col.getIndex())));
-                } catch (ParseException e) {
-                    throw new ConverterParseException(e);
-                }
-            } else {
-                String coldata = tokens.get(col.getIndex());
-                map.put(col.getName(), coldata);
-            }
+            putColumnDataOnValueMap(map, tokens, rec.getColumnAt(i));
         }
+        return map;
+    }
 
-        // use BeanUtils to load data into bean
-        try {
-            BeanUtils.populate(target, map);
-        } catch (Exception e) {
-            throw new ConverterParseException(e);
+    private void putColumnDataOnValueMap(Map<String, Object> map, FlatFileRecordTokenListAdapter tokens, FlatFileCol col) {
+        if (col.isSkip()) {
+            return;
         }
-        return target;
+        if (col.getType().equals(Date.class.getName())) {
+            SimpleDateFormat formatter = new SimpleDateFormat(
+                    col.getDateFormat());
+            try {
+                map.put(col.getName(), formatter.parse(tokens.get(col.getIndex())));
+            } catch (ParseException e) {
+                throw new FlatFileConverterException("Error while parsing String value.", e);
+            }
+        } else {
+            String coldata = tokens.get(col.getIndex());
+            map.put(col.getName(), coldata);
+        }
     }
 
     /**
      * Parse the reader content and register the handle to which we send
      * individual records read from the file. Reader content will be read until
-     * either the complete file is read or if the {@link ch.alv.components.core.file.flat.reader.ObjectHandle} returns
+     * either the complete file is read or if the {@link ch.alv.components.core.file.flat.reader.FlatFileObjectHandle} returns
      * a <code>false</code> requesting the framework to stop reading the rest of
      * the reader.
      *
-     * @param reader   file contents
+     * @param reader file contents
      * @param handle handle waiting for records
      */
     @SuppressWarnings("unchecked")
-    private void parse(BufferedReader reader, ObjectHandle handle) {
-        if (handle == null) {
-            throw new ConverterException("Expecting non-null instance of " + ObjectHandle.class.getName());
-        }
+    private void parse(BufferedReader reader, FlatFileObjectHandle handle) {
         try {
-            String line;
-            boolean continueReading = true;
-            long lineCount = 1;
-            while ((line = reader.readLine()) != null) {
-                if (skipFirstLine && lineCount == 1) {
-                    lineCount++;
-                    continue;
-                }
-
-                // check if we need to stop reading
-                if (!continueReading) {
-                    LOG.info("Aborted reading of file at line# " + lineCount);
-                    break;
-                }
-                // ok read on
-                Object o = convert(line);
-                if (o != null) {
-                    continueReading = handle.handle(o);
-                } else {
-                    throw new ConverterException("Could not convert '" + line + "' to a " + targetClass.getName() + " object.");
-                }
-                lineCount++;
-            }
+            parseLines(reader, handle);
         } catch (IOException e) {
-            throw new ConverterException(e);
+            throw new FlatFileConverterException(e);
         } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                LOG.error("Error while closing the fileReader.", e);
+            IoHelper.closeReaderQuietly(reader);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void parseLines(BufferedReader reader, FlatFileObjectHandle handle) throws IOException {
+        String line;
+        boolean continueReading = true;
+        long lineCount = 1;
+        while ((line = reader.readLine()) != null) {
+            if (skipFirstLine && lineCount == 1) {
+                lineCount++;
+                continue;
             }
+            // check if we need to stop reading
+            if (!continueReading) {
+                LOG.info("Aborted reading of file at line# " + lineCount);
+                break;
+            }
+            // ok read on
+            Object o = convert(line);
+            if (o != null) {
+                continueReading = handle.handle(o);
+            } else {
+                throw new FlatFileConverterException("Could not convert '" + line + "' to a " + targetClass.getName() + " object.");
+            }
+            lineCount++;
         }
     }
 
@@ -277,7 +273,7 @@ public final class FlatFileToObjectsConverter<T> implements StringToObjectConver
     public void setRecordIdentifierColumn(int idcol) {
         idColumnIndex = idcol;
         if (idColumnIndex < 0) {
-            idColumnIndex = 0;
+            idColumnIndex = 1;
         }
         idColumnIndex--;
     }

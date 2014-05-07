@@ -1,7 +1,6 @@
 package ch.alv.components.core.spring;
 
 import ch.alv.components.core.beans.mapper.BeanMapper;
-import ch.alv.components.core.spring.context.DefaultContextProvider;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +10,8 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
+
 
 /**
  * Unit tests for the BeanMapper
@@ -18,15 +19,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 1.0.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:default-context-provider-test.xml")
+@ContextConfiguration(locations = "classpath:spring/default-context-provider-test-context.xml")
 public class DefaultContextProviderTest {
+
+    @Resource
+    private ApplicationContextProvider contextProvider;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testGetBeanByName() {
-        BeanMapper mapper = DefaultContextProvider.getBeanByName("mapper");
+        BeanMapper mapper = contextProvider.getBeanByName("mapper");
         Assert.assertNotNull(mapper);
     }
 
@@ -35,7 +39,7 @@ public class DefaultContextProviderTest {
         String beanName = "nonExistingBean";
         exception.expect(NoSuchBeanDefinitionException.class);
         exception.expectMessage("No bean named '" + beanName + "' is defined");
-        DefaultContextProvider.getBeanByName(beanName);
+        contextProvider.getBeanByName(beanName);
     }
 
 }

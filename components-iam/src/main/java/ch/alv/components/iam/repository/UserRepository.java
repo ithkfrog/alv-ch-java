@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  *
  * @since 1.0.0
  */
-@Repository
+@Repository(value = "userRepository")
 public interface UserRepository extends PagingAndSortingRepository<User, String>, UserRepositoryCustom {
 }

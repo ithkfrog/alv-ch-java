@@ -1,8 +1,9 @@
 package ch.alv.components.web.endpoint;
 
+import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
-import ch.alv.components.web.spring.WebContextProvider;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -12,17 +13,17 @@ import java.util.Map;
  */
 public class EndpointRegistry {
 
-    public static Endpoint getEndpoint(String moduleName, String storeName) {
+    @Resource
+    private ApplicationContextProvider contextProvider;
+
+    public Endpoint getEndpoint(String moduleName, String storeName) {
         if (StringHelper.isEmpty(moduleName)) {
-            throw new IllegalStateException("Param 'moduleName' must not be empty.");
+            throw new IllegalArgumentException("Param 'moduleName' must not be empty.");
         }
         if (StringHelper.isEmpty(storeName)) {
-            throw new IllegalStateException("Param 'storeName' must not be empty.");
+            throw new IllegalArgumentException("Param 'storeName' must not be empty.");
         }
-        Map<String, Endpoint> endpointMap = WebContextProvider.getBeansOfType(Endpoint.class);
-        if (endpointMap == null || endpointMap.isEmpty()) {
-            return null;
-        }
+        Map<String, Endpoint> endpointMap = contextProvider.getBeansOfType(Endpoint.class);
         for (String key : endpointMap.keySet()) {
             Endpoint endpoint = endpointMap.get(key);
             if (endpoint.getModuleName().equalsIgnoreCase(moduleName)
@@ -33,14 +34,11 @@ public class EndpointRegistry {
         return null;
     }
 
-    public static Endpoint getEndpoint(Class<?> entityClass) {
+    public Endpoint getEndpoint(Class<?> entityClass) {
         if (entityClass == null) {
-            throw new IllegalStateException("Param 'entityClass' must not be null.");
+            throw new IllegalArgumentException("Param 'entityClass' must not be null.");
         }
-        Map<String, Endpoint> endpointMap = WebContextProvider.getBeansOfType(Endpoint.class);
-        if (endpointMap == null || endpointMap.isEmpty()) {
-            return null;
-        }
+        Map<String, Endpoint> endpointMap = contextProvider.getBeansOfType(Endpoint.class);
         for (String key : endpointMap.keySet()) {
             Endpoint endpoint = endpointMap.get(key);
             if (endpoint.getEntityClass() == entityClass) {
@@ -49,5 +47,6 @@ public class EndpointRegistry {
         }
         return null;
     }
+
 
 }

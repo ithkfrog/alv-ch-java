@@ -1,12 +1,10 @@
 package ch.alv.components.iam.endpoint;
 
-import ch.alv.components.core.model.ModelItem;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.iam.endpoint.dto.RoleDto;
 import ch.alv.components.iam.model.Role;
 import ch.alv.components.web.dto.Dto;
-import ch.alv.components.web.endpoint.BaseEndpoint;
-import ch.alv.components.web.search.StringWebValuesProvider;
+import ch.alv.components.web.endpoint.internal.BaseEndpoint;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,9 +35,5 @@ public class RolesEndpoint extends BaseEndpoint {
         return Role.class;
     }
 
-    @Override
-    public Class<? extends SearchValuesProvider> getValuesProviderClass() {
-        return StringWebValuesProvider.class;
-    }
 
 }

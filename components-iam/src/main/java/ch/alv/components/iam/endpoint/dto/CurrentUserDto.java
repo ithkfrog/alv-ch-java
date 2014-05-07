@@ -1,6 +1,6 @@
 package ch.alv.components.iam.endpoint.dto;
 
-import ch.alv.components.web.dto.DtoImpl;
+import ch.alv.components.web.dto.internal.DtoImpl;
 import org.springframework.hateoas.Link;
 
 import java.util.Date;

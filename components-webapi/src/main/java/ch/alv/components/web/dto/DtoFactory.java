@@ -1,7 +1,7 @@
 package ch.alv.components.web.dto;
 
 
-import ch.alv.components.core.model.ModelItem;
+import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.web.endpoint.Endpoint;
 
 /**

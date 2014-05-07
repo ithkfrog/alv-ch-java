@@ -1,9 +1,8 @@
 package ch.alv.components.core.file.flat.reader.internal;
 
 
-import ch.alv.components.core.file.flat.reader.ConverterException;
-import ch.alv.components.core.file.flat.reader.ConverterParseException;
 import ch.alv.components.core.file.flat.reader.FlatFileColumnSeparatorType;
+import ch.alv.components.core.file.flat.reader.FlatFileConverterException;
 import ch.alv.components.core.utils.StringHelper;
 
 import java.util.LinkedList;
@@ -42,13 +41,13 @@ class FlatFileRecordTokenListAdapter {
         this.targetClass = targetClass;
 
         if (StringHelper.isEmpty(src)) {
-            throw new ConverterException("Source string to parse cannot be null.");
+            throw new FlatFileConverterException("Source string to parse cannot be null.");
         }
         if (converter == null) {
-            throw new ConverterException("Converter to apply must not be null.");
+            throw new FlatFileConverterException("Converter to apply must not be null.");
         }
         if (targetClass == null) {
-            throw new ConverterException("The targetClass must not be null.");
+            throw new FlatFileConverterException("The targetClass must not be null.");
         }
         parse();
     }
@@ -73,10 +72,10 @@ class FlatFileRecordTokenListAdapter {
         FlatFileRecord rec = transformer.getRecord(targetClass.getName());
         for (int i : rec.indexes()) {
             try {
-                FlatFileColumn col = rec.getColumnAt(i);
+                FlatFileCol col = rec.getColumnAt(i);
                 list.add(prepareValue(src.substring(col.getStartColumn(), col.getEndColumn())));
             } catch (IndexOutOfBoundsException ex) {
-                throw new ConverterParseException(ex);
+                throw new FlatFileConverterException("Could not parse field " + rec.getColumnAt(i).getName() + ": " + ex.getMessage(), ex);
             }
         }
     }
@@ -85,15 +84,11 @@ class FlatFileRecordTokenListAdapter {
         return substring.trim().replace("\"", "");
     }
 
-    public String getRecordIdentifierValue() {
-        return get(transformer.getRecordIdentifierColumn());
-    }
-
     public String get(int pos) {
         try {
             return list.get(pos);
         } catch (IndexOutOfBoundsException ex) {
-            throw new ConverterParseException(ex);
+            throw new FlatFileConverterException(ex);
         }
     }
 

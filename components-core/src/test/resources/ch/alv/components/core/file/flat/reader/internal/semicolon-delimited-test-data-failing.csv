@@ -1,0 +1,3 @@
+﻿id;firstName;lastName;isActive
+wrongFormat;hans;"meier;beck";false
+wrongFormat;kurt;blaser;true

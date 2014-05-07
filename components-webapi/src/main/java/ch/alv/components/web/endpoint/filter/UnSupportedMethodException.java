@@ -5,5 +5,6 @@ package ch.alv.components.web.endpoint.filter;
  *
  * @since 1.0.0
  */
-public class UnSupportedMethodException extends Exception {
+public class UnSupportedMethodException extends RuntimeException {
+    private static final long serialVersionUID = -4942806118500854057L;
 }

@@ -25,10 +25,6 @@ public class GlobalExceptionController {
     public ResponseEntity<?> handleAllExceptions(Exception e) {
 
         if (e instanceof UnSupportedMethodException) {
-            return new ResponseEntity<>("The current user is not allowed to execute this request.", HttpStatus.UNAUTHORIZED);
-        }
-
-        if (e instanceof UnSupportedMethodException) {
             return new ResponseEntity<>("This HTTP method is currently not supported.", HttpStatus.METHOD_NOT_ALLOWED);
         }
 
@@ -42,7 +38,7 @@ public class GlobalExceptionController {
 
         UUID uuid = UUID.randomUUID();
         LOG.error("Exception id: " + uuid.toString(), e);
-        return new ResponseEntity<>("A internal server error occurred. Please inform our support staff with the error id: " + uuid.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("An internal server error occurred. Please inform our support staff with the error id: " + uuid.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

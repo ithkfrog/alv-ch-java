@@ -15,8 +15,8 @@ public class SecurityFilterResult {
     private String message;
 
     public SecurityFilterResult(int result, String message) {
-        this.result = result;
-        this.message = message;
+        setResult(result);
+        setMessage(message);
     }
 
     public int getResult() {

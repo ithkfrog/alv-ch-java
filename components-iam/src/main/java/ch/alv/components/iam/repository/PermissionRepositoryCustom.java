@@ -1,6 +1,6 @@
 package ch.alv.components.iam.repository;
 
-import ch.alv.components.data.search.SearchRepository;
+import ch.alv.components.data.SearchRepository;
 import ch.alv.components.iam.model.Permission;
 
 /**
@@ -8,5 +8,5 @@ import ch.alv.components.iam.model.Permission;
  *
  * @since 1.0.0
  */
-public interface PermissionRepositoryCustom extends SearchRepository<Permission> {
+public interface PermissionRepositoryCustom extends SearchRepository<Permission, String> {
 }

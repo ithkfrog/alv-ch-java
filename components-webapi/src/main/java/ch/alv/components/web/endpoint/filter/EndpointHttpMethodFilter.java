@@ -1,5 +1,7 @@
 package ch.alv.components.web.endpoint.filter;
 
+import ch.alv.components.web.endpoint.filter.internal.EndpointHttpMethodFilterResult;
+
 /**
  * HttpMethod filter for requests.
  *

@@ -1,5 +1,7 @@
 package ch.alv.components.web.controller;
 
+import ch.alv.components.web.endpoint.filter.UnauthorizedException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -12,6 +14,6 @@ public interface DeleteController {
     Object handleDeleteRequest(HttpServletRequest request,
                             String moduleName,
                             String storeName,
-                            String id);
+                            String id) throws UnauthorizedException;
 
 }

@@ -15,4 +15,6 @@ public interface Dto {
 
     List<Link> getLinks();
 
+    Integer getVersion();
+
 }

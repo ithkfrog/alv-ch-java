@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultSecurityContextProvider" />
+
+    <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultSecurityFilter" />
+
+    <bean class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
+
+    <bean class="ch.alv.components.web.endpoint.filter.FilterTestEndpoint" />
+    <bean class="ch.alv.components.web.endpoint.filter.SecuredFilterTestEndpoint" />
+
+    <bean class="ch.alv.components.web.endpoint.EndpointRegistry" />
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider>
+            <sec:user-service>
+                <sec:user name="jimi" password="jimi" authorities="ROLE_USER, ROLE_ADMIN"/>
+                <sec:user name="bob" password="bob" authorities="ROLE_USER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+</beans>
+
+
+
+

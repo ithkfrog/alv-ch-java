@@ -1,18 +1,19 @@
 package ch.alv.components.web.i18n;
 
 import ch.alv.components.core.enums.Language;
+import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.data.jpa.TextConstant;
 import ch.alv.components.web.context.ServletRequestProvider;
-import ch.alv.components.web.dto.TranslatedText;
-import ch.alv.components.web.spring.WebContextProvider;
+import ch.alv.components.web.dto.internal.TranslatedText;
 import org.dozer.BeanFactory;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Converts {@link } into {@link ch.alv.components.web.dto.TranslatedText}.
+ * Converts {@link TextConstant} into {@link ch.alv.components.web.dto.internal.TranslatedText}.
  *
  * @since 1.0.0
  */
@@ -20,13 +21,17 @@ public class RequestAwareTranslatedTextFactory implements BeanFactory {
 
     private static final Language LANGUAGE_DEFAULT = Language.GERMAN;
 
+    @Resource
+    private ApplicationContextProvider contextProvider;
+
     @Override
     public Object createBean(Object o, Class<?> aClass, String s) {
         String defaultValue = "";
         if (o instanceof List) {
             ServletRequestProvider requestProvider = getRequestProvider();
+
             Language language = null;
-            if (StringHelper.isNotEmpty(requestProvider.getLanguage())) {
+            if (requestProvider != null && StringHelper.isNotEmpty(requestProvider.getLanguage())) {
                 language = Language.getByCode(requestProvider.getLanguage());
             }
             if (language == null) {
@@ -51,7 +56,7 @@ public class RequestAwareTranslatedTextFactory implements BeanFactory {
     }
 
     private ServletRequestProvider getRequestProvider() {
-        Map<String, ServletRequestProvider> providers = WebContextProvider.getBeansOfType(ServletRequestProvider.class);
+        Map<String, ServletRequestProvider> providers = contextProvider.getBeansOfType(ServletRequestProvider.class);
         if (providers.isEmpty()) {
             return null;
         }

@@ -1,11 +1,12 @@
 package ch.alv.components.core.search;
 
+import ch.alv.components.core.search.internal.BaseSearchValuesProvider;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * TestCases for the {@link BaseSearchValuesProvider}.
+ * TestCases for the {@link ch.alv.components.core.search.internal.BaseSearchValuesProvider}.
  *
  * @since 1.0.0
  */
@@ -32,6 +33,11 @@ public class BaseSearchValuesProviderTest {
     public static final String TEST_NULL_KEY = "testNullKey";
     public static final Object TEST_NULL_VALUE = null;
     public static final String TEST_NO_VALUE_KEY = "noValueKey";
+    public static final String TEST_EMPTY_STRING_KEY = "emptyStringKey";
+    public static final String TEST_EMPTY_STRING_VALUE = "";
+
+    public static final String TEST_DEFAULT_VALUE = "defaultValue";
+
 
     SearchValuesProvider provider = new TestSearchValuesProvider();
 
@@ -63,9 +69,17 @@ public class BaseSearchValuesProviderTest {
         assertEquals(null, provider.getStringValue(TEST_NO_VALUE_KEY));
         // null keys also should return null
         assertEquals(null, provider.getStringValue(null));
+        // default value checks
+        assertEquals(TEST_DEFAULT_VALUE, provider.getValue("unknownKey", TEST_DEFAULT_VALUE));
+        assertEquals(TEST_DEFAULT_VALUE, provider.getValue(TEST_NO_VALUE_KEY, TEST_DEFAULT_VALUE));
+        assertEquals(TEST_DEFAULT_VALUE, provider.getValue(TEST_EMPTY_STRING_KEY, TEST_DEFAULT_VALUE));
     }
 
     public class TestSearchValuesProvider extends BaseSearchValuesProvider {
+
+        public TestSearchValuesProvider() {
+            putData();
+        }
 
         @Override
         protected void putData() {
@@ -76,6 +90,7 @@ public class BaseSearchValuesProviderTest {
             values.put(TEST_FLOAT_KEY, TEST_FLOAT_VALUE);
             values.put(TEST_DOUBLE_KEY, TEST_DOUBLE_VALUE);
             values.put(TEST_NULL_KEY, TEST_NULL_VALUE);
+            values.put(TEST_EMPTY_STRING_KEY, TEST_EMPTY_STRING_VALUE);
         }
     }
 

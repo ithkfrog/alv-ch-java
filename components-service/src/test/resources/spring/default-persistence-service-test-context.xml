@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
+
+    <bean class="ch.alv.components.service.mock.MockSearchQueryFactory" />
+    <!--<bean class="ch.alv.components.service.internal.ServiceRegistry" />-->
+
+    <bean class="ch.alv.components.service.mock.MockModelItemDataStore" />
+    <bean id="repository" class="ch.alv.components.service.mock.MockPersistenceRepository" />
+
+    <bean class="ch.alv.components.service.internal.DefaultPersistenceService">
+        <constructor-arg index="0" ref="repository" />
+    </bean>
+
+</beans>
+
+

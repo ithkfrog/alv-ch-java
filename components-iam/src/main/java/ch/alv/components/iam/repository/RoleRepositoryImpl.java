@@ -1,6 +1,6 @@
 package ch.alv.components.iam.repository;
 
-import ch.alv.components.data.jpa.JpaBaseSearchRepositoryImpl;
+import ch.alv.components.data.jpa.JpaBaseSearchRepository;
 import ch.alv.components.iam.model.Role;
 
 /**
@@ -8,5 +8,5 @@ import ch.alv.components.iam.model.Role;
  *
  * @since 1.0.0
  */
-public class RoleRepositoryImpl extends JpaBaseSearchRepositoryImpl<Role> implements RoleRepositoryCustom {
+public class RoleRepositoryImpl extends JpaBaseSearchRepository<Role, String> implements RoleRepositoryCustom {
 }

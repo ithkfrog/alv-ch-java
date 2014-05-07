@@ -1,7 +1,7 @@
 package ch.alv.components.core.file.flat.reader.internal;
 
 import ch.alv.components.core.beans.factory.BeanFactory;
-import ch.alv.components.core.file.flat.reader.ConverterException;
+import ch.alv.components.core.file.flat.reader.FlatFileConverterException;
 
 /**
  * Default implementation of the BeanFactory interface. The bean class must have
@@ -19,7 +19,7 @@ public class FlatFileBeanFactory implements BeanFactory {
 		try {
 			return targetClass.newInstance();
 		} catch (Exception e) {
-			throw new ConverterException(e);
+			throw new FlatFileConverterException(e);
 		}
 	}
 

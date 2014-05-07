@@ -20,10 +20,12 @@ import java.util.List;
 @Table(name = "module_iam_user")
 public class User extends BaseJpaModelItem implements UserDetails {
 
-    @Column(nullable = false)
-    private String userName;
+    private static final long serialVersionUID = -2143829548175561682L;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = true)
     private String firstName;
 
     @Column(nullable = true)
@@ -65,12 +67,13 @@ public class User extends BaseJpaModelItem implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
-    public String getUserName() {
-        return userName;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -170,11 +173,6 @@ public class User extends BaseJpaModelItem implements UserDetails {
             auths.add(auth);
         }
         return auths;
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
     }
 
     @Override

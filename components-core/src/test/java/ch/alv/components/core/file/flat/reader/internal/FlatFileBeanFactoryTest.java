@@ -1,7 +1,7 @@
 package ch.alv.components.core.file.flat.reader.internal;
 
-import ch.alv.components.core.file.flat.reader.ConverterException;
-import ch.alv.components.core.test.BeanA;
+import ch.alv.components.core.file.flat.reader.FlatFileConverterException;
+import ch.alv.components.core.mock.BeanA;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -25,7 +25,7 @@ public class FlatFileBeanFactoryTest {
 
     @Test
     public void testException() {
-        exception.expect(ConverterException.class);
+        exception.expect(FlatFileConverterException.class);
         new FlatFileBeanFactory().createBean(null);
     }
 

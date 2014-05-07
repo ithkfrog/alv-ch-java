@@ -36,6 +36,10 @@
         <postgresql-driver.version>9.3-1101-jdbc41</postgresql-driver.version>
         <hsql.version>2.3.2</hsql.version>
         <elasticsearch.version>1.1.0</elasticsearch.version>
+        <failsafeArgLine/>
+        <surefireArgLine/>
+        <jacoco.version>0.7.0.201403182114</jacoco.version>
+        <c3p0.version>0.9.1.2</c3p0.version>
     </properties>
 
     <modules>
@@ -205,7 +209,7 @@
                 <version>${jackson.version}</version>
             </dependency>
 
-             <!--Injection -->
+            <!--Injection -->
             <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
@@ -261,7 +265,7 @@
             <dependency>
                 <groupId>c3p0</groupId>
                 <artifactId>c3p0</artifactId>
-                <version>0.9.1.2</version>
+                <version>${c3p0.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -400,7 +404,7 @@
     <developers>
         <developer>
             <name>Informatik der Arbeitslosenversicherung (ALV)</name>
-            </developer>
+        </developer>
     </developers>
 
     <licenses>

@@ -1,6 +1,6 @@
 package ch.alv.components.data.jpa;
 
-import ch.alv.components.core.model.ModelItem;
+import ch.alv.components.core.beans.ModelItem;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

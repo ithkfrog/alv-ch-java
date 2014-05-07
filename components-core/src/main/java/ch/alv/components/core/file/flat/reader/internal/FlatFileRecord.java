@@ -16,7 +16,7 @@
  */
 
 package ch.alv.components.core.file.flat.reader.internal;
-import ch.alv.components.core.file.flat.reader.ConverterException;
+import ch.alv.components.core.file.flat.reader.FlatFileConverterException;
 import ch.alv.components.core.utils.StringHelper;
 
 import java.util.Arrays;
@@ -32,12 +32,12 @@ final class FlatFileRecord {
 
     private String name;
 
-    private Map<Integer, FlatFileColumn> columnMap = new HashMap<>();
+    private Map<Integer, FlatFileCol> columnMap = new HashMap<>();
 
     public FlatFileRecord(String name) {
         // sanity checks
         if (StringHelper.isEmpty(name)) {
-            throw new ConverterException("Record name must be specified");
+            throw new FlatFileConverterException("Record name must be specified");
         }
 
         // copy parameters
@@ -48,7 +48,7 @@ final class FlatFileRecord {
         return name;
     }
 
-    void addColumn(FlatFileColumn col) {
+    void addColumn(FlatFileCol col) {
         columnMap.put(col.getIndex(), col);
     }
 
@@ -58,7 +58,7 @@ final class FlatFileRecord {
         return keyWeights;
     }
 
-    public FlatFileColumn getColumnAt(int index) {
+    public FlatFileCol getColumnAt(int index) {
         return columnMap.get(index);
     }
 }

@@ -1,6 +1,6 @@
 package ch.alv.components.iam.repository;
 
-import ch.alv.components.data.jpa.JpaBaseSearchRepositoryImpl;
+import ch.alv.components.data.jpa.JpaBaseSearchRepository;
 import ch.alv.components.iam.model.User;
 
 /**
@@ -8,5 +8,5 @@ import ch.alv.components.iam.model.User;
  *
  * @since 1.0.0
  */
-public class UserRepositoryImpl extends JpaBaseSearchRepositoryImpl<User> implements UserRepositoryCustom {
+public class UserRepositoryImpl extends JpaBaseSearchRepository<User, String> implements UserRepositoryCustom {
 }

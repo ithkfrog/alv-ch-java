@@ -1,6 +1,6 @@
 package ch.alv.components.web.mapper;
 
-import ch.alv.components.core.model.ModelItem;
+import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.web.context.ServletRequestProvider;
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointRegistry;
@@ -19,9 +19,12 @@ public class LinkFactory implements BeanFactory {
     @Resource
     private ServletRequestProvider requestProvider;
 
+    @Resource
+    private EndpointRegistry endpointRegistry;
+
     @Override
     public Object createBean(Object o, Class<?> aClass, String s) {
-        Endpoint endpoint = EndpointRegistry.getEndpoint(aClass);
+        Endpoint endpoint = endpointRegistry.getEndpoint(aClass);
         if (endpoint == null) {
             return null;
         }

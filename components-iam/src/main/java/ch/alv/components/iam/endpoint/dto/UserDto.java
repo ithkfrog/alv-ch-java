@@ -1,6 +1,6 @@
 package ch.alv.components.iam.endpoint.dto;
 
-import ch.alv.components.web.dto.DtoImpl;
+import ch.alv.components.web.dto.internal.DtoImpl;
 import org.springframework.hateoas.Link;
 
 import java.util.Date;
@@ -12,8 +12,6 @@ import java.util.List;
  * @since 1.0.0
  */
 public class UserDto extends DtoImpl {
-
-    private String id;
 
     private String userName;
 
@@ -28,14 +26,6 @@ public class UserDto extends DtoImpl {
     private List<Link> roles;
 
     private Date updateDate;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;

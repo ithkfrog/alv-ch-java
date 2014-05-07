@@ -1,6 +1,6 @@
 package ch.alv.components.core.file.flat.reader.internal;
 
-import ch.alv.components.core.file.flat.reader.ConverterException;
+import ch.alv.components.core.file.flat.reader.FlatFileConverterException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -26,7 +26,7 @@ public class FlatFileRecordTest {
 
     @Test
     public void testConstructorException() {
-        exception.expect(ConverterException.class);
+        exception.expect(FlatFileConverterException.class);
         exception.expectMessage("Record name must be specified");
         new FlatFileRecord("");
     }
