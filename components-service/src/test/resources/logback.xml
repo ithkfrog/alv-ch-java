@@ -19,7 +19,7 @@
     <logger name="org.dozer" level="warn" />
     <logger name="org.apache.commons.beanutils.converters" level="warn" />
 
-    <root level="info">
+    <root level="warn">
         <appender-ref ref="STDOUT" />
     </root>
 
