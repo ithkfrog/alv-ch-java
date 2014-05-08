@@ -7,7 +7,7 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
-public interface SearchValuesProvider {
+public interface ValuesProvider {
 
     /**
      * Getter

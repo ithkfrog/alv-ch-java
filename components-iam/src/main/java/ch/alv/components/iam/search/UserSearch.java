@@ -1,7 +1,7 @@
 package ch.alv.components.iam.search;
 
 import ch.alv.components.core.search.Search;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 
 /**
  * ByName search query for the {@link ch.alv.components.iam.model.User} entity
@@ -11,8 +11,8 @@ import ch.alv.components.core.search.SearchValuesProvider;
 public class UserSearch implements Search {
 
     @Override
-    public Object createQuery(SearchValuesProvider searchValuesProvider, Class<?> targetClass) {
-        return "SELECT u FROM User u where u.username = '" + searchValuesProvider.getStringValue("userName") + "'";
+    public Object createQuery(ValuesProvider valuesProvider, Class<?> targetClass) {
+        return "SELECT u FROM User u where u.username = '" + valuesProvider.getStringValue("userName") + "'";
     }
 
     @Override

@@ -1,12 +1,13 @@
 package ch.alv.components.web.controller;
 
 import ch.alv.components.core.beans.ModelItem;
-import ch.alv.components.core.search.SearchValuesProvider;
 import ch.alv.components.web.dto.Dto;
 import ch.alv.components.web.endpoint.EndpointHelper;
 import ch.alv.components.web.endpoint.internal.BaseEndpoint;
 import ch.alv.components.web.mapper.MockFactoryTestEntity;
 import ch.alv.components.web.mock.TestDto;
+import ch.alv.components.web.search.RequestParamsToValuesMapper;
+import ch.alv.components.web.search.internal.DefaultMapper;
 import org.springframework.http.HttpMethod;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class ControllerTestEndpointWithParamConstructorSearch extends BaseEndpoi
     }
 
     @Override
-    public Class<? extends SearchValuesProvider> getValuesProviderClass() {
-        return ParamConstructorValuesProvider.class;
+    public Class<? extends RequestParamsToValuesMapper> getValuesProviderClass() {
+        return DefaultMapper.class;
     }
 }

@@ -138,7 +138,7 @@ public final class FlatFileToObjectsConverter<T> implements StringBeanFactory<T>
         try {
             BeanUtilsBean.getInstance().populate(target, prepareDataMap(input));
         } catch (Exception e) {
-            LOG.error("Error while mapping values to bean: '" + input + "', null will be returned.", e);
+            LOG.warn("Error while mapping values to bean: '" + input + "', null will be returned.", e);
             target = null;
         }
         return target;

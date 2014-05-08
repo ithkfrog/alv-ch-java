@@ -1,7 +1,7 @@
 package ch.alv.components.data.elastic;
 
 import ch.alv.components.core.search.Search;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 
 
 /**
@@ -12,7 +12,7 @@ import ch.alv.components.core.search.SearchValuesProvider;
 public class ElasticBaseSearchRepositoryTestSearch implements Search {
 
     @Override
-    public Object createQuery(SearchValuesProvider searchValuesProvider, Class<?> targetClass) {
+    public Object createQuery(ValuesProvider valuesProvider, Class<?> targetClass) {
         return "";
     }
 

@@ -21,7 +21,7 @@ public class BeanUtilsAdapter extends BeanUtils {
             BeanUtilsBean.getInstance().populate(bean, properties);
             return true;
         } catch (Exception e) {
-            LOG.error("Error while mapping data.", e);
+            LOG.warn("Error while mapping data.", e);
             return false;
         }
     }

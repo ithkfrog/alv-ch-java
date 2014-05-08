@@ -1,7 +1,7 @@
 package ch.alv.components.service.internal;
 
+import ch.alv.components.core.search.internal.MapBasedValuesProvider;
 import ch.alv.components.service.mock.MockModelItem;
-import ch.alv.components.service.mock.MockSearchValuesProvider;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -60,7 +60,7 @@ public class DefaultSearchServiceTest {
 
     @Test
     public void testFindWithValuesProvider() {
-        Page<?> page = service.find(new MockSearchValuesProvider());
+        Page<?> page = service.find(new MapBasedValuesProvider());
         assertEquals(100, page.getSize());
         assertEquals(0, page.getNumber());
         assertEquals(19, page.getTotalElements());
@@ -70,7 +70,7 @@ public class DefaultSearchServiceTest {
     @Test
     public void testFindWithPageableAndValuesProvider() {
         Pageable pageable = new PageRequest(1, 5);
-        Page<?> page = service.find(pageable, new MockSearchValuesProvider());
+        Page<?> page = service.find(pageable, new MapBasedValuesProvider());
         assertEquals(5, page.getSize());
         assertEquals(1, page.getNumber());
         assertEquals(19, page.getTotalElements());
@@ -79,7 +79,7 @@ public class DefaultSearchServiceTest {
 
     @Test
     public void testFindWithSearchAndValuesProvider() {
-        Page<?> page = service.find("defaultSearchServiceSearch", new MockSearchValuesProvider());
+        Page<?> page = service.find("defaultSearchServiceSearch", new MapBasedValuesProvider());
         assertEquals(100, page.getSize());
         assertEquals(0, page.getNumber());
         assertEquals(19, page.getTotalElements());
@@ -89,7 +89,7 @@ public class DefaultSearchServiceTest {
     @Test
     public void testFindWithSearchAndPageableAndValuesProvider() {
         Pageable pageable = new PageRequest(1, 5);
-        Page<?> page = service.find(pageable, "defaultSearchServiceSearch", new MockSearchValuesProvider());
+        Page<?> page = service.find(pageable, "defaultSearchServiceSearch", new MapBasedValuesProvider());
         assertEquals(5, page.getSize());
         assertEquals(1, page.getNumber());
         assertEquals(19, page.getTotalElements());

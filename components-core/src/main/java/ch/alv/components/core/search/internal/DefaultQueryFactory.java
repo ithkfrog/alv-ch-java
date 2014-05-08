@@ -3,7 +3,7 @@ package ch.alv.components.core.search.internal;
 import ch.alv.components.core.search.NoSuchSearchException;
 import ch.alv.components.core.search.Search;
 import ch.alv.components.core.search.SearchQueryFactory;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 
@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
-public class DefaultSearchQueryFactory implements SearchQueryFactory {
+public class DefaultQueryFactory implements SearchQueryFactory {
 
     @Resource
     private ApplicationContextProvider contextProvider;
@@ -27,7 +27,7 @@ public class DefaultSearchQueryFactory implements SearchQueryFactory {
      * @see SearchQueryFactory#createQuery)
      */
     @Override
-    public Object createQuery(String searchName, SearchValuesProvider searchValuesProvider, Class<?> targetClass) {
+    public Object createQuery(String searchName, ValuesProvider valuesProvider, Class<?> targetClass) {
         if (StringHelper.isEmpty(searchName)) {
             throw new IllegalArgumentException("Argument 'searchName' must not be empty.");
         }
@@ -35,7 +35,7 @@ public class DefaultSearchQueryFactory implements SearchQueryFactory {
         if (search == null) {
             throw new NoSuchSearchException(searchName);
         }
-        return search.createQuery(searchValuesProvider, targetClass);
+        return search.createQuery(valuesProvider, targetClass);
     }
 
     /**

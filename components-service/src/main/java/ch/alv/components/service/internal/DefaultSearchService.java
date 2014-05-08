@@ -1,7 +1,7 @@
 package ch.alv.components.service.internal;
 
 import ch.alv.components.core.beans.ModelItem;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.data.SearchRepository;
 import ch.alv.components.service.SearchService;
 import org.springframework.data.domain.Page;
@@ -44,26 +44,26 @@ public class DefaultSearchService<TYPE extends ModelItem, ID extends Serializabl
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(SearchValuesProvider searchValuesProvider) {
-        return getRepository().find(searchValuesProvider);
+    public Page<TYPE> find(ValuesProvider valuesProvider) {
+        return getRepository().find(valuesProvider);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(String searchName, SearchValuesProvider searchValuesProvider) {
-        return getRepository().find(searchValuesProvider, searchName);
+    public Page<TYPE> find(String searchName, ValuesProvider valuesProvider) {
+        return getRepository().find(valuesProvider, searchName);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(Pageable pageable, SearchValuesProvider searchValuesProvider) {
-        return getRepository().find(searchValuesProvider, pageable);
+    public Page<TYPE> find(Pageable pageable, ValuesProvider valuesProvider) {
+        return getRepository().find(valuesProvider, pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TYPE> find(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider) {
-        return getRepository().find(searchValuesProvider, pageable, searchName);
+    public Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
+        return getRepository().find(valuesProvider, pageable, searchName);
     }
 
     protected SearchRepository getRepository() {

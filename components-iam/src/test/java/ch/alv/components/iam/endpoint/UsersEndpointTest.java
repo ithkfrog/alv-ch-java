@@ -2,7 +2,7 @@ package ch.alv.components.iam.endpoint;
 
 import ch.alv.components.iam.endpoint.dto.UserDto;
 import ch.alv.components.iam.model.User;
-import ch.alv.components.iam.search.UserSearchValuesProvider;
+import ch.alv.components.iam.search.UserSearchValuesMapper;
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointHelper;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class UsersEndpointTest {
         assertEquals(EndpointHelper.createAllMethodsList(), endpoint.getAllowedMethods());
         assertEquals(UserDto.class, endpoint.getDtoClass());
         assertEquals(User.class, endpoint.getEntityClass());
-        assertEquals(UserSearchValuesProvider.class, endpoint.getValuesProviderClass());
+        assertEquals(UserSearchValuesMapper.class, endpoint.getValuesProviderClass());
         assertEquals("", endpoint.getRolesGET());
         assertEquals("", endpoint.getRolesPOST());
         assertEquals("", endpoint.getRolesPUT());

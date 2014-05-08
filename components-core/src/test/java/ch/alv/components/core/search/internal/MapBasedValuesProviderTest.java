@@ -1,16 +1,19 @@
-package ch.alv.components.core.search;
+package ch.alv.components.core.search.internal;
 
-import ch.alv.components.core.search.internal.BaseSearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * TestCases for the {@link ch.alv.components.core.search.internal.BaseSearchValuesProvider}.
+ * TestCases for the {@link ch.alv.components.core.search.internal.MapBasedValuesProvider}.
  *
  * @since 1.0.0
  */
-public class BaseSearchValuesProviderTest {
+public class MapBasedValuesProviderTest {
 
     public static final String TEST_STRING_KEY = "testStringKey";
     public static final String TEST_NULL_STRING_KEY = "testNullStringKey";
@@ -39,10 +42,25 @@ public class BaseSearchValuesProviderTest {
     public static final String TEST_DEFAULT_VALUE = "defaultValue";
 
 
-    SearchValuesProvider provider = new TestSearchValuesProvider();
+    private ValuesProvider provider;
+
+    public void init() {
+        Map<String, Object> values = new HashMap<>();
+        values.put(TEST_STRING_KEY, TEST_STRING_VALUE);
+        values.put(TEST_BOOL_KEY, TEST_BOOL_VALUE);
+        values.put(TEST_INT_KEY, TEST_INT_VALUE);
+        values.put(TEST_LONG_KEY, TEST_LONG_VALUE);
+        values.put(TEST_FLOAT_KEY, TEST_FLOAT_VALUE);
+        values.put(TEST_DOUBLE_KEY, TEST_DOUBLE_VALUE);
+        values.put(TEST_NULL_KEY, TEST_NULL_VALUE);
+        values.put(TEST_EMPTY_STRING_KEY, TEST_EMPTY_STRING_VALUE);
+        provider = new MapBasedValuesProvider(values);
+    }
+
 
     @Test
     public void testSimpleCalls() {
+        init();
         assertEquals(TEST_STRING_VALUE, provider.getStringValue(TEST_STRING_KEY));
         assertEquals(TEST_BOOL_VALUE, provider.getBooleanValue(TEST_BOOL_KEY));
         assertEquals(TEST_INT_VALUE, provider.getIntValue(TEST_INT_KEY));
@@ -54,6 +72,7 @@ public class BaseSearchValuesProviderTest {
 
     @Test
     public void testDefaultedCalls() {
+        init();
         assertEquals(TEST_STRING_VALUE, provider.getStringValue(TEST_NO_VALUE_KEY, TEST_STRING_VALUE));
         assertEquals(TEST_BOOL_VALUE, provider.getBooleanValue(TEST_NO_VALUE_KEY, TEST_BOOL_VALUE));
         assertEquals(TEST_INT_VALUE, provider.getIntValue(TEST_NO_VALUE_KEY, TEST_INT_VALUE));
@@ -65,6 +84,7 @@ public class BaseSearchValuesProviderTest {
 
     @Test
     public void testSpecialCalls() {
+        init();
         // inexistent keys should return null
         assertEquals(null, provider.getStringValue(TEST_NO_VALUE_KEY));
         // null keys also should return null
@@ -73,25 +93,8 @@ public class BaseSearchValuesProviderTest {
         assertEquals(TEST_DEFAULT_VALUE, provider.getValue("unknownKey", TEST_DEFAULT_VALUE));
         assertEquals(TEST_DEFAULT_VALUE, provider.getValue(TEST_NO_VALUE_KEY, TEST_DEFAULT_VALUE));
         assertEquals(TEST_DEFAULT_VALUE, provider.getValue(TEST_EMPTY_STRING_KEY, TEST_DEFAULT_VALUE));
-    }
-
-    public class TestSearchValuesProvider extends BaseSearchValuesProvider {
-
-        public TestSearchValuesProvider() {
-            putData();
-        }
-
-        @Override
-        protected void putData() {
-            values.put(TEST_STRING_KEY, TEST_STRING_VALUE);
-            values.put(TEST_BOOL_KEY, TEST_BOOL_VALUE);
-            values.put(TEST_INT_KEY, TEST_INT_VALUE);
-            values.put(TEST_LONG_KEY, TEST_LONG_VALUE);
-            values.put(TEST_FLOAT_KEY, TEST_FLOAT_VALUE);
-            values.put(TEST_DOUBLE_KEY, TEST_DOUBLE_VALUE);
-            values.put(TEST_NULL_KEY, TEST_NULL_VALUE);
-            values.put(TEST_EMPTY_STRING_KEY, TEST_EMPTY_STRING_VALUE);
-        }
+        ((MapBasedValuesProvider) provider).setValues(null);
+        assertEquals(0, provider.getValues().size());
     }
 
 }

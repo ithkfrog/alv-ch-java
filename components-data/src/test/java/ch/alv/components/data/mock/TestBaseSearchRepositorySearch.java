@@ -1,7 +1,7 @@
 package ch.alv.components.data.mock;
 
 import ch.alv.components.core.search.Search;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 
 /**
  * * Mock implementation of the {@link Search} interface.
@@ -11,7 +11,7 @@ import ch.alv.components.core.search.SearchValuesProvider;
 public class TestBaseSearchRepositorySearch implements Search {
 
     @Override
-    public Object createQuery(SearchValuesProvider searchValuesProvider, Class<?> targetClass) {
+    public Object createQuery(ValuesProvider valuesProvider, Class<?> targetClass) {
         return null; // not required
     }
 

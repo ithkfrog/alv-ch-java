@@ -2,7 +2,7 @@ package ch.alv.components.data.internal;
 
 import ch.alv.components.core.search.NoSuchSearchException;
 import ch.alv.components.core.search.SearchQueryFactory;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.core.utils.ReflectionUtils;
 import ch.alv.components.data.SearchRepository;
 import org.slf4j.Logger;
@@ -46,13 +46,13 @@ public abstract class BaseSearchRepository<TYPE, ID extends Serializable> implem
      *
      * @param pageable       the pageable to fulfill.
      * @param searchName     the name of the search to apply.
-     * @param searchValuesProvider provides the values to apply.
+     * @param valuesProvider provides the values to apply.
      * @return the result page, matching the requirements of the pageable.
      */
-    protected Page<TYPE> findInternal(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider) {
+    protected Page<TYPE> findInternal(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
         Object search;
         try {
-            search = factory.createQuery(searchName, searchValuesProvider,
+            search = factory.createQuery(searchName, valuesProvider,
                     ReflectionUtils.determineFirstGenericParam(getClass()));
         } catch (NoSuchSearchException e) {
             LOG.debug(e.getMessage() + " Default search will be used.");
@@ -62,7 +62,7 @@ public abstract class BaseSearchRepository<TYPE, ID extends Serializable> implem
             search = null;
         }
         List<TYPE> result = fetchFromSource(pageable, search);
-        if (result == null || result.size() == 0) {
+        if (result == null) {
             return new PageImpl(new ArrayList(), pageable, 0);
         } else {
             return createPage(pageable, result);
@@ -75,35 +75,35 @@ public abstract class BaseSearchRepository<TYPE, ID extends Serializable> implem
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.SearchValuesProvider)
+     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.ValuesProvider)
      */
     @Override
-    public Page<TYPE> find(SearchValuesProvider searchValuesProvider) {
-        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), null, searchValuesProvider);
+    public Page<TYPE> find(ValuesProvider valuesProvider) {
+        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), null, valuesProvider);
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.SearchValuesProvider, org.springframework.data.domain.Pageable)
+     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.ValuesProvider, org.springframework.data.domain.Pageable)
      */
     @Override
-    public Page<TYPE> find(SearchValuesProvider searchValuesProvider, Pageable pageable) {
-        return findInternal(pageable, null, searchValuesProvider);
+    public Page<TYPE> find(ValuesProvider valuesProvider, Pageable pageable) {
+        return findInternal(pageable, null, valuesProvider);
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.SearchValuesProvider, java.lang.String)
+     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.ValuesProvider, java.lang.String)
      */
     @Override
-    public Page<TYPE> find(SearchValuesProvider searchValuesProvider, String searchName) {
-        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), searchName, searchValuesProvider);
+    public Page<TYPE> find(ValuesProvider valuesProvider, String searchName) {
+        return findInternal(new PageRequest(0, DEFAULT_PAGE_SIZE), searchName, valuesProvider);
     }
 
     /* (non-Javadoc)
-     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.SearchValuesProvider, org.springframework.data.domain.Pageable, java.lang.String)
+     * @see ch.alv.components.data.search.SearchRepository#find(ch.alv.components.core.search.ValuesProvider, org.springframework.data.domain.Pageable, java.lang.String)
      */
     @Override
-    public Page<TYPE> find(SearchValuesProvider searchValuesProvider, Pageable pageable, String searchName) {
-        return findInternal(pageable, searchName, searchValuesProvider);
+    public Page<TYPE> find(ValuesProvider valuesProvider, Pageable pageable, String searchName) {
+        return findInternal(pageable, searchName, valuesProvider);
     }
 
     /**

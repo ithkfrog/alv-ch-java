@@ -1,8 +1,9 @@
 package ch.alv.components.web.controller.internal;
 
 import ch.alv.components.core.beans.ModelItem;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.core.spring.ApplicationContextProvider;
+import ch.alv.components.core.utils.ReflectionUtils;
 import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.service.SearchService;
 import ch.alv.components.web.WebConstant;
@@ -14,7 +15,8 @@ import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointRegistry;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import ch.alv.components.web.endpoint.filter.UnauthorizedException;
-import ch.alv.components.web.search.WebSearchValuesProvider;
+import ch.alv.components.web.search.MapBasedRequestParamsAsValuesProvider;
+import ch.alv.components.web.search.RequestParamsToValuesMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -109,23 +111,16 @@ public class DefaultSearchController extends BaseController implements SearchCon
     }
 
     protected ResponseEntity<?> handleNamedSearch(Pageable pageable, Map<String, String[]> params, Endpoint endpoint, String searchName) throws NoSuchValuesProviderException {
-        SearchValuesProvider provider = initValuesProvider(endpoint, params);
+        ValuesProvider provider = initValuesProvider(endpoint, params);
         Page page = getService(endpoint).find(pageable, searchName, provider);
         return new ResponseEntity<>(new PageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements()), HttpStatus.OK);
     }
 
-    protected SearchValuesProvider initValuesProvider(Endpoint endpoint, Map<String, String[]> params) throws NoSuchValuesProviderException {
-        Class<? extends SearchValuesProvider> providerClass = endpoint.getValuesProviderClass();
-        try {
-            SearchValuesProvider provider;
-            provider = providerClass.newInstance();
-            if (provider instanceof WebSearchValuesProvider) {
-                ((WebSearchValuesProvider) provider).setSource(params);
-            }
-            return provider;
-        } catch (Exception e) {
-            throw new NoSuchValuesProviderException("Error while executing search: No valuesProvider of class '" + providerClass.getName() + "' found.");
-        }
+    protected ValuesProvider initValuesProvider(Endpoint endpoint, Map<String, String[]> params) throws NoSuchValuesProviderException {
+        Class<? extends RequestParamsToValuesMapper> mapperClass = endpoint.getValuesProviderClass();
+        RequestParamsToValuesMapper mapper = ReflectionUtils.newInstanceQuietly(mapperClass);
+        ValuesProvider provider = new MapBasedRequestParamsAsValuesProvider(mapper, params);
+        return provider;
     }
 
     protected Object getById(String moduleName, String storeName, String id) {

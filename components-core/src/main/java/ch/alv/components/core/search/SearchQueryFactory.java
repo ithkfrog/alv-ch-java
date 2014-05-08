@@ -10,10 +10,10 @@ public interface SearchQueryFactory {
     /**
      * Create a query object dynamically.
      * @param searchName the name of the search that is executed.
-     * @param searchValuesProvider the values provider.
+     * @param valuesProvider the values provider.
      * @param targetClass the class of which the result will be.
      * @return a platform / store type specific query object.
      */
-    Object createQuery(String searchName, SearchValuesProvider searchValuesProvider, Class<?> targetClass);
+    Object createQuery(String searchName, ValuesProvider valuesProvider, Class<?> targetClass);
 
 }

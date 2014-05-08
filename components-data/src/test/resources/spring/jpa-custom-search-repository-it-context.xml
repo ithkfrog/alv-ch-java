@@ -49,7 +49,7 @@
         </property>
     </bean>
 
-    <bean class="ch.alv.components.core.search.internal.DefaultSearchQueryFactory"/>
+    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory"/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 

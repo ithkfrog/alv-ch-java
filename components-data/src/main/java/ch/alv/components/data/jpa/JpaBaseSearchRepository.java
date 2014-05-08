@@ -31,7 +31,7 @@ public class JpaBaseSearchRepository<TYPE, ID extends Serializable> extends Base
     /* (non-Javadoc)
      * @see ch.alv.components.data.search.BaseSearchRepositoryImpl#fetchFromSource(org.springframework.data.domain.Pageable,
      *                                                                             ch.alv.components.core.search.SearchImpl,
-     *                                                                             ch.alv.components.core.search.SearchValuesProvider,
+     *                                                                             ch.alv.components.core.search.ValuesProvider,
      *                                                                             java.lang.String)
      */
     @Override

@@ -106,16 +106,6 @@ public class DefaultSearchControllerTest {
     }
 
     @Test
-    public void testGetWithIllegalDefaultSearchClass() throws UnauthorizedException, NoSuchValuesProviderException {
-        request.setMethod("GET");
-        request.removeAllParameters();
-        exception.expect(NoSuchValuesProviderException.class);
-        exception.expectMessage("No valuesProvider of class 'ch.alv.components.web.controller.ParamConstructorValuesProvider' found.");
-        controller.handleGetRequest(request, "searchTestModuleWithParamConstructorSearch", "searchTestStore");
-    }
-
-
-    @Test
     public void testPost() throws UnauthorizedException, NoSuchValuesProviderException {
         request.setMethod("POST");
         request.removeAllParameters();

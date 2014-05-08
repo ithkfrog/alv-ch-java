@@ -1,7 +1,7 @@
 package ch.alv.components.data.mock;
 
 import ch.alv.components.core.search.Search;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class TestBaseSearchRepositoryNonStringSearch implements Search {
 
     @Override
-    public Object createQuery(SearchValuesProvider searchValuesProvider, Class<?> targetClass) {
+    public Object createQuery(ValuesProvider valuesProvider, Class<?> targetClass) {
         return new ArrayList<>(); // not required
     }
 

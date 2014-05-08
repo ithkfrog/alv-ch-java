@@ -1,5 +1,8 @@
 package ch.alv.components.core.utils;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.lang.reflect.ParameterizedType;
 
 /**
@@ -9,6 +12,8 @@ import java.lang.reflect.ParameterizedType;
  */
 @SuppressWarnings("unchecked")
 public class ReflectionUtils {
+
+    private final static Log LOG = LogFactory.getLog(ReflectionUtils.class);
 
     /**
      * Determines the Type Parameter of the superclass of the particular class instance.
@@ -47,6 +52,15 @@ public class ReflectionUtils {
             throw new ReflectionUtilsException("No Type Parameter defined for: '" + type + "' with index '" + index + "'");
         }
         return (Class<T>) type.getActualTypeArguments()[index];
+    }
+
+    public static <T> T newInstanceQuietly(Class<T> targetClass) {
+        try {
+            return targetClass.newInstance();
+        } catch (Exception e) {
+            LOG.warn("Error while creating a new object of class " + targetClass.getName(), e);
+            return null;
+        }
     }
 
 }

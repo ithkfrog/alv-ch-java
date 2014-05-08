@@ -9,7 +9,7 @@
     <bean class="ch.alv.components.data.mock.TestBaseSearchRepositoryNonStringSearch"/>
     <bean class="ch.alv.components.data.mock.TestBaseSearchRepositoryNullSearch"/>
 
-    <bean class="ch.alv.components.core.search.internal.DefaultSearchQueryFactory"/>
+    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory"/>
 
     <bean class="ch.alv.components.data.mock.TestBaseSearchRepository"/>
 

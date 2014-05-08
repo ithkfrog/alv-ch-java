@@ -14,12 +14,18 @@
         </layout>
     </appender>
 
+    <logger name="ch.alv.components.core.beans.mapper.internal.BeanUtilsAdapter">
+        <level value="fatal" />
+    </logger>
+
+
+
     <!-- ========================================= -->
     <!-- ROOT CONFIG -->
     <!-- ========================================= -->
 
     <root>
-        <level value="warn"/>
+        <level value="error"/>
         <appender-ref ref="technical-console-appender"/>
     </root>
 

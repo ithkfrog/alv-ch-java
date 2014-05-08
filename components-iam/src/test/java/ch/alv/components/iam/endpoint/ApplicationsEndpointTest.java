@@ -4,7 +4,7 @@ import ch.alv.components.iam.endpoint.dto.ApplicationDto;
 import ch.alv.components.iam.model.Application;
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointHelper;
-import ch.alv.components.web.search.internal.DefaultWebSearchValuesProvider;
+import ch.alv.components.web.search.internal.DefaultMapper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -27,7 +27,7 @@ public class ApplicationsEndpointTest {
         assertEquals(EndpointHelper.createAllMethodsList(), endpoint.getAllowedMethods());
         assertEquals(ApplicationDto.class, endpoint.getDtoClass());
         assertEquals(Application.class, endpoint.getEntityClass());
-        assertEquals(DefaultWebSearchValuesProvider.class, endpoint.getValuesProviderClass());
+        assertEquals(DefaultMapper.class, endpoint.getValuesProviderClass());
         assertEquals("", endpoint.getRolesGET());
         assertEquals("", endpoint.getRolesPOST());
         assertEquals("", endpoint.getRolesPUT());

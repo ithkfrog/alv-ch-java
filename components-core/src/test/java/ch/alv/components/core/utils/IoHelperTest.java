@@ -39,15 +39,7 @@ public class IoHelperTest {
     }
 
     @Test
-    public void testCloseReaderQuietlyWithException() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(FILE_NAME)));
-        br.close();
-        IoHelper.closeReaderQuietly(br);
-    }
-
-    @Test
-    public void testCloseReaderQuietlyWithNullReader() {
-        exception.expect(NullPointerException.class);
+    public void testCloseReaderQuietlyWithException() {
         IoHelper.closeReaderQuietly(null);
     }
 

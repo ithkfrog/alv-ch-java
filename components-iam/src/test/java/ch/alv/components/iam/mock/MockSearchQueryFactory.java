@@ -1,7 +1,7 @@
 package ch.alv.components.iam.mock;
 
 import ch.alv.components.core.search.SearchQueryFactory;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 
 /**
  * * Mock implementation of the {@link SearchQueryFactory} interface.
@@ -10,7 +10,7 @@ import ch.alv.components.core.search.SearchValuesProvider;
  */
 public class MockSearchQueryFactory implements SearchQueryFactory {
     @Override
-    public Object createQuery(String searchName, SearchValuesProvider searchValuesProvider, Class<?> targetClass) {
+    public Object createQuery(String searchName, ValuesProvider valuesProvider, Class<?> targetClass) {
         return null;  // not required
     }
 }

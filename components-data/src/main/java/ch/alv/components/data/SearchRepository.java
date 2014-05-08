@@ -1,6 +1,6 @@
 package ch.alv.components.data;
 
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,37 +16,37 @@ public interface SearchRepository<TYPE, ID extends Serializable> extends DataRep
     /**
      * Find entities with the default search configuration.
      *
-     * @param searchValuesProvider provides the parameters which should be used
+     * @param valuesProvider provides the parameters which should be used
      * @return a page of matching entities
      */
-    Page<TYPE> find(SearchValuesProvider searchValuesProvider);
+    Page<TYPE> find(ValuesProvider valuesProvider);
 
     /**
      * Find entities with the default search configuration and adapt the result list to be conform to the given pageable.
      *
-     * @param searchValuesProvider provides the parameters which should be used.
+     * @param valuesProvider provides the parameters which should be used.
      * @param pageable       paging information to be considered when executing the search.
      * @return a page of matching entities
      */
-    Page<TYPE> find(SearchValuesProvider searchValuesProvider, Pageable pageable);
+    Page<TYPE> find(ValuesProvider valuesProvider, Pageable pageable);
 
     /**
      * Find entities with the given search configuration.
      *
-     * @param searchValuesProvider provides the parameters which should be used
+     * @param valuesProvider provides the parameters which should be used
      * @param searchName     the name of the search that should be used.
      * @return a page of matching entities
      */
-    Page<TYPE> find(SearchValuesProvider searchValuesProvider, String searchName);
+    Page<TYPE> find(ValuesProvider valuesProvider, String searchName);
 
     /**
      * Find entities with the given search configuration and adapt the result list to be conform to the given pageable.
      *
-     * @param searchValuesProvider provides the parameters which should be used.
+     * @param valuesProvider provides the parameters which should be used.
      * @param pageable       paging information to be considered when executing the search.
      * @param searchName     the name of the search that should be used.
      * @return a page of matching entities
      */
-    Page<TYPE> find(SearchValuesProvider searchValuesProvider, Pageable pageable, String searchName);
+    Page<TYPE> find(ValuesProvider valuesProvider, Pageable pageable, String searchName);
 
 }

@@ -1,6 +1,6 @@
 package ch.alv.components.web.mapper;
 
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.service.SearchService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -62,39 +62,39 @@ public class MockSearchService implements SearchService<MockFactoryTestEntity, S
     }
 
     @Override
-    public Page<MockFactoryTestEntity> find(SearchValuesProvider searchValuesProvider) {
+    public Page<MockFactoryTestEntity> find(ValuesProvider valuesProvider) {
         List<MockFactoryTestEntity> result = new ArrayList<>();
-        result.add(entitiesMap.get(searchValuesProvider.getValue("id")));
+        result.add(entitiesMap.get(valuesProvider.getValue("id")));
         return new PageImpl(result);
     }
 
     @Override
-    public Page<MockFactoryTestEntity> find(String searchName, SearchValuesProvider searchValuesProvider) {
+    public Page<MockFactoryTestEntity> find(String searchName, ValuesProvider valuesProvider) {
         List<MockFactoryTestEntity> result = new ArrayList<>();
         if ("searchById".equalsIgnoreCase(searchName)) {
-            result.add(entitiesMap.get(searchValuesProvider.getValue("id")));
+            result.add(entitiesMap.get(valuesProvider.getValue("id")));
         }
         if ("searchByVersion".equalsIgnoreCase(searchName)) {
-            result.add(entitiesMap.get(searchValuesProvider.getValue("version")));
+            result.add(entitiesMap.get(valuesProvider.getValue("version")));
         }
         return new PageImpl(result);
     }
 
     @Override
-    public Page<MockFactoryTestEntity> find(Pageable pageable, SearchValuesProvider searchValuesProvider) {
+    public Page<MockFactoryTestEntity> find(Pageable pageable, ValuesProvider valuesProvider) {
         List<MockFactoryTestEntity> result = new ArrayList<>();
-        result.add(entitiesMap.get(searchValuesProvider.getValue("id")));
+        result.add(entitiesMap.get(valuesProvider.getValue("id")));
         return new PageImpl(result, pageable, 1);
     }
 
     @Override
-    public Page<MockFactoryTestEntity> find(Pageable pageable, String searchName, SearchValuesProvider searchValuesProvider) {
+    public Page<MockFactoryTestEntity> find(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
         List<MockFactoryTestEntity> result = new ArrayList<>();
         if ("searchById".equalsIgnoreCase(searchName)) {
-            result.add(entitiesMap.get(searchValuesProvider.getValue("id")));
+            result.add(entitiesMap.get(valuesProvider.getValue("id")));
         }
         if ("searchByVersion".equalsIgnoreCase(searchName)) {
-            result.add(entitiesMap.get(searchValuesProvider.getValue("version")));
+            result.add(entitiesMap.get(valuesProvider.getValue("version")));
         }
         return new PageImpl(result, pageable, 1);
     }

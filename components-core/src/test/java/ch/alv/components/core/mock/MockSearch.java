@@ -1,7 +1,7 @@
 package ch.alv.components.core.mock;
 
 import ch.alv.components.core.search.Search;
-import ch.alv.components.core.search.SearchValuesProvider;
+import ch.alv.components.core.search.ValuesProvider;
 
 /**
  * Search implementation for test purposes.
@@ -22,7 +22,7 @@ public class MockSearch implements Search {
     }
 
     @Override
-    public Object createQuery(SearchValuesProvider searchValuesProvider, Class<?> targetClass) {
+    public Object createQuery(ValuesProvider valuesProvider, Class<?> targetClass) {
         return "testQuery for " + targetClass.getSimpleName();
     }
 }

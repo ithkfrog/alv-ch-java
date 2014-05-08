@@ -89,14 +89,14 @@ public class BaseControllerTest {
 
     @Test
     public void testCreateProvider() {
-        // SearchValuesProvider provider = controller.createProvider(StringWebValuesProvider.class);
+        // ValuesProvider provider = controller.createProvider(StringWebValuesProvider.class);
         // assertNotNull(provider);
     }
 
     @Test
     public void testCreateProviderFail() {
         //exception.expect(IllegalStateException.class);
-        // SearchValuesProvider provider = controller.createProvider(null);
+        // ValuesProvider provider = controller.createProvider(null);
     }
 
     @Test

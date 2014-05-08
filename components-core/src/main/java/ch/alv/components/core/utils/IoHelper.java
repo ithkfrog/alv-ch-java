@@ -3,7 +3,6 @@ package ch.alv.components.core.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.IOException;
 import java.io.Reader;
 
 /**
@@ -22,8 +21,8 @@ public class IoHelper {
     public static void closeReaderQuietly(Reader reader) {
         try {
             reader.close();
-        } catch (IOException e) {
-            LOG.error("Error while closing reader.", e);
+        } catch (Exception e) {
+            LOG.warn("Error while closing reader.", e);
         }
     }
 
