@@ -1,27 +1,15 @@
 package ch.alv.components.data.jpa;
 
-import ch.alv.components.data.mock.JpaTestEntity;
-import ch.alv.components.data.mock.JpaTestRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.annotation.Resource;
-import java.util.Iterator;
-
-
 /**
  * Unit tests for the Repositories
  *
  * @since 1.0.0
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring/jpa-custom-search-repository-it-context.xml")
+/*@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:spring/jpa-custom-search-repository-it-context.xml")*/
 public class JpaCustomSearchRepositoryIT {
 
-    @Resource
+    /*@Resource
     private JpaTestRepository repository;
 
 
@@ -37,5 +25,5 @@ public class JpaCustomSearchRepositoryIT {
         }
         Assert.assertEquals(1, counter);
     }
-
+*/
 }

@@ -40,6 +40,11 @@ public class BeanUtilsAdapterTest {
         assertEquals("testId", testObject.getId());
     }
 
+    @Test
+    public void testConstructor()  {
+        new BeanUtilsAdapter();
+    }
+
     public class MockIdentifiable implements Identifiable<String> {
         private String id;
         @Override

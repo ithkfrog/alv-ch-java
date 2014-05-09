@@ -35,7 +35,7 @@ public class DefaultSearchServiceTest {
     @Test
     public void testFindAll() {
         Page<?> page = service.findAll();
-        assertEquals(100, page.getSize());
+        assertEquals(20, page.getSize());
         assertEquals(0, page.getNumber());
         assertEquals(19, page.getTotalElements());
         assertEquals(1, page.getTotalPages());

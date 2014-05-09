@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 public class FlatFileColumnSeparatorTypeTest {
 
     @Test
-    public void testKeys() {
+    public void testValues() {
         assertNotNull(FlatFileColumnSeparatorType.CHARACTER);
         assertNotNull(FlatFileColumnSeparatorType.FIXLENGTH);
     }

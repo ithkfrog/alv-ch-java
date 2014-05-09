@@ -1,8 +1,8 @@
 package ch.alv.components.core.beans.mapper.internal;
 
 import ch.alv.components.core.beans.mapper.MappingException;
-import ch.alv.components.core.mock.BeanA;
-import ch.alv.components.core.mock.BeanB;
+import ch.alv.components.core.mock.MockBeanA;
+import ch.alv.components.core.mock.MockBeanB;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -69,13 +69,13 @@ public class DozerBeanMapperTest {
     @Test
     public void testAllowedNullValues() {
         // creation of fresh beans
-        assertNull(mapper.mapObject(null, BeanA.class));
+        assertNull(mapper.mapObject(null, MockBeanA.class));
         assertNull(mapper.mapObject(null, null));
-        assertNull(mapper.mapCollection(null, BeanA.class));
+        assertNull(mapper.mapCollection(null, MockBeanA.class));
         assertNull(mapper.mapCollection(null, null));
 
         // mapping to existing beans
-        BeanA a = null;
+        MockBeanA a = null;
         mapper.mapObject(null, a);
         assertEquals(null, a);
     }
@@ -84,7 +84,7 @@ public class DozerBeanMapperTest {
     public void testForbiddenNullClassForFreshSingleObjects() {
         exception.expect(MappingException.class);
         exception.expectMessage("Error while mapping objects");
-        mapper.mapObject(new BeanA(), null);
+        mapper.mapObject(new MockBeanA(), null);
     }
 
     @Test
@@ -92,8 +92,8 @@ public class DozerBeanMapperTest {
         exception.expect(MappingException.class);
         exception.expectMessage("Error while mapping objects");
         // mapping to existing beans
-        BeanA a = null;
-        mapper.mapObject(new BeanA(), a);
+        MockBeanA a = null;
+        mapper.mapObject(new MockBeanA(), a);
     }
 
     public void testForbiddenNullClassForCollections() {
@@ -106,8 +106,8 @@ public class DozerBeanMapperTest {
     public void testMapToFreshObject() {
         String key = "testKey";
         String value = "testValue";
-        BeanA a = new BeanA(key, value);
-        BeanB b = mapper.mapObject(a, BeanB.class);
+        MockBeanA a = new MockBeanA(key, value);
+        MockBeanB b = mapper.mapObject(a, MockBeanB.class);
         assertEquals(key, b.getKey());
         assertEquals(value, b.getValue());
     }
@@ -117,8 +117,8 @@ public class DozerBeanMapperTest {
         String key = "testKey";
         String value = "testValue";
 
-        BeanA a = new BeanA(key, value);
-        BeanB b = new BeanB("initialKey", "initialValue");
+        MockBeanA a = new MockBeanA(key, value);
+        MockBeanB b = new MockBeanB("initialKey", "initialValue");
 
         mapper.mapObject(a, b);
         assertEquals(key, b.getKey());
@@ -133,14 +133,14 @@ public class DozerBeanMapperTest {
         String keyB = "testKeyB";
         String valueB = "testValueB";
 
-        BeanA a = new BeanA(keyA, valueA);
-        BeanA b = new BeanA(keyB, valueB);
+        MockBeanA a = new MockBeanA(keyA, valueA);
+        MockBeanA b = new MockBeanA(keyB, valueB);
 
         List<Object> list = new ArrayList<>();
         list.add(a);
         list.add(b);
 
-        List<BeanB> newList = mapper.mapCollection(list, BeanB.class);
+        List<MockBeanB> newList = mapper.mapCollection(list, MockBeanB.class);
         assertEquals(keyA, newList.get(0).getKey());
         assertEquals(valueA, newList.get(0).getValue());
         assertEquals(keyB, newList.get(1).getKey());

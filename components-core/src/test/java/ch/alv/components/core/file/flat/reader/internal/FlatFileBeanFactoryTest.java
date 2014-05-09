@@ -1,7 +1,7 @@
 package ch.alv.components.core.file.flat.reader.internal;
 
 import ch.alv.components.core.file.flat.reader.FlatFileConverterException;
-import ch.alv.components.core.mock.BeanA;
+import ch.alv.components.core.mock.MockBeanA;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -20,7 +20,7 @@ public class FlatFileBeanFactoryTest {
 
     @Test
     public void testSuccess() {
-        assertNotNull(new FlatFileBeanFactory().createBean(BeanA.class));
+        assertNotNull(new FlatFileBeanFactory().createBean(MockBeanA.class));
     }
 
     @Test

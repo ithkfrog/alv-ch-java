@@ -16,6 +16,15 @@
 
     <context:component-scan base-package="ch.alv.components.iam.service"/>
 
+    <bean class="ch.alv.components.data.jpa.JpaSearchAdapter">
+        <constructor-arg index="0" value="ch.alv.components.iam.model.User" />
+        <constructor-arg index="1">
+            <bean class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+                <property name="persistenceUnitName" value="sm-iam" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
     <bean id="mapper" class="ch.alv.components.core.beans.mapper.internal.DozerBeanMapper" />
 
     <bean class="ch.alv.components.iam.search.UserSearch" />
@@ -35,7 +44,7 @@
     </bean>
 
     <!-- *** EntityManagerFactory *** -->
-    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="emf" name="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="persistenceUnitName" value="sm-iam"/>
         <property name="packagesToScan">

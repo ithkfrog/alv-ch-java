@@ -18,8 +18,6 @@
     <logger name="org.springframework" level="warn" />
     <logger name="org.dozer" level="warn" />
     <logger name="org.apache.commons.beanutils.converters" level="warn" />
-    <logger name="ch.alv.components.core.beans.mapper.internal.BeanUtilsAdapter" level="fatal" />
-    <logger name="ch.alv.components.core.file.flat.reader.internal.FlatFileToObjectsConverter" level="fatal" />
 
     <root level="error">
         <appender-ref ref="STDOUT" />

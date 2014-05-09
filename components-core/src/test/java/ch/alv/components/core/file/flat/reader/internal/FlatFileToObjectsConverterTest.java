@@ -35,20 +35,20 @@ public class FlatFileToObjectsConverterTest {
 
     @Test
     public void testConstructor() throws InstantiationException, IllegalAccessException {
-        new FlatFileToObjectsConverter<>(BeanB.class);
+        new FlatFileToObjectsConverter<>(MockBeanB.class);
     }
 
     @Test
     public void testMissingAnnotation() throws InstantiationException, IllegalAccessException {
         exception.expect(FlatFileConverterException.class);
-        exception.expectMessage("Could not find @FlatFileConversion annotation on class 'ch.alv.components.core.mock.BeanA'.");
-        new FlatFileToObjectsConverter<>(BeanA.class);
+        exception.expectMessage("Could not find @FlatFileConversion annotation on class 'ch.alv.components.core.mock.MockBeanA'.");
+        new FlatFileToObjectsConverter<>(MockBeanA.class);
     }
 
     @Test
     public void testSimpleStringConversion() throws InstantiationException, IllegalAccessException {
         String row = "1;Jon;Doe;true";
-        SemicolonDelimitedBean bean = new FlatFileToObjectsConverter<>(SemicolonDelimitedBean.class).convert(row);
+        MockSemicolonDelimitedBean bean = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedBean.class).convert(row);
         assertEquals((Integer) 1, bean.getId());
         assertEquals("Jon", bean.getFirstName());
         assertEquals("Doe", bean.getLastName());
@@ -57,37 +57,37 @@ public class FlatFileToObjectsConverterTest {
 
     @Test
     public void testSimpleStringEmptyValue() throws InstantiationException, IllegalAccessException {
-        assertNull(new FlatFileToObjectsConverter<>(SemicolonDelimitedBean.class).convert(""));
+        assertNull(new FlatFileToObjectsConverter<>(MockSemicolonDelimitedBean.class).convert(""));
     }
 
     @Test
     public void testSimpleStringNullValue() throws InstantiationException, IllegalAccessException {
-        assertNull(new FlatFileToObjectsConverter<>(SemicolonDelimitedBean.class).convert(null));
+        assertNull(new FlatFileToObjectsConverter<>(MockSemicolonDelimitedBean.class).convert(null));
     }
 
     @Test
     public void testDelimitedColumnStreamRead() throws InstantiationException, IllegalAccessException {
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedBean.class);
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedBean.class);
         spec.convert(getClass().getResourceAsStream("semicolon-delimited-test-data.csv"), new FlatFileTestHandle());
     }
 
     @Test
     public void testDelimitedColumnMappingFail() throws InstantiationException, IllegalAccessException {
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedBean.class);
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedBean.class);
         spec.convert(getClass().getResourceAsStream("semicolon-delimited-test-data-failing.csv"), new FlatFileTestHandle());
     }
 
     @Test
     public void testFixLengthColumnStreamRead() throws InstantiationException, IllegalAccessException {
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(FixLengthBean.class);
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockFixLengthBean.class);
         spec.convert(getClass().getResourceAsStream("fix-length-test-data.csv"), new FlatFileTestHandle());
     }
 
     @Test
     public void testFixLengthIndexFail() throws InstantiationException, IllegalAccessException {
         exception.expect(FlatFileConverterException.class);
-        exception.expectMessage("Could not convert '1    hans           \"meier;beck\"        false         ' to a ch.alv.components.core.mock.FailingFixLengthBean object.");
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(FailingFixLengthBean.class);
+        exception.expectMessage("Could not convert '1    hans           \"meier;beck\"        false         ' to a ch.alv.components.core.mock.MockFailingFixLengthBean object.");
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockFailingFixLengthBean.class);
         spec.convert(getClass().getResourceAsStream("fix-length-test-data.csv"), new FlatFileTestHandle());
     }
 
@@ -95,16 +95,16 @@ public class FlatFileToObjectsConverterTest {
     public void testNullStreamException() throws InstantiationException, IllegalAccessException {
         exception.expect(FlatFileConverterException.class);
         exception.expectMessage("Cannot read file. Invalid InputStream.");
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(FixLengthBean.class);
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockFixLengthBean.class);
         spec.convert(null, new FlatFileTestHandle());
     }
 
     @Test
     public void testColSkipping() throws InstantiationException, IllegalAccessException {
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedColSkippingBean.class);
-        spec.convert(getClass().getResourceAsStream("semicolon-delimited-test-data.csv"), new FlatFileObjectHandle<SemicolonDelimitedColSkippingBean>() {
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedColSkippingBean.class);
+        spec.convert(getClass().getResourceAsStream("semicolon-delimited-test-data.csv"), new FlatFileObjectHandle<MockSemicolonDelimitedColSkippingBean>() {
             @Override
-            public boolean handle(SemicolonDelimitedColSkippingBean object) {
+            public boolean handle(MockSemicolonDelimitedColSkippingBean object) {
                 if (object.getId() == 1) {
                     assertNull(object.getFirstName());
                     assertEquals("meier;beck", object.getLastName());
@@ -121,10 +121,10 @@ public class FlatFileToObjectsConverterTest {
 
     @Test
     public void testDateFormatNoHeaders() throws InstantiationException, IllegalAccessException {
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedDateTestLineSkippingBean.class);
-        spec.convert(getClass().getResourceAsStream("semicolon-delimited-date-test-data.csv"), new FlatFileObjectHandle<SemicolonDelimitedDateTestLineSkippingBean>() {
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedDateTestLineSkippingBean.class);
+        spec.convert(getClass().getResourceAsStream("semicolon-delimited-date-test-data.csv"), new FlatFileObjectHandle<MockSemicolonDelimitedDateTestLineSkippingBean>() {
             @Override
-            public boolean handle(SemicolonDelimitedDateTestLineSkippingBean object) {
+            public boolean handle(MockSemicolonDelimitedDateTestLineSkippingBean object) {
                 assertEquals(1, object.getId());
 
                 try {
@@ -143,10 +143,10 @@ public class FlatFileToObjectsConverterTest {
 
     @Test
     public void testDateFormat() throws InstantiationException, IllegalAccessException {
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedDateTestBean.class);
-        spec.convert(getClass().getResourceAsStream("semicolon-delimited-date-test-data.csv"), new FlatFileObjectHandle<SemicolonDelimitedDateTestBean>() {
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedDateTestBean.class);
+        spec.convert(getClass().getResourceAsStream("semicolon-delimited-date-test-data.csv"), new FlatFileObjectHandle<MockSemicolonDelimitedDateTestBean>() {
             @Override
-            public boolean handle(SemicolonDelimitedDateTestBean object) {
+            public boolean handle(MockSemicolonDelimitedDateTestBean object) {
                 assertEquals(1, object.getId());
 
                 try {
@@ -167,11 +167,11 @@ public class FlatFileToObjectsConverterTest {
     @Test
     public void testIllegalDateFormat() throws InstantiationException, IllegalAccessException {
         exception.expect(FlatFileConverterException.class);
-        exception.expectMessage("Could not convert '1;noDate;noDate' to a ch.alv.components.core.mock.SemicolonDelimitedDateTestBean object.");
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedDateTestBean.class);
-        spec.convert(getClass().getResourceAsStream("semicolon-delimited-date-test-data-failing.csv"), new FlatFileObjectHandle<SemicolonDelimitedDateTestBean>() {
+        exception.expectMessage("Could not convert '1;noDate;noDate' to a ch.alv.components.core.mock.MockSemicolonDelimitedDateTestBean object.");
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedDateTestBean.class);
+        spec.convert(getClass().getResourceAsStream("semicolon-delimited-date-test-data-failing.csv"), new FlatFileObjectHandle<MockSemicolonDelimitedDateTestBean>() {
             @Override
-            public boolean handle(SemicolonDelimitedDateTestBean object) {
+            public boolean handle(MockSemicolonDelimitedDateTestBean object) {
                 return true;
             }
         });
@@ -181,13 +181,13 @@ public class FlatFileToObjectsConverterTest {
     public void testNullHandle() throws InstantiationException, IllegalAccessException {
         exception.expect(FlatFileConverterException.class);
         exception.expectMessage("Cannot read file. Invalid InputStream.");
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedDateTestBean.class);
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedDateTestBean.class);
         spec.convert(getClass().getResourceAsStream("semicolon-delimited-date-fail-test.csv"), null);
     }
 
     @Test
     public void testGettersAndSetters() throws InstantiationException, IllegalAccessException {
-        FlatFileToObjectsConverter spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedBean.class);
+        FlatFileToObjectsConverter spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedBean.class);
         assertEquals(0, spec.getIdColumnIndex());
         assertNotNull(spec.getBeanFactory());
         spec.setColumnSeparator(null);
@@ -204,11 +204,11 @@ public class FlatFileToObjectsConverterTest {
 
     @Test
     public void testStop() throws InstantiationException, IllegalAccessException {
-        StringBeanFactory spec = new FlatFileToObjectsConverter<>(SemicolonDelimitedBean.class);
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockSemicolonDelimitedBean.class);
         final int[] counter = {0};
-        spec.convert(getClass().getResourceAsStream("semicolon-delimited-test-data.csv"), new FlatFileObjectHandle<SemicolonDelimitedBean>() {
+        spec.convert(getClass().getResourceAsStream("semicolon-delimited-test-data.csv"), new FlatFileObjectHandle<MockSemicolonDelimitedBean>() {
             @Override
-            public boolean handle(SemicolonDelimitedBean object) {
+            public boolean handle(MockSemicolonDelimitedBean object) {
                 counter[0]++;
                 return false;
             }
@@ -216,9 +216,9 @@ public class FlatFileToObjectsConverterTest {
         assertEquals(1, counter[0]);
     }
 
-    private class FlatFileTestHandle implements FlatFileObjectHandle<FlatFileBean> {
+    private class FlatFileTestHandle implements FlatFileObjectHandle<MockFlatFileBean> {
         @Override
-        public boolean handle(FlatFileBean object) {
+        public boolean handle(MockFlatFileBean object) {
             recCount++;
             // there are 2 records in the file and the assertions check for data
             // in each

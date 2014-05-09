@@ -17,7 +17,6 @@ public class UserSearchValuesMapperTest {
 
     private UserSearchValuesMapper mapper = new UserSearchValuesMapper();
 
-
     @Test
     public void testMap() {
         Map<String, String[]> source = new HashMap<>();

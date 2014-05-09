@@ -10,9 +10,9 @@
 
     <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory"/>
 
-    <bean class="ch.alv.components.data.mock.TestBaseSearchRepositorySearch"/>
-    <bean class="ch.alv.components.data.mock.TestBaseSearchRepositoryNonStringSearch"/>
-    <bean class="ch.alv.components.data.mock.TestBaseSearchRepositoryNullSearch"/>
+    <bean class="ch.alv.components.data.mock.search.TestBaseSearchRepositorySearch"/>
+    <bean class="ch.alv.components.data.mock.search.TestBaseSearchRepositoryNonStringSearch"/>
+    <bean class="ch.alv.components.data.mock.search.TestBaseSearchRepositoryNullSearch"/>
 
     <!-- use a sandbox node -->
      <elasticsearch:node-client id="client" local="true"/>

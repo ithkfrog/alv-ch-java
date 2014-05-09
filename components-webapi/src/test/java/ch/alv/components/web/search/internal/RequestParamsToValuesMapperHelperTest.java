@@ -57,8 +57,8 @@ public class RequestParamsToValuesMapperHelperTest {
         items.add("multiValue2");
         assertEquals(items, helper.getMultiSourceValue("multiValueKey", source, String.class));
         assertNull(helper.getMultiSourceValue("unknownKey", source, String.class));
-        assertNull(helper.getMultiSourceValue("unknownKey", source, null));
-        assertNull(helper.getMultiSourceValue("unknownKey", null, String.class));
+        assertNull(helper.getMultiSourceValue("stringKey", source, null));
+        assertNull(helper.getMultiSourceValue("stringKey", null, String.class));
         assertNull(helper.getMultiSourceValue("emptyKey", source, String.class));
     }
 
