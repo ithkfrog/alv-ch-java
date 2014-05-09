@@ -3,7 +3,6 @@ package ch.alv.components.data.internal;
 import ch.alv.components.core.search.NoSuchSearchException;
 import ch.alv.components.core.search.SearchQueryFactory;
 import ch.alv.components.core.search.ValuesProvider;
-import ch.alv.components.core.utils.ReflectionUtils;
 import ch.alv.components.data.DataStoreSearchAdapter;
 import ch.alv.components.data.SearchRepository;
 import org.slf4j.Logger;
@@ -33,10 +32,12 @@ public class DefaultSearchRepository<TYPE, ID extends Serializable> implements S
 
     private final DataStoreSearchAdapter<TYPE, ID> storeAdapter;
 
-    protected DefaultSearchRepository(DataStoreSearchAdapter<TYPE, ID> storeAdapter) {
+    private final Class<? extends TYPE> entityClass;
+
+    protected DefaultSearchRepository(Class<TYPE> entityClass, DataStoreSearchAdapter<TYPE, ID> storeAdapter) {
+        this.entityClass = entityClass;
         this.storeAdapter = storeAdapter;
     }
-
 
     /**
      * Central logic how public method requests are handled.
@@ -49,8 +50,7 @@ public class DefaultSearchRepository<TYPE, ID extends Serializable> implements S
     protected Page<TYPE> findInternal(Pageable pageable, String searchName, ValuesProvider valuesProvider) {
         Object search;
         try {
-            search = factory.createQuery(searchName, valuesProvider,
-                    ReflectionUtils.determineFirstGenericParam(getClass()));
+            search = factory.createQuery(searchName, valuesProvider, entityClass);
         } catch (NoSuchSearchException e) {
             LOG.debug(e.getMessage() + " Default search will be used.");
             search = null;

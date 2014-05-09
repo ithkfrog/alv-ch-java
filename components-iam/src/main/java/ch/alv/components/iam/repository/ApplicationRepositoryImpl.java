@@ -16,7 +16,7 @@ public class ApplicationRepositoryImpl extends DefaultSearchRepository<Applicati
 
     @Inject
     public ApplicationRepositoryImpl(EntityManagerFactory emf) {
-        super(new JpaSearchAdapter<Application, String>(Application.class, emf.createEntityManager()));
+        super(Application.class, new JpaSearchAdapter<Application, String>(Application.class, emf.createEntityManager()));
     }
 
 }

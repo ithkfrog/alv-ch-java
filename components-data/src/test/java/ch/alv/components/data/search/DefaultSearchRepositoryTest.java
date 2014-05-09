@@ -1,7 +1,7 @@
 package ch.alv.components.data.search;
 
-import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.data.internal.DefaultSearchRepository;
+import ch.alv.components.data.mock.MockModelItem;
 import ch.alv.components.data.mock.MockSearchRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ import static org.junit.Assert.assertNotNull;
 public class DefaultSearchRepositoryTest {
 
     @Resource
-    private DefaultSearchRepository<ModelItem, String> repository = new MockSearchRepository();
+    private DefaultSearchRepository<MockModelItem, String> repository = new MockSearchRepository();
 
     @Test
     public void testFindWithValuesProvider() {
@@ -69,7 +69,7 @@ public class DefaultSearchRepositoryTest {
         ids.add("a");
         ids.add("b");
         ids.add("z");
-        Page<ModelItem> page = repository.getAll(ids);
+        Page<MockModelItem> page = repository.getAll(ids);
         assertEquals(2, page.getContent().size());
     }
 

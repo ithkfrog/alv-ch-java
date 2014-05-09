@@ -16,7 +16,7 @@ public class RoleRepositoryImpl extends DefaultSearchRepository<Role, String> im
 
     @Inject
     public RoleRepositoryImpl(EntityManagerFactory emf) {
-        super(new JpaSearchAdapter<Role, String>(Role.class, emf.createEntityManager()));
+        super(Role.class, new JpaSearchAdapter<Role, String>(Role.class, emf.createEntityManager()));
     }
 
 }

@@ -1,6 +1,5 @@
 package ch.alv.components.service.mock;
 
-import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.data.internal.DefaultSearchRepository;
 
 /**
@@ -8,10 +7,10 @@ import ch.alv.components.data.internal.DefaultSearchRepository;
  *
  * @since 1.0.0
  */
-public class MockSearchRepository extends DefaultSearchRepository<ModelItem, String> {
+public class MockSearchRepository extends DefaultSearchRepository<MockModelItem, String> {
 
     public MockSearchRepository() {
-        super(new MockSearchRepositoryAdapter());
+        super(MockModelItem.class, new MockSearchRepositoryAdapter());
     }
 
 }

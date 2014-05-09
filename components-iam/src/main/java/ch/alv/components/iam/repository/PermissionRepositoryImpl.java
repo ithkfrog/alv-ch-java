@@ -16,7 +16,7 @@ public class PermissionRepositoryImpl extends DefaultSearchRepository<Permission
 
     @Inject
     public PermissionRepositoryImpl(EntityManagerFactory emf) {
-        super(new JpaSearchAdapter<Permission, String>(Permission.class, emf.createEntityManager()));
+        super(Permission.class, new JpaSearchAdapter<Permission, String>(Permission.class, emf.createEntityManager()));
     }
 
 }

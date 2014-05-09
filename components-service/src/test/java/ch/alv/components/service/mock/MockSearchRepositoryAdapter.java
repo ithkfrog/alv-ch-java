@@ -1,6 +1,5 @@
 package ch.alv.components.service.mock;
 
-import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.data.DataStoreSearchAdapter;
 import org.springframework.data.domain.Pageable;
 
@@ -14,11 +13,11 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
-public class MockSearchRepositoryAdapter implements DataStoreSearchAdapter<ModelItem<String, Integer>,String> {
+public class MockSearchRepositoryAdapter implements DataStoreSearchAdapter<MockModelItem,String> {
 
-    Map<String, ModelItem<String, Integer>> entitiesMap = new HashMap<>();
+    Map<String, MockModelItem> entitiesMap = new HashMap<>();
 
-    List<ModelItem<String, Integer>> entitiesList = new ArrayList<>();
+    List<MockModelItem> entitiesList = new ArrayList<>();
 
     public MockSearchRepositoryAdapter() {
         init();
@@ -45,18 +44,18 @@ public class MockSearchRepositoryAdapter implements DataStoreSearchAdapter<Model
         entitiesList.add(new MockModelItem<>("s", 17, "s"));
         entitiesList.add(new MockModelItem<>("t", 18, "t"));
 
-        for (ModelItem<String, Integer> entity : entitiesList) {
-            entitiesMap.put(entity.getId(), entity);
+        for (MockModelItem entity : entitiesList) {
+            entitiesMap.put((String) entity.getId(), entity);
         }
     }
 
     @Override
-    public List<ModelItem<String, Integer>> fetchFromSource(Pageable pageable, Object search) {
+    public List<MockModelItem> fetchFromSource(Pageable pageable, Object search) {
         return entitiesList;
     }
 
     @Override
-    public ModelItem<String, Integer> fetchFromSource(String id) {
+    public MockModelItem fetchFromSource(String id) {
         return entitiesMap.get(id);
     }
 }

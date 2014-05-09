@@ -16,7 +16,7 @@ public class UserRepositoryImpl extends DefaultSearchRepository<User, String> im
 
     @Inject
     public UserRepositoryImpl(EntityManagerFactory emf) {
-        super(new JpaSearchAdapter<User, String>(User.class, emf.createEntityManager()));
+        super(User.class, new JpaSearchAdapter<User, String>(User.class, emf.createEntityManager()));
     }
 
 }

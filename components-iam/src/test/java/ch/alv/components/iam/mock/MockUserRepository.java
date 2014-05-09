@@ -29,7 +29,7 @@ public class MockUserRepository extends DefaultSearchRepository<User, String> im
 
     @Inject
     public MockUserRepository(EntityManager em) {
-        super(new JpaSearchAdapter<User, String>(User.class, em));
+        super(User.class, new JpaSearchAdapter<User, String>(User.class, em));
     }
 
     @PostConstruct
