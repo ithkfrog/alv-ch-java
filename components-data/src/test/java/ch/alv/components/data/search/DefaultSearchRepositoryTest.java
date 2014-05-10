@@ -2,7 +2,6 @@ package ch.alv.components.data.search;
 
 import ch.alv.components.data.internal.DefaultSearchRepository;
 import ch.alv.components.data.mock.MockModelItem;
-import ch.alv.components.data.mock.MockSearchRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.data.domain.Page;
@@ -27,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 public class DefaultSearchRepositoryTest {
 
     @Resource
-    private DefaultSearchRepository<MockModelItem, String> repository = new MockSearchRepository();
+    private DefaultSearchRepository<MockModelItem, String> repository;
 
     @Test
     public void testFindWithValuesProvider() {

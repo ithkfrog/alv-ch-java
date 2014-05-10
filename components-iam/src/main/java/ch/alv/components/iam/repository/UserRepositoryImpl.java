@@ -1,5 +1,6 @@
 package ch.alv.components.iam.repository;
 
+import ch.alv.components.core.search.SearchQueryFactory;
 import ch.alv.components.data.internal.DefaultSearchRepository;
 import ch.alv.components.data.jpa.JpaSearchAdapter;
 import ch.alv.components.iam.model.User;
@@ -15,8 +16,8 @@ import javax.persistence.EntityManagerFactory;
 public class UserRepositoryImpl extends DefaultSearchRepository<User, String> implements UserRepositoryCustom {
 
     @Inject
-    public UserRepositoryImpl(EntityManagerFactory emf) {
-        super(User.class, new JpaSearchAdapter<User, String>(User.class, emf.createEntityManager()));
+    public UserRepositoryImpl(SearchQueryFactory factory, EntityManagerFactory emf) {
+        super(factory, User.class, new JpaSearchAdapter<User, String>(User.class, emf.createEntityManager()));
     }
 
 }

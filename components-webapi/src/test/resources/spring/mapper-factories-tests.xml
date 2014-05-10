@@ -17,8 +17,14 @@
 
     <bean class="ch.alv.components.web.context.internal.DefaultServletRequestProvider" />
 
-    <bean class="ch.alv.components.service.internal.ServiceRegistry" />
-    <bean class="ch.alv.components.web.endpoint.EndpointRegistry" />
+    <bean class="ch.alv.components.service.internal.ServiceRegistry">
+        <constructor-arg index="0" ref="contextProvider" />
+    </bean>
+
+
+    <bean class="ch.alv.components.web.endpoint.EndpointRegistry">
+        <constructor-arg index="0" ref="contextProvider" />
+    </bean>
 
     <bean class="org.springframework.mock.web.MockHttpServletRequest" />
 

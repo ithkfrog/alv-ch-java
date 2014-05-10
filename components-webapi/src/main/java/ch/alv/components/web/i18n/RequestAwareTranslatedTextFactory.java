@@ -8,7 +8,6 @@ import ch.alv.components.web.context.ServletRequestProvider;
 import ch.alv.components.web.dto.internal.TranslatedText;
 import org.dozer.BeanFactory;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +20,11 @@ public class RequestAwareTranslatedTextFactory implements BeanFactory {
 
     private static final Language LANGUAGE_DEFAULT = Language.GERMAN;
 
-    @Resource
-    private ApplicationContextProvider contextProvider;
+    private final ApplicationContextProvider contextProvider;
+
+    public RequestAwareTranslatedTextFactory(ApplicationContextProvider contextProvider) {
+        this.contextProvider = contextProvider;
+    }
 
     @Override
     public Object createBean(Object o, Class<?> aClass, String s) {

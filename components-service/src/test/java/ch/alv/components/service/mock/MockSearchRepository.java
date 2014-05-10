@@ -9,8 +9,8 @@ import ch.alv.components.data.internal.DefaultSearchRepository;
  */
 public class MockSearchRepository extends DefaultSearchRepository<MockModelItem, String> {
 
-    public MockSearchRepository() {
-        super(MockModelItem.class, new MockSearchRepositoryAdapter());
+    public MockSearchRepository(MockSearchQueryFactory factory) {
+        super(factory, MockModelItem.class, new MockSearchRepositoryAdapter());
     }
 
 }

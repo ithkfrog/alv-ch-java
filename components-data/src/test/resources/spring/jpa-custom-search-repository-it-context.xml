@@ -49,7 +49,9 @@
         </property>
     </bean>
 
-    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory"/>
+    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory">
+        <constructor-arg index="0" ref="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
+    </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 

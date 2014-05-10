@@ -1,6 +1,7 @@
 package ch.alv.components.web.controller.internal;
 
 import ch.alv.components.core.beans.ModelItem;
+import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.web.controller.PutController;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import ch.alv.components.web.endpoint.filter.UnauthorizedException;
@@ -20,6 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DefaultPutController extends BasePersistingController implements PutController {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultPutController.class);
+
+    public DefaultPutController(ApplicationContextProvider contextProvider) {
+        super(contextProvider);
+    }
 
     @Override
     @RequestMapping(method = RequestMethod.POST, value = "/{moduleName}/{storeName}", produces = MediaType.APPLICATION_JSON_VALUE)

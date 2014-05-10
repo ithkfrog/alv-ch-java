@@ -9,8 +9,12 @@
     <bean class="ch.alv.components.data.mock.search.TestBaseSearchRepositoryNonStringSearch"/>
     <bean class="ch.alv.components.data.mock.search.TestBaseSearchRepositoryNullSearch"/>
 
-    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory"/>
+    <bean id="queryFactory" class="ch.alv.components.core.search.internal.DefaultQueryFactory">
+        <constructor-arg index="0" ref="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
+    </bean>
 
-    <bean class="ch.alv.components.data.mock.MockSearchRepository"/>
+    <bean class="ch.alv.components.data.mock.MockSearchRepository">
+        <constructor-arg index="0" ref="queryFactory" />
+    </bean>
 
 </beans>

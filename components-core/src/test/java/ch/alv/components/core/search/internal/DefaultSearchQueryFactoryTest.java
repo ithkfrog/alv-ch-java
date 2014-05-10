@@ -29,8 +29,6 @@ public class DefaultSearchQueryFactoryTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-
-
     @Test
     public void testSuccess() {
         assertEquals("testQuery for DefaultSearchQueryFactoryTest",

@@ -8,7 +8,6 @@ import org.springframework.data.elasticsearch.core.query.GetQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,12 +21,12 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 @SuppressWarnings("unchecked")
 public class ElasticSearchAdapter<TYPE, ID extends Serializable> implements DataStoreSearchAdapter<TYPE, ID> {
 
-    @Resource
-    private ElasticsearchTemplate elasticsearchTemplate;
+    private final ElasticsearchTemplate elasticsearchTemplate;
 
     private final Class<?> managedClass;
 
-    public ElasticSearchAdapter(Class<?> managedClass) {
+    public ElasticSearchAdapter(ElasticsearchTemplate elasticsearchTemplate, Class<?> managedClass) {
+        this.elasticsearchTemplate = elasticsearchTemplate;
         this.managedClass = managedClass;
     }
 

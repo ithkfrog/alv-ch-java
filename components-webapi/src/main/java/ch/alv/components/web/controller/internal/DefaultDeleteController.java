@@ -1,5 +1,6 @@
 package ch.alv.components.web.controller.internal;
 
+import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.web.controller.DeleteController;
 import ch.alv.components.web.endpoint.filter.UnauthorizedException;
@@ -24,6 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DefaultDeleteController extends BasePersistingController implements DeleteController {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultDeleteController.class);
+
+    public DefaultDeleteController(ApplicationContextProvider contextProvider) {
+        super(contextProvider);
+    }
 
     @Override
     @RequestMapping(method = RequestMethod.DELETE, value = "/{moduleName}/{storeName}({id}", produces = MediaType.APPLICATION_JSON_VALUE)

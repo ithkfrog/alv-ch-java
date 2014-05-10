@@ -1,5 +1,6 @@
 package ch.alv.components.iam.repository;
 
+import ch.alv.components.core.search.SearchQueryFactory;
 import ch.alv.components.data.internal.DefaultSearchRepository;
 import ch.alv.components.data.jpa.JpaSearchAdapter;
 import ch.alv.components.iam.model.Application;
@@ -15,8 +16,8 @@ import javax.persistence.EntityManagerFactory;
 public class ApplicationRepositoryImpl extends DefaultSearchRepository<Application, String> implements ApplicationRepositoryCustom {
 
     @Inject
-    public ApplicationRepositoryImpl(EntityManagerFactory emf) {
-        super(Application.class, new JpaSearchAdapter<Application, String>(Application.class, emf.createEntityManager()));
+    public ApplicationRepositoryImpl(SearchQueryFactory factory, EntityManagerFactory emf) {
+        super(factory, Application.class, new JpaSearchAdapter<Application, String>(Application.class, emf.createEntityManager()));
     }
 
 }

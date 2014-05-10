@@ -7,7 +7,6 @@ import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +18,12 @@ import java.util.Map;
  */
 public class DefaultQueryFactory implements SearchQueryFactory {
 
-    @Resource
-    private ApplicationContextProvider contextProvider;
+    private final ApplicationContextProvider contextProvider;
+
+    public DefaultQueryFactory(ApplicationContextProvider contextProvider) {
+        this.contextProvider = contextProvider;
+    }
+
 
     /**
      * (non-Javadoc)

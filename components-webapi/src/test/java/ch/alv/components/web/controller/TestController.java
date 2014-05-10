@@ -1,5 +1,6 @@
 package ch.alv.components.web.controller;
 
+import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.web.controller.internal.BaseController;
 
 /**
@@ -10,4 +11,7 @@ import ch.alv.components.web.controller.internal.BaseController;
 public class TestController extends BaseController {
 
 
+    public TestController(ApplicationContextProvider contextProvider) {
+        super(contextProvider);
+    }
 }

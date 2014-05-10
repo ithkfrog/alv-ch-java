@@ -5,8 +5,6 @@ import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.service.PersistenceService;
 import ch.alv.components.service.SearchService;
 
-import javax.annotation.Resource;
-
 /**
  * Provides dynamic access to service beans.
  *
@@ -14,8 +12,11 @@ import javax.annotation.Resource;
  */
 public class ServiceRegistry {
 
-    @Resource
-    private ApplicationContextProvider contextProvider;
+    private final ApplicationContextProvider contextProvider;
+
+    public ServiceRegistry(ApplicationContextProvider contextProvider) {
+        this.contextProvider = contextProvider;
+    }
 
     public PersistenceService getPersistenceService(String serviceName) {
         if (StringHelper.isEmpty(serviceName)) {

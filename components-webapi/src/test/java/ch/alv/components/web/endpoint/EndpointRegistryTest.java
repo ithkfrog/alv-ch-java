@@ -1,5 +1,6 @@
 package ch.alv.components.web.endpoint;
 
+import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.ReflectionUtilsException;
 import ch.alv.components.web.mock.TestEntity;
 import org.junit.Rule;
@@ -25,6 +26,9 @@ public class EndpointRegistryTest {
 
     @Resource
     private EndpointRegistry registry;
+
+    @Resource
+    private ApplicationContextProvider contextProvider;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -91,7 +95,7 @@ public class EndpointRegistryTest {
 
     @Test
     public void fullCoverageForStaticTest() throws ReflectionUtilsException {
-        new EndpointRegistry();
+        new EndpointRegistry(contextProvider);
     }
 
 }

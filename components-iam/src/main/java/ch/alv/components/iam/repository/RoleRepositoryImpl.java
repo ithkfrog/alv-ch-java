@@ -1,5 +1,6 @@
 package ch.alv.components.iam.repository;
 
+import ch.alv.components.core.search.SearchQueryFactory;
 import ch.alv.components.data.internal.DefaultSearchRepository;
 import ch.alv.components.data.jpa.JpaSearchAdapter;
 import ch.alv.components.iam.model.Role;
@@ -15,8 +16,8 @@ import javax.persistence.EntityManagerFactory;
 public class RoleRepositoryImpl extends DefaultSearchRepository<Role, String> implements RoleRepositoryCustom {
 
     @Inject
-    public RoleRepositoryImpl(EntityManagerFactory emf) {
-        super(Role.class, new JpaSearchAdapter<Role, String>(Role.class, emf.createEntityManager()));
+    public RoleRepositoryImpl(SearchQueryFactory factory, EntityManagerFactory emf) {
+        super(factory, Role.class, new JpaSearchAdapter<Role, String>(Role.class, emf.createEntityManager()));
     }
 
 }

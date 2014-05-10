@@ -5,10 +5,11 @@
 
     <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
 
-    <bean class="ch.alv.components.service.mock.MockSearchQueryFactory" />
-    <!--<bean class="ch.alv.components.service.internal.ServiceRegistry" />-->
+    <bean name="queryFactory" class="ch.alv.components.service.mock.MockSearchQueryFactory" />
 
-    <bean id="repository" class="ch.alv.components.service.mock.MockSearchRepository" />
+    <bean id="repository" class="ch.alv.components.service.mock.MockSearchRepository">
+        <constructor-arg index="0" ref="queryFactory" />
+    </bean>
 
     <bean class="ch.alv.components.service.internal.DefaultSearchService">
         <constructor-arg index="0" ref="repository" />

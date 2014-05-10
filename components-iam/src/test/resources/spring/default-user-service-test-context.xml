@@ -61,7 +61,9 @@
         </property>
     </bean>
 
-    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory"/>
+    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory">
+        <constructor-arg index="0" ref="securityContextProvider" />
+    </bean>
 
     <sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider>

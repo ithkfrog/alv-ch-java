@@ -14,7 +14,9 @@
     <bean class="ch.alv.components.web.endpoint.filter.FilterTestEndpoint" />
     <bean class="ch.alv.components.web.endpoint.filter.SecuredFilterTestEndpoint" />
 
-    <bean class="ch.alv.components.web.endpoint.EndpointRegistry" />
+    <bean class="ch.alv.components.web.endpoint.EndpointRegistry">
+        <constructor-arg index="0" ref="contextProvider" />
+    </bean>
 
     <sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider>

@@ -33,8 +33,7 @@ public abstract class BaseController {
     @Value("${api.defaultPageSize}")
     private int defaultPageSize = 100;
 
-    @Resource
-    private ApplicationContextProvider contextProvider;
+    private final ApplicationContextProvider contextProvider;
 
     @Resource
     private EndpointRegistry endpointRegistry;
@@ -44,6 +43,10 @@ public abstract class BaseController {
 
     @Resource
     private EndpointHttpMethodFilter methodFilter;
+
+    protected BaseController(ApplicationContextProvider contextProvider) {
+        this.contextProvider = contextProvider;
+    }
 
     protected void runFilters(HttpServletRequest request, String moduleName, String storeName) throws UnSupportedMethodException, UnauthorizedException {
         methodFilter.doFilter(request.getMethod(), moduleName, storeName);

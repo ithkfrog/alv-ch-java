@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +26,14 @@ public class DefaultSearchRepository<TYPE, ID extends Serializable> implements S
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultSearchRepository.class);
 
-    @Resource
-    private SearchQueryFactory factory;
+    protected final SearchQueryFactory factory;
 
-    private final DataStoreSearchAdapter<TYPE, ID> storeAdapter;
+    protected final DataStoreSearchAdapter<TYPE, ID> storeAdapter;
 
-    private final Class<? extends TYPE> entityClass;
+    protected final Class<? extends TYPE> entityClass;
 
-    protected DefaultSearchRepository(Class<TYPE> entityClass, DataStoreSearchAdapter<TYPE, ID> storeAdapter) {
+    protected DefaultSearchRepository(SearchQueryFactory factory, Class<TYPE> entityClass, DataStoreSearchAdapter<TYPE, ID> storeAdapter) {
+        this.factory = factory;
         this.entityClass = entityClass;
         this.storeAdapter = storeAdapter;
     }

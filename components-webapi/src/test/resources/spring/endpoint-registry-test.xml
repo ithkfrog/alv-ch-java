@@ -10,8 +10,10 @@
     <context:component-scan base-package="ch.alv.components.web.endpoint"/>
 
 
-    <bean class="ch.alv.components.web.endpoint.EndpointRegistry" />
-    <bean class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
+    <bean class="ch.alv.components.web.endpoint.EndpointRegistry">
+        <constructor-arg index="0" ref="contextProvider" />
+    </bean>
+    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
 
     <context:annotation-config />
 

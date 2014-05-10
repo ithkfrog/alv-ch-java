@@ -40,11 +40,15 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class DefaultSearchController extends BaseController implements SearchController {
 
-    @Resource
-    private ApplicationContextProvider contextProvider;
+    private final ApplicationContextProvider contextProvider;
 
     @Resource
     private EndpointRegistry endpointRegistry;
+
+    public DefaultSearchController(ApplicationContextProvider contextProvider) {
+        super(contextProvider);
+        this.contextProvider = contextProvider;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{moduleName}/{storeName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

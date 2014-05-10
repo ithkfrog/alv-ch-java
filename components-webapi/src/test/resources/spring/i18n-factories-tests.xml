@@ -7,7 +7,9 @@
 
     <context:component-scan base-package="ch.alv.components.web.i18n"/>
 
-    <bean class="ch.alv.components.web.i18n.RequestAwareTranslatedTextFactory" />
+    <bean class="ch.alv.components.web.i18n.RequestAwareTranslatedTextFactory">
+        <constructor-arg index="0" ref="contextProvider" />
+    </bean>
 
     <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
     <bean class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />

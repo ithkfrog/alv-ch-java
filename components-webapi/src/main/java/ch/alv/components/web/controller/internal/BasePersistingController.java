@@ -2,6 +2,7 @@ package ch.alv.components.web.controller.internal;
 
 import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.core.beans.mapper.BeanMapper;
+import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.service.PersistenceService;
 import ch.alv.components.web.dto.Dto;
@@ -23,6 +24,10 @@ public abstract class BasePersistingController extends BaseController {
 
     @Resource
     private EndpointRegistry endpointRegistry;
+
+    public BasePersistingController(ApplicationContextProvider contextProvider) {
+        super(contextProvider);
+    }
 
     public Object persist(String moduleName, String storeName, String id, String body) {
         Endpoint endpoint = endpointRegistry.getEndpoint(moduleName, storeName);

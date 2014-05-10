@@ -1,5 +1,6 @@
 package ch.alv.components.data.mock;
 
+import ch.alv.components.core.search.SearchQueryFactory;
 import ch.alv.components.data.internal.DefaultSearchRepository;
 
 /**
@@ -9,8 +10,8 @@ import ch.alv.components.data.internal.DefaultSearchRepository;
  */
 public class MockSearchRepository extends DefaultSearchRepository<MockModelItem, String> {
 
-    public MockSearchRepository() {
-        super(MockModelItem.class, new MockSearchRepositoryAdapter());
+    public MockSearchRepository(SearchQueryFactory factory) {
+        super(factory, MockModelItem.class, new MockSearchRepositoryAdapter());
     }
 
 }

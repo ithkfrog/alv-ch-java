@@ -5,7 +5,9 @@
 
     <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
 
-    <bean class="ch.alv.components.service.internal.ServiceRegistry" />
+    <bean class="ch.alv.components.service.internal.ServiceRegistry">
+        <constructor-arg index="0" ref="contextProvider" />
+    </bean>
 
     <bean id="testSearchService" class="ch.alv.components.service.mock.MockSearchService" />
     <bean id="testPersistenceService" class="ch.alv.components.service.mock.MockPersistenceService" />

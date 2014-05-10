@@ -1,5 +1,6 @@
 package ch.alv.components.iam.mock;
 
+import ch.alv.components.core.search.SearchQueryFactory;
 import ch.alv.components.data.SearchRepository;
 import ch.alv.components.data.internal.DefaultSearchRepository;
 import ch.alv.components.data.jpa.JpaSearchAdapter;
@@ -28,8 +29,8 @@ public class MockUserRepository extends DefaultSearchRepository<User, String> im
     List<User> entitiesList = new ArrayList<>();
 
     @Inject
-    public MockUserRepository(EntityManager em) {
-        super(User.class, new JpaSearchAdapter<User, String>(User.class, em));
+    public MockUserRepository(SearchQueryFactory factory, EntityManager em) {
+        super(factory, User.class, new JpaSearchAdapter<User, String>(User.class, em));
     }
 
     @PostConstruct

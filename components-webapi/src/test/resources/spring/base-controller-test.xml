@@ -20,47 +20,61 @@
     </bean>
 
     <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultEndpointHttpMethodFilter"/>
-    <bean class="ch.alv.components.web.controller.TestController" />
-    <bean class="ch.alv.components.web.controller.PersistingController" />
-    <bean class="ch.alv.components.web.controller.internal.DefaultDeleteController" />
-    <bean class="ch.alv.components.web.controller.internal.DefaultPostController" />
-    <bean class="ch.alv.components.web.controller.internal.DefaultPutController" />
-    <bean class="ch.alv.components.web.controller.internal.DefaultSearchController" />
+    <bean class="ch.alv.components.web.controller.TestController">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
+    <bean class="ch.alv.components.web.controller.PersistingController">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
+    <bean class="ch.alv.components.web.controller.internal.DefaultDeleteController">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
+    <bean class="ch.alv.components.web.controller.internal.DefaultPostController">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
+    <bean class="ch.alv.components.web.controller.internal.DefaultPutController">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
+    <bean class="ch.alv.components.web.controller.internal.DefaultSearchController">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
 
-    <bean class="ch.alv.components.web.endpoint.EndpointRegistry" />
+    <bean class="ch.alv.components.web.endpoint.EndpointRegistry">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
 
-    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultSecurityContextProvider" />
+    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultSecurityContextProvider"/>
 
     <bean class="ch.alv.components.web.search.MapBasedRequestParamsAsValuesProvider">
-           <constructor-arg index="0">
-               <bean class="ch.alv.components.web.search.internal.DefaultMapper" />
-           </constructor-arg>
+        <constructor-arg index="0">
+            <bean class="ch.alv.components.web.search.internal.DefaultMapper"/>
+        </constructor-arg>
     </bean>
 
 
-    <bean class="ch.alv.components.web.context.internal.DefaultServletRequestProvider" />
-    <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultSecurityFilter" />
+    <bean class="ch.alv.components.web.context.internal.DefaultServletRequestProvider"/>
+    <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultSecurityFilter"/>
 
-    <bean class="org.springframework.mock.web.MockHttpServletRequest" />
+    <bean class="org.springframework.mock.web.MockHttpServletRequest"/>
 
 
-    <bean class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
+    <bean class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider"/>
 
-    <bean class="ch.alv.components.web.endpoint.filter.FilterTestEndpoint" />
-    <bean class="ch.alv.components.web.endpoint.filter.SecuredFilterTestEndpoint" />
-    <bean class="ch.alv.components.web.controller.ControllerTestEndpoint" />
-    <bean class="ch.alv.components.web.mock.SearchTestEndpoint" />
-    <bean class="ch.alv.components.web.controller.ControllerTestEndpointWithDefaultSearch" />
-    <bean class="ch.alv.components.web.controller.ControllerTestEndpointWithParamConstructorSearch" />
+    <bean class="ch.alv.components.web.endpoint.filter.FilterTestEndpoint"/>
+    <bean class="ch.alv.components.web.endpoint.filter.SecuredFilterTestEndpoint"/>
+    <bean class="ch.alv.components.web.controller.ControllerTestEndpoint"/>
+    <bean class="ch.alv.components.web.mock.SearchTestEndpoint"/>
+    <bean class="ch.alv.components.web.controller.ControllerTestEndpointWithDefaultSearch"/>
+    <bean class="ch.alv.components.web.controller.ControllerTestEndpointWithParamConstructorSearch"/>
 
-    <bean id="mapper" class="ch.alv.components.core.beans.mapper.internal.DozerBeanMapper" />
+    <bean id="mapper" class="ch.alv.components.core.beans.mapper.internal.DozerBeanMapper"/>
 
-    <bean name="dtoFactory" class="ch.alv.components.web.dto.internal.DefaultDtoFactory" />
+    <bean name="dtoFactory" class="ch.alv.components.web.dto.internal.DefaultDtoFactory"/>
 
-    <bean name="filterTestModule.filterTestStor.service" class="ch.alv.components.web.mapper.MockFactoryTestPersistenceService" />
-    <bean name="controllerTestModule.controllerTestStor.service" class="ch.alv.components.web.mapper.MockFactoryTestPersistenceService" />
-    <bean name="searchService" class="ch.alv.components.web.mapper.MockSearchService" />
-    <bean name="searchTestModuleWithDefaultSearch.searchTestStor.service" class="ch.alv.components.web.mapper.MockSearchService" />
+    <bean name="filterTestModule.filterTestStor.service" class="ch.alv.components.web.mapper.MockFactoryTestPersistenceService"/>
+    <bean name="controllerTestModule.controllerTestStor.service" class="ch.alv.components.web.mapper.MockFactoryTestPersistenceService"/>
+    <bean name="searchService" class="ch.alv.components.web.mapper.MockSearchService"/>
+    <bean name="searchTestModuleWithDefaultSearch.searchTestStor.service" class="ch.alv.components.web.mapper.MockSearchService"/>
 
     <sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider>
@@ -71,7 +85,7 @@
         </sec:authentication-provider>
     </sec:authentication-manager>
 
-    <context:annotation-config />
+    <context:annotation-config/>
 
 </beans>
 

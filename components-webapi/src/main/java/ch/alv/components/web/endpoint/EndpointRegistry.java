@@ -3,7 +3,6 @@ package ch.alv.components.web.endpoint;
 import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -13,8 +12,11 @@ import java.util.Map;
  */
 public class EndpointRegistry {
 
-    @Resource
-    private ApplicationContextProvider contextProvider;
+    private final ApplicationContextProvider contextProvider;
+
+    public EndpointRegistry(ApplicationContextProvider contextProvider) {
+        this.contextProvider = contextProvider;
+    }
 
     public Endpoint getEndpoint(String moduleName, String storeName) {
         if (StringHelper.isEmpty(moduleName)) {
