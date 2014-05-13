@@ -15,11 +15,13 @@ import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointRegistry;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import ch.alv.components.web.endpoint.filter.UnauthorizedException;
+import ch.alv.components.web.response.LinkPageImpl;
 import ch.alv.components.web.search.MapBasedRequestParamsAsValuesProvider;
 import ch.alv.components.web.search.RequestParamsToValuesMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +59,7 @@ public class DefaultSearchController extends BaseController implements SearchCon
                                    @PathVariable String storeName) throws UnauthorizedException, UnSupportedMethodException, NoSuchValuesProviderException {
 
         runFilters(request, moduleName, storeName);
-        return find(createPageable(request), request.getParameterMap(), moduleName, storeName);
+        return find(createPageable(request), request.getParameterMap(), moduleName, storeName, request);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{moduleName}/{storeName}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -82,15 +84,15 @@ public class DefaultSearchController extends BaseController implements SearchCon
         return new ResponseEntity<>("Search for post method is not implemented yet.", HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    protected ResponseEntity<?> find(Pageable pageable, Map<String, String[]> params, String moduleName, String storeName) throws NoSuchValuesProviderException {
+    protected ResponseEntity<?> find(Pageable pageable, Map<String, String[]> params, String moduleName, String storeName, HttpServletRequest request) throws NoSuchValuesProviderException {
         Endpoint endpoint = endpointRegistry.getEndpoint(moduleName, storeName);
         String searchName = extractSearchName(params);
         if (StringHelper.isEmpty(searchName) && StringHelper.isEmpty(endpoint.getDefaultSearchName())) {
-            return handleDefaultSearch(pageable, params, endpoint);
+            return handleDefaultSearch(pageable, params, endpoint, request);
         } else if (StringHelper.isEmpty(searchName)) {
-            return handleNamedSearch(pageable, params, endpoint, endpoint.getDefaultSearchName());
+            return handleNamedSearch(pageable, params, endpoint, endpoint.getDefaultSearchName(), request);
         } else {
-            return handleNamedSearch(pageable, params, endpoint, searchName);
+            return handleNamedSearch(pageable, params, endpoint, searchName, request);
         }
     }
 
@@ -103,21 +105,29 @@ public class DefaultSearchController extends BaseController implements SearchCon
         return searchName;
     }
 
-/*    protected ResponseEntity<?> handleGetAllSearch(Pageable pageable, Endpoint endpoint) throws NoSuchValuesProviderException {
-        SearchService searchService = contextProvider.getBeanByName(endpoint.getServiceName());
-        Page page = searchService.getAll(pageable);
-        return new ResponseEntity<>(new PageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements()), HttpStatus.OK);
-    }*/
-
-    protected ResponseEntity<?> handleDefaultSearch(Pageable pageable, Map<String, String[]> params, Endpoint endpoint) throws NoSuchValuesProviderException {
+    protected ResponseEntity<?> handleDefaultSearch(Pageable pageable, Map<String, String[]> params, Endpoint endpoint, HttpServletRequest request) throws NoSuchValuesProviderException {
         Page page = getService(endpoint).find(pageable, initValuesProvider(endpoint, params));
-        return new ResponseEntity<>(new PageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements()), HttpStatus.OK);
+        LinkPageImpl linkPage = new LinkPageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements());
+        linkPage.addLink(createSelfLink(params, endpoint, request));
+        return new ResponseEntity<>(linkPage, HttpStatus.OK);
     }
 
-    protected ResponseEntity<?> handleNamedSearch(Pageable pageable, Map<String, String[]> params, Endpoint endpoint, String searchName) throws NoSuchValuesProviderException {
+    private Link createSelfLink(Map<String, String[]> params, Endpoint endpoint, HttpServletRequest request) {
+        String path = request.getRequestURL().toString();
+        if (StringUtils.isEmpty(path)) {
+            return null;
+        }
+        Link link = new Link(path, "self");
+        return link;
+    }
+
+    protected ResponseEntity<?> handleNamedSearch(Pageable pageable, Map<String, String[]> params, Endpoint endpoint, String searchName, HttpServletRequest request) throws NoSuchValuesProviderException {
         ValuesProvider provider = initValuesProvider(endpoint, params);
-        Page page = getService(endpoint).find(pageable, searchName, provider);
-        return new ResponseEntity<>(new PageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements()), HttpStatus.OK);
+        LinkPageImpl page = new LinkPageImpl(getService(endpoint).find(pageable, searchName, provider));
+
+        LinkPageImpl linkPage = new LinkPageImpl(convertEntityListToDtoList(page.getContent(), endpoint), pageable, page.getTotalElements());
+        linkPage.addLink(createSelfLink(params, endpoint, request));
+        return new ResponseEntity<>(linkPage, HttpStatus.OK);
     }
 
     protected ValuesProvider initValuesProvider(Endpoint endpoint, Map<String, String[]> params) throws NoSuchValuesProviderException {

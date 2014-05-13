@@ -18,7 +18,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public class MockPersistenceRepository<T extends ModelItem<ID, VERSION>, ID extends Serializable, VERSION extends Serializable>
-            implements PersistenceRepository<T, ID, VERSION> {
+        implements PersistenceRepository<T, ID, VERSION> {
 
     @Resource
     private MockModelItemDataStore<T, ID, VERSION> dataStore;

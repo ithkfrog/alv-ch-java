@@ -2,8 +2,8 @@ package ch.alv.components.web.mapper;
 
 import ch.alv.components.core.search.ValuesProvider;
 import ch.alv.components.service.SearchService;
+import ch.alv.components.web.response.LinkPageImpl;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import javax.annotation.PostConstruct;
@@ -58,14 +58,14 @@ public class MockSearchService implements SearchService<MockFactoryTestEntity, S
 
     @Override
     public Page<MockFactoryTestEntity> findAll(Pageable pageable) {
-        return new PageImpl(entitiesList, pageable, 19);
+        return new LinkPageImpl(entitiesList, pageable, 19);
     }
 
     @Override
     public Page<MockFactoryTestEntity> find(ValuesProvider valuesProvider) {
         List<MockFactoryTestEntity> result = new ArrayList<>();
         result.add(entitiesMap.get(valuesProvider.getValue("id")));
-        return new PageImpl(result);
+        return new LinkPageImpl(result);
     }
 
     @Override
@@ -77,14 +77,14 @@ public class MockSearchService implements SearchService<MockFactoryTestEntity, S
         if ("searchByVersion".equalsIgnoreCase(searchName)) {
             result.add(entitiesMap.get(valuesProvider.getValue("version")));
         }
-        return new PageImpl(result);
+        return new LinkPageImpl(result);
     }
 
     @Override
     public Page<MockFactoryTestEntity> find(Pageable pageable, ValuesProvider valuesProvider) {
         List<MockFactoryTestEntity> result = new ArrayList<>();
         result.add(entitiesMap.get(valuesProvider.getValue("id")));
-        return new PageImpl(result, pageable, 1);
+        return new LinkPageImpl(result, pageable, 1);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class MockSearchService implements SearchService<MockFactoryTestEntity, S
         if ("searchByVersion".equalsIgnoreCase(searchName)) {
             result.add(entitiesMap.get(valuesProvider.getValue("version")));
         }
-        return new PageImpl(result, pageable, 1);
+        return new LinkPageImpl(result, pageable, 1);
     }
 
     @Override
