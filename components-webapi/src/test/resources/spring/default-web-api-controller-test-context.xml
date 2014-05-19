@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <context:component-scan base-package="ch.alv.components.web.mock"/>
+
+    <!-- Properties -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:base-controller-test.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultEndpointHttpMethodFilter"/>
+    <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultSecurityFilter"/>
+
+    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultSecurityContextProvider"/>
+
+    <bean id="dtoFactory" class="ch.alv.components.web.dto.DefaultDtoFactory" />
+
+    <bean id="endpointRegistry" class="ch.alv.components.web.endpoint.EndpointRegistry">
+        <constructor-arg index="0" ref="contextProvider"/>
+    </bean>
+
+    <bean id="mapper" class="ch.alv.components.core.beans.mapper.internal.DozerBeanMapper"/>
+
+    <bean class="ch.alv.components.web.controller.DefaultWebApiController">
+        <constructor-arg index="0" ref="dtoFactory"/>
+        <constructor-arg index="1" ref="endpointRegistry"/>
+        <constructor-arg index="2" ref="mapper"/>
+    </bean>
+
+    <bean class="org.springframework.mock.web.MockHttpServletRequest"/>
+
+    <bean class="ch.alv.components.web.context.internal.DefaultServletRequestProvider"/>
+
+    <bean class="ch.alv.components.web.mock.MockEndpoint"/>
+
+    <bean name="testModule.testStor.service" id="testModule.testStor.service" class="ch.alv.components.web.mock.MockPagingDataService" />
+
+    <bean class="ch.alv.components.web.endpoint.filter.FilterTestEndpoint"/>
+    <bean class="ch.alv.components.web.endpoint.filter.SecuredFilterTestEndpoint"/>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider>
+            <sec:user-service>
+                <sec:user name="jimi" password="jimi" authorities="ROLE_USER, ROLE_ADMIN"/>
+                <sec:user name="bob" password="bob" authorities="ROLE_USER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <context:annotation-config/>
+
+</beans>
+
+

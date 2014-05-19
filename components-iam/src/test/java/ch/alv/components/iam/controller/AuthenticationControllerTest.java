@@ -24,7 +24,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test cases for the {@link ch.alv.components.service.internal.ServiceRegistry} class.
+ * Test cases for the {@link ch.alv.components.service.ServiceRegistry} class.
  *
  * @since 1.0.0
  */

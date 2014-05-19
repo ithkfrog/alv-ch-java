@@ -1,9 +1,9 @@
 package ch.alv.components.web.i18n;
 
 import ch.alv.components.core.enums.Language;
-import ch.alv.components.data.jpa.TextConstant;
+import ch.alv.components.data.model.TextConstant;
 import ch.alv.components.web.context.ServletRequestProvider;
-import ch.alv.components.web.dto.internal.TranslatedText;
+import ch.alv.components.web.dto.TranslatedText;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

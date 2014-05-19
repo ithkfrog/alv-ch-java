@@ -1,7 +1,7 @@
 package ch.alv.components.web.dto;
 
 
-import ch.alv.components.core.beans.ModelItem;
+import ch.alv.components.core.beans.Identifiable;
 import ch.alv.components.web.endpoint.Endpoint;
 
 /**
@@ -13,6 +13,6 @@ public interface DtoFactory {
 
     Dto createDtoFromRequestBody(String requestBody, Endpoint endpoint);
 
-    Dto createDtoFromEntity(ModelItem entity, Endpoint endpoint);
+    Dto createDtoFromEntity(Identifiable entity, Endpoint endpoint);
 
 }

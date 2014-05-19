@@ -41,6 +41,7 @@
         <surefireArgLine/>
         <jacoco.version>0.7.0.201403182114</jacoco.version>
         <c3p0.version>0.9.1.2</c3p0.version>
+        <guava.version>10.0</guava.version>
     </properties>
 
     <modules>
@@ -142,6 +143,12 @@
                 <artifactId>spring-aop</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.aspectj</groupId>
@@ -242,6 +249,13 @@
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+
+            <!-- utilities -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
 
             <!-- Testing -->
@@ -381,16 +395,16 @@
     </scm>
 
     <distributionManagement>
-        <repository>
+<!--        <repository>
             <id>alvch-artifactoryonline-libs-releases</id>
             <name>ALV Switzerland Libraries Releases</name>
             <url>http://alvch.artifactoryonline.com/alvch/libs-releases-local</url>
-        </repository>
-        <snapshotRepository>
+        </repository>-->
+<!--        <snapshotRepository>
             <id>alvch-artifactoryonline-libs-snapshots</id>
             <name>ALV Switzerland Libraries Snapshots</name>
             <url>http://alvch.artifactoryonline.com/alvch/libs-snapshots-local</url>
-        </snapshotRepository>
+        </snapshotRepository>-->
         <!-- missing for some resolution??? <downloadUrl> -->
     </distributionManagement>
 

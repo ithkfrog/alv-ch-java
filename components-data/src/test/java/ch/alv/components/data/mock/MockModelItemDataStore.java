@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * In memory implementation of a data store, used in the mock implementation {@link MockPersistenceRepository}.
+ * In memory implementation of a data store.
  *
  * @since 1.0.0
  */

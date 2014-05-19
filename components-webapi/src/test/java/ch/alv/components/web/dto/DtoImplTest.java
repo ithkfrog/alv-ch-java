@@ -1,6 +1,6 @@
 package ch.alv.components.web.dto;
 
-import ch.alv.components.web.mock.TestDto;
+import ch.alv.components.web.mock.MockDto;
 import org.junit.Test;
 import org.springframework.hateoas.Link;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test cases for the {@link ch.alv.components.web.dto.internal.DtoImpl} class
+ * Test cases for the {@link DtoImpl} class
  *
  * @since 1.0.0
  */
@@ -19,7 +19,7 @@ public class DtoImplTest {
 
     @Test
     public void testDto() {
-        TestDto dto = new TestDto();
+        MockDto dto = new MockDto();
 
         String id = "stringId";
         int version = 3;

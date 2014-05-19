@@ -1,6 +1,6 @@
 package ch.alv.components.iam.endpoint.dto;
 
-import ch.alv.components.web.dto.internal.DtoImpl;
+import ch.alv.components.web.dto.DtoImpl;
 
 /**
  * WebApi dto for the {@link ch.alv.components.iam.model.Role} entity.

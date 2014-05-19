@@ -2,7 +2,7 @@ package ch.alv.components.web.endpoint;
 
 import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.ReflectionUtilsException;
-import ch.alv.components.web.mock.TestEntity;
+import ch.alv.components.web.mock.MockEntity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -75,7 +75,7 @@ public class EndpointRegistryTest {
 
     @Test
     public void testGetByClass() {
-        Endpoint endPoint = registry.getEndpoint(TestEntity.class);
+        Endpoint endPoint = registry.getEndpoint(MockEntity.class);
         assertNotNull(endPoint);
     }
 

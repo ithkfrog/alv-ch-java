@@ -1,6 +1,7 @@
 package ch.alv.components.web.mapper;
 
 import ch.alv.components.web.context.ServletRequestProvider;
+import ch.alv.components.web.mock.MockEntity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertNull;
  * @since 1.0.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring/mapper-factories-tests.xml")
+@ContextConfiguration(locations = "classpath:spring/link-factory-test-context.xml")
 public class LinkFactoryTest {
 
     @Rule
@@ -35,18 +36,17 @@ public class LinkFactoryTest {
     private ServletRequestProvider requestProvider;
 
     @Test
-    public void test() {
-
+    public void testCreateBean() {
         ((MockHttpServletRequest) requestProvider.getRequest()).setRequestURI("/api/test/test");
-
         UUID id = UUID.randomUUID();
-        MockFactoryTestEntity entity = new MockFactoryTestEntity();
+        MockEntity entity = new MockEntity();
         entity.setId(id.toString());
 
-        Link link = (Link) factory.createBean(entity, MockFactoryTestEntity.class, null);
+        Link link = (Link) factory.createBean(entity, MockEntity.class, null);
         assertEquals("self", link.getRel());
-        assertEquals("http://127.0.0.1:80/mapperFactoryModule/mapperFactoryModule/" + id.toString(), link.getHref());
+        assertEquals("http://127.0.0.1:80/testModule/testStore/" + id.toString(), link.getHref());
 
+        // check unknown endpoint
         assertNull(factory.createBean(entity, ServletRequestProvider.class, null));
     }
 

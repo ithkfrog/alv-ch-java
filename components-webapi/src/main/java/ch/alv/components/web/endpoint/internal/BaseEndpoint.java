@@ -2,8 +2,6 @@ package ch.alv.components.web.endpoint.internal;
 
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointHelper;
-import ch.alv.components.web.search.RequestParamsToValuesMapper;
-import ch.alv.components.web.search.internal.DefaultMapper;
 import org.springframework.http.HttpMethod;
 
 import java.util.List;
@@ -16,18 +14,8 @@ import java.util.List;
 public abstract class BaseEndpoint implements Endpoint {
 
     @Override
-    public Class<? extends RequestParamsToValuesMapper> getValuesProviderClass() {
-        return DefaultMapper.class;
-    }
-
-    @Override
     public List<HttpMethod> getAllowedMethods() {
         return EndpointHelper.createAllMethodsList();
-    }
-
-    @Override
-    public String getServiceName() {
-        return getModuleName() + "." + getStoreName().substring(0, getStoreName().length() - 1) + ".service";
     }
 
     @Override

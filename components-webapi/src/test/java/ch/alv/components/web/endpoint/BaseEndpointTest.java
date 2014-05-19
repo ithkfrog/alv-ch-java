@@ -1,6 +1,5 @@
 package ch.alv.components.web.endpoint;
 
-import ch.alv.components.web.search.internal.DefaultMapper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,11 +17,9 @@ public class BaseEndpointTest {
         assertEquals("testModule", endpoint.getModuleName());
         assertEquals("testStore", endpoint.getStoreName());
         assertEquals("", endpoint.getDefaultSearchName());
-        assertEquals("testModule.testStor.service", endpoint.getServiceName());
         assertEquals(EndpointHelper.createAllMethodsList(), endpoint.getAllowedMethods());
         assertEquals(TestDto.class, endpoint.getDtoClass());
         assertEquals(TestBean.class, endpoint.getEntityClass());
-        assertEquals(DefaultMapper.class, endpoint.getValuesProviderClass());
         assertEquals("", endpoint.getRolesGET());
         assertEquals("", endpoint.getRolesPOST());
         assertEquals("", endpoint.getRolesPUT());

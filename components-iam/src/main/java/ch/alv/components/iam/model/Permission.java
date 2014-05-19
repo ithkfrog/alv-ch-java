@@ -1,6 +1,7 @@
 package ch.alv.components.iam.model;
 
-import ch.alv.components.data.jpa.BaseJpaModelItem;
+import ch.alv.components.data.model.BaseModelItem;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +13,9 @@ import javax.persistence.Table;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "module_iam_permission")
-public class Permission extends BaseJpaModelItem {
+@Table(name = "iam_permission")
+@Document(indexName = "iam", type = "permissions", shards = 1, replicas = 0)
+public class Permission extends BaseModelItem {
 
     @Column(nullable = false)
     private String name;

@@ -1,12 +1,11 @@
 package ch.alv.components.web.dto;
 
-import ch.alv.components.web.dto.internal.TranslatedText;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test cases for the {@link ch.alv.components.web.dto.internal.TranslatedText} class
+ * Test cases for the {@link TranslatedText} class
  *
  * @since 1.0.0
  */

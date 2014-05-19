@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static org.junit.Assert.assertNotNull;
+
 
 /**
  * Unit tests for the {@link IoHelper} class.
@@ -19,6 +21,12 @@ public class IoHelperTest {
     public static final String FILE_NAME = "io-helper-test-file.csv";
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void testDefaultConstructor() {
+        IoHelper helper = new IoHelper();
+        assertNotNull(helper);
+    }
 
     @Test
     public void testCloseReaderQuietly() throws IOException {

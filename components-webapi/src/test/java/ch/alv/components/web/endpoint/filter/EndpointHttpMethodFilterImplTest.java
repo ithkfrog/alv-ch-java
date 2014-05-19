@@ -1,5 +1,6 @@
 package ch.alv.components.web.endpoint.filter;
 
+import ch.alv.components.web.WebLayerException;
 import ch.alv.components.web.endpoint.filter.internal.DefaultEndpointHttpMethodFilter;
 import ch.alv.components.web.endpoint.filter.internal.EndpointHttpMethodFilterResult;
 import org.junit.Rule;
@@ -29,15 +30,15 @@ public class EndpointHttpMethodFilterImplTest {
     DefaultEndpointHttpMethodFilter filter;
 
     @Test
-    public void testAllowedMethod() {
+    public void testAllowedMethod() throws UnSupportedMethodException, WebLayerException {
         EndpointHttpMethodFilterResult result = filter.doFilter("GET", "filterTestModule", "filterTestStore");
         assertEquals(EndpointHttpMethodFilterResult.OK, result.getResult());
         assertEquals("Method allowed.", result.getMessage());
     }
 
     @Test
-    public void testUnknownEndpoint() {
-        exception.expect(IllegalStateException.class);
+    public void testUnknownEndpoint() throws UnSupportedMethodException, WebLayerException {
+        exception.expect(WebLayerException.class);
         exception.expectMessage("No endpoint for store 'module/store' found.");
         EndpointHttpMethodFilterResult result = filter.doFilter("POST", "module", "store");
         assertEquals(EndpointHttpMethodFilterResult.NOK, result.getResult());
@@ -45,25 +46,25 @@ public class EndpointHttpMethodFilterImplTest {
     }
 
     @Test
-    public void testUnAllowedPost() {
+    public void testUnAllowedPost() throws UnSupportedMethodException, WebLayerException {
         exception.expect(UnSupportedMethodException.class);
         filter.doFilter("POST", "filterTestModule", "filterTestStore");
     }
 
     @Test
-    public void testUnAllowedPut() {
+    public void testUnAllowedPut() throws UnSupportedMethodException, WebLayerException {
         exception.expect(UnSupportedMethodException.class);
         filter.doFilter("PUT", "filterTestModule", "filterTestStore");
     }
 
     @Test
-    public void testUnAllowedDelete() {
+    public void testUnAllowedDelete() throws UnSupportedMethodException, WebLayerException {
         exception.expect(UnSupportedMethodException.class);
         filter.doFilter("DELETE", "filterTestModule", "filterTestStore");
     }
 
     @Test
-    public void testEmptyMethod() {
+    public void testEmptyMethod() throws UnSupportedMethodException, WebLayerException {
         exception.expect(UnSupportedMethodException.class);
         filter.doFilter("", "filterTestModule", "filterTestStore");
     }

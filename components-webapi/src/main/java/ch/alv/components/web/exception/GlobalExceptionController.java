@@ -1,6 +1,7 @@
 package ch.alv.components.web.exception;
 
-import ch.alv.components.data.jpa.NoSuchTextConstantException;
+import ch.alv.components.data.model.NoSuchTextConstantException;
+import ch.alv.components.web.WebLayerException;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,10 @@ public class GlobalExceptionController {
 
         if (e instanceof BadRequestException) {
             return new ResponseEntity<>("The request is in a illegal state: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        if (e instanceof WebLayerException) {
+            return new ResponseEntity<>(((WebLayerException) e).getBody(), ((WebLayerException) e).getResponseStatus());
         }
 
         UUID uuid = UUID.randomUUID();

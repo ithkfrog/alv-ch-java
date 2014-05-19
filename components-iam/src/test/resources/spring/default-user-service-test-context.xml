@@ -2,32 +2,29 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:sec="http://www.springframework.org/schema/security"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-                           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+
+
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <jpa:repositories base-package="ch.alv.components.iam.repository"/>
+    <!--<context:component-scan base-package="ch.alv.components.iam.service"/>-->
 
-    <context:component-scan base-package="ch.alv.components.iam.service"/>
+    <bean id="jpaAdapter" class="ch.alv.components.data.adapter.JpaDataStoreAdapter">
+        <constructor-arg index="0" ref="queryFactory" />
+    </bean>
 
-    <bean class="ch.alv.components.data.jpa.JpaSearchAdapter">
-        <constructor-arg index="0" value="ch.alv.components.iam.model.User" />
-        <constructor-arg index="1">
-            <bean class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
-                <property name="persistenceUnitName" value="sm-iam" />
-            </bean>
-        </constructor-arg>
+    <bean id="repository" class="ch.alv.components.data.repository.DefaultRepository">
+        <constructor-arg index="0" ref="jpaAdapter" />
+    </bean>
+
+    <bean id="userService" class="ch.alv.components.iam.service.DefaultUserService">
+        <constructor-arg index="0" ref="repository" />
     </bean>
 
     <bean id="mapper" class="ch.alv.components.core.beans.mapper.internal.DozerBeanMapper" />
-
-    <bean class="ch.alv.components.iam.search.UserSearch" />
 
     <bean id="securityContextProvider" class="ch.alv.components.core.spring.internal.DefaultSecurityContextProvider" />
 
@@ -61,9 +58,11 @@
         </property>
     </bean>
 
-    <bean class="ch.alv.components.core.search.internal.DefaultQueryFactory">
+    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory">
         <constructor-arg index="0" ref="securityContextProvider" />
     </bean>
+
+    <bean class="ch.alv.components.iam.query.JpaUserQuery" />
 
     <sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider>

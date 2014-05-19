@@ -2,7 +2,7 @@ package ch.alv.components.iam.service;
 
 import ch.alv.components.iam.model.Role;
 import ch.alv.components.iam.model.User;
-import ch.alv.components.iam.repository.UserRepository;
+import ch.alv.components.service.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,12 +24,13 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Test cases for the {@link ch.alv.components.service.internal.ServiceRegistry} class.
+ * Test cases for the {@link ch.alv.components.service.ServiceRegistry} class.
  *
  * @since 1.0.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/default-user-service-test-context.xml")
+@SuppressWarnings("unchecked")
 public class DefaultUserServiceTest {
 
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
@@ -41,10 +42,7 @@ public class DefaultUserServiceTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Resource
-    private UserSearchService service;
-
-    @Resource
-    private UserRepository repository;
+    private UserService service;
 
     private User user;
     private Authentication auth;
@@ -106,13 +104,14 @@ public class DefaultUserServiceTest {
     }
 
     @Test
-    public void testLoadUserByUsername() {
+    public void testLoadUserByUsername() throws ServiceLayerException {
         SecurityContextHolder.getContext().setAuthentication(auth);
         User user = new User();
         user.setUsername("testUser");
         user.setFirstName("testFirstName");
         user.setLastName("testLastName");
-        repository.save(user);
+        service.save(user, User.class);
+
         assertEquals("testUser", service.loadUserByUsername("testUser").getUsername());
         assertNull("testUser", service.loadUserByUsername("unknownUser"));
     }

@@ -8,8 +8,8 @@
 
     <context:component-scan base-package="ch.alv.components.web.context" />
 
-    <bean name="endpointA" id="endpointA" class="ch.alv.components.web.mock.TestEndpoint" />
-    <bean name="endpointB" id="endpointB" class="ch.alv.components.web.mock.TestEndpoint" />
+    <bean name="endpointA" id="endpointA" class="ch.alv.components.web.mock.MockEndpoint" />
+    <bean name="endpointB" id="endpointB" class="ch.alv.components.web.mock.MockEndpoint" />
 
     <bean class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
 

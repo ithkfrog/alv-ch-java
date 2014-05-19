@@ -12,6 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -41,6 +44,12 @@ public class DefaultContextProviderTest {
         exception.expect(NoSuchBeanDefinitionException.class);
         exception.expectMessage("No bean named '" + beanName + "' is defined");
         contextProvider.getBeanByName(beanName);
+    }
+
+    @Test
+    public void testGetBeansOfType() {
+        Map<String, BeanMapper> mappers = contextProvider.getBeansOfType(BeanMapper.class);
+        assertEquals(1, mappers.size());
     }
 
 }

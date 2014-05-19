@@ -4,7 +4,6 @@ import ch.alv.components.iam.endpoint.dto.PermissionDto;
 import ch.alv.components.iam.model.Permission;
 import ch.alv.components.web.endpoint.Endpoint;
 import ch.alv.components.web.endpoint.EndpointHelper;
-import ch.alv.components.web.search.internal.DefaultMapper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -23,11 +22,9 @@ public class PermissionsEndpointTest {
         assertEquals("iam", endpoint.getModuleName());
         assertEquals("permissions", endpoint.getStoreName());
         assertEquals("", endpoint.getDefaultSearchName());
-        assertEquals("iam.permission.service", endpoint.getServiceName());
         assertEquals(EndpointHelper.createAllMethodsList(), endpoint.getAllowedMethods());
         assertEquals(PermissionDto.class, endpoint.getDtoClass());
         assertEquals(Permission.class, endpoint.getEntityClass());
-        assertEquals(DefaultMapper.class, endpoint.getValuesProviderClass());
         assertEquals("", endpoint.getRolesGET());
         assertEquals("", endpoint.getRolesPOST());
         assertEquals("", endpoint.getRolesPUT());

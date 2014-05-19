@@ -1,5 +1,6 @@
 package ch.alv.components.web.endpoint.filter;
 
+import ch.alv.components.web.WebLayerException;
 import ch.alv.components.web.endpoint.filter.internal.EndpointHttpMethodFilterResult;
 
 /**
@@ -9,6 +10,6 @@ import ch.alv.components.web.endpoint.filter.internal.EndpointHttpMethodFilterRe
  */
 public interface EndpointHttpMethodFilter {
 
-    EndpointHttpMethodFilterResult doFilter(String methodString, String moduleName, String storeName) throws UnSupportedMethodException;
+    EndpointHttpMethodFilterResult doFilter(String methodString, String moduleName, String storeName) throws UnSupportedMethodException, WebLayerException;
 
 }

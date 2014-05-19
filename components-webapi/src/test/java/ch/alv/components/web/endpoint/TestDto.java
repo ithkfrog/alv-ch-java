@@ -1,6 +1,6 @@
 package ch.alv.components.web.endpoint;
 
-import ch.alv.components.web.dto.internal.DtoImpl;
+import ch.alv.components.web.dto.DtoImpl;
 
 /**
  * Dto for testing purposes.

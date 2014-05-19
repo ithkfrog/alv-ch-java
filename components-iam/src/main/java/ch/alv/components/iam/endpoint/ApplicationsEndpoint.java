@@ -35,5 +35,4 @@ public class ApplicationsEndpoint extends BaseEndpoint {
         return Application.class;
     }
 
-
 }

@@ -1,7 +1,7 @@
 package ch.alv.components.web.exception;
 
 import ch.alv.components.core.enums.Language;
-import ch.alv.components.data.jpa.NoSuchTextConstantException;
+import ch.alv.components.data.model.NoSuchTextConstantException;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,7 @@
 package ch.alv.components.iam.model;
 
-import ch.alv.components.data.jpa.BaseJpaModelItem;
+import ch.alv.components.data.model.BaseModelItem;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +18,9 @@ import java.util.List;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "module_iam_user")
-public class User extends BaseJpaModelItem implements UserDetails {
+@Table(name = "iam_user")
+@Document(indexName = "iam", type = "users", shards = 1, replicas = 0)
+public class User extends BaseModelItem implements UserDetails {
 
     private static final long serialVersionUID = -2143829548175561682L;
 

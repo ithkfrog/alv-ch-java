@@ -3,16 +3,16 @@ package ch.alv.components.web.i18n;
 import ch.alv.components.core.enums.Language;
 import ch.alv.components.core.spring.ApplicationContextProvider;
 import ch.alv.components.core.utils.StringHelper;
-import ch.alv.components.data.jpa.TextConstant;
+import ch.alv.components.data.model.TextConstant;
 import ch.alv.components.web.context.ServletRequestProvider;
-import ch.alv.components.web.dto.internal.TranslatedText;
+import ch.alv.components.web.dto.TranslatedText;
 import org.dozer.BeanFactory;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Converts {@link TextConstant} into {@link ch.alv.components.web.dto.internal.TranslatedText}.
+ * Converts {@link TextConstant} into {@link ch.alv.components.web.dto.TranslatedText}.
  *
  * @since 1.0.0
  */
