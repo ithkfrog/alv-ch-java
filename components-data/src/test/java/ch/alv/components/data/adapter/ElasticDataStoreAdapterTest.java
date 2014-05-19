@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/elasticsearch-data-store-adapter-test-context.xml")
-public class ElasticsearchDataStoreAdapterTest {
+public class ElasticDataStoreAdapterTest {
 
     @Resource
     private DataStoreAdapter<String> adapter;
