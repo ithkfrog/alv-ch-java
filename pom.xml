@@ -395,17 +395,17 @@
     </scm>
 
     <distributionManagement>
-<!--        <repository>
+        <repository>
             <id>alvch-artifactoryonline-libs-releases</id>
             <name>ALV Switzerland Libraries Releases</name>
             <url>http://alvch.artifactoryonline.com/alvch/libs-releases-local</url>
-        </repository>-->
-<!--        <snapshotRepository>
+        </repository>
+        <snapshotRepository>
             <id>alvch-artifactoryonline-libs-snapshots</id>
             <name>ALV Switzerland Libraries Snapshots</name>
             <url>http://alvch.artifactoryonline.com/alvch/libs-snapshots-local</url>
-        </snapshotRepository>-->
-        <!-- missing for some resolution??? <downloadUrl> -->
+        </snapshotRepository>
+         <!--missing for some resolution??? <downloadUrl>-->
     </distributionManagement>
 
     <repositories>
