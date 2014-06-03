@@ -2,14 +2,13 @@ package ch.alv.components.web.endpoint;
 
 import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.web.dto.Dto;
-import ch.alv.components.web.endpoint.internal.BaseEndpoint;
 
 /**
  * Endpoint for testing purposes.
  *
  * @since 1.0.0
  */
-public class TestEndpoint extends BaseEndpoint {
+public class TestEndpoint extends DefaultEndpoint {
 
     @Override
     public String getModuleName() {

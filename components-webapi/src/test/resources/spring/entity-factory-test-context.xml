@@ -7,7 +7,7 @@
 
     <bean class="ch.alv.components.web.mapper.EntityFactory" />
 
-    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultApplicationContextProvider" />
+    <bean id="contextProvider" class="ch.alv.components.core.spring.DefaultApplicationContextProvider" />
 
     <bean class="ch.alv.components.service.ServiceRegistry">
         <constructor-arg index="0" ref="contextProvider" />
@@ -21,7 +21,7 @@
 
     <bean id="endpoint" class="ch.alv.components.web.mock.MockEndpoint" />
 
-    <bean class="ch.alv.components.web.context.internal.DefaultServletRequestProvider" />
+    <bean class="ch.alv.components.web.context.DefaultServletRequestProvider" />
 
     <bean class="org.springframework.mock.web.MockHttpServletRequest" />
 

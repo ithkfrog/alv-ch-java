@@ -1,6 +1,6 @@
 package ch.alv.components.iam.controller;
 
-import ch.alv.components.iam.endpoint.dto.CurrentUserDto;
+import ch.alv.components.iam.dto.CurrentUserDto;
 import ch.alv.components.iam.model.Role;
 import ch.alv.components.iam.model.User;
 import org.junit.Before;

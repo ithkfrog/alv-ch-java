@@ -1,8 +1,8 @@
 package ch.alv.components.web.dto;
 
 import ch.alv.components.core.beans.ModelItem;
+import ch.alv.components.web.endpoint.DefaultEndpoint;
 import ch.alv.components.web.endpoint.Endpoint;
-import ch.alv.components.web.endpoint.internal.BaseEndpoint;
 import ch.alv.components.web.mock.MockDto;
 import ch.alv.components.web.mock.MockEntity;
 import org.junit.Rule;
@@ -120,7 +120,7 @@ public class DefaultDtoFactoryTest {
         assertNull(factory.createDtoFromEntity(null, endpoint));
     }
 
-    private class TestEndpoint extends BaseEndpoint {
+    private class TestEndpoint extends DefaultEndpoint {
 
         @Override
         public String getModuleName() {

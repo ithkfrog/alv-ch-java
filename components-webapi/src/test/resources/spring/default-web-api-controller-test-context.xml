@@ -22,7 +22,7 @@
     <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultEndpointHttpMethodFilter"/>
     <bean class="ch.alv.components.web.endpoint.filter.internal.DefaultSecurityFilter"/>
 
-    <bean id="contextProvider" class="ch.alv.components.core.spring.internal.DefaultSecurityContextProvider"/>
+    <bean id="contextProvider" class="ch.alv.components.core.spring.DefaultSecurityContextProvider"/>
 
     <bean id="dtoFactory" class="ch.alv.components.web.dto.DefaultDtoFactory" />
 
@@ -30,7 +30,7 @@
         <constructor-arg index="0" ref="contextProvider"/>
     </bean>
 
-    <bean id="mapper" class="ch.alv.components.core.beans.mapper.internal.DozerBeanMapper"/>
+    <bean id="mapper" class="ch.alv.components.core.beans.mapper.DozerBeanMapper"/>
 
     <bean class="ch.alv.components.web.controller.DefaultWebApiController">
         <constructor-arg index="0" ref="dtoFactory"/>
@@ -40,7 +40,7 @@
 
     <bean class="org.springframework.mock.web.MockHttpServletRequest"/>
 
-    <bean class="ch.alv.components.web.context.internal.DefaultServletRequestProvider"/>
+    <bean class="ch.alv.components.web.context.DefaultServletRequestProvider"/>
 
     <bean class="ch.alv.components.web.mock.MockEndpoint"/>
 

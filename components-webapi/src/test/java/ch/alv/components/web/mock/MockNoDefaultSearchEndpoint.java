@@ -2,7 +2,7 @@ package ch.alv.components.web.mock;
 
 import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.web.dto.Dto;
-import ch.alv.components.web.endpoint.internal.BaseEndpoint;
+import ch.alv.components.web.endpoint.DefaultEndpoint;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Component
-public class MockNoDefaultSearchEndpoint extends BaseEndpoint {
+public class MockNoDefaultSearchEndpoint extends DefaultEndpoint {
     @Override
     public String getModuleName() {
         return "noDefaultSearchModule";

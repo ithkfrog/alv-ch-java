@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
-    <!-- scan for repositories -->
-    <jpa:repositories base-package="ch.alv.components.iam.repository"/>
-    <context:component-scan base-package="ch.alv.components.iam.repository"/>
 
     <!-- we use component scan and let spring doing the integration of the user service -->
     <context:component-scan base-package="ch.alv.components.iam.service"/>
 
-    <!-- no user service required, that one's configured with annotations (Spring Security) -->
-    <bean id="iam.application.service" name="iam.application"
-          class="ch.alv.components.service.internal.DefaultPersistenceService">
-        <constructor-arg ref="applicationRepository"/>
+
+    <bean id="applicationsEndpoint" class="ch.alv.components.web.endpoint.DefaultEndpoint">
+        <property name="moduleName" value="iam" />
+        <property name="storeName" value="applications" />
+        <property name="allowPOSTMethod" value="true" />
+        <property name="allowPUTMethod" value="true" />
+        <property name="allowDELETEMethod" value="true" />
+        <property name="entityClass" value="ch.alv.components.iam.model.Application" />
+        <property name="dtoClass" value="ch.alv.components.iam.dto.ApplicationDto" />
+        <property name="defaultSearchName" value="applicationSearch" />
     </bean>
-    <bean id="iam.permission.service" name="iam.permission"
-          class="ch.alv.components.service.internal.DefaultPersistenceService">
-        <constructor-arg ref="permissionRepository"/>
+
+    <bean id="permissionsEndpoint" class="ch.alv.components.web.endpoint.DefaultEndpoint">
+        <property name="moduleName" value="iam" />
+        <property name="storeName" value="permissions" />
+        <property name="allowPOSTMethod" value="true" />
+        <property name="allowPUTMethod" value="true" />
+        <property name="allowDELETEMethod" value="true" />
+        <property name="entityClass" value="ch.alv.components.iam.model.Permissions" />
+        <property name="dtoClass" value="ch.alv.components.iam.dto.PermissionsDto" />
+        <property name="defaultSearchName" value="permissionsSearch" />
     </bean>
-    <bean id="iam.role.service" name="iam.role"
-          class="ch.alv.components.service.internal.DefaultPersistenceService">
-        <constructor-arg ref="roleRepository"/>
+
+    <bean id="rolesEndpoint" class="ch.alv.components.web.endpoint.DefaultEndpoint">
+        <property name="moduleName" value="iam" />
+        <property name="storeName" value="roles" />
+        <property name="allowPOSTMethod" value="true" />
+        <property name="allowPUTMethod" value="true" />
+        <property name="allowDELETEMethod" value="true" />
+        <property name="entityClass" value="ch.alv.components.iam.model.Roles" />
+        <property name="dtoClass" value="ch.alv.components.iam.dto.RoleDto" />
+        <property name="defaultSearchName" value="rolesSearch" />
+    </bean>
+
+    <bean id="usersEndpoint" class="ch.alv.components.web.endpoint.DefaultEndpoint">
+        <property name="moduleName" value="iam" />
+        <property name="storeName" value="users" />
+        <property name="allowPOSTMethod" value="true" />
+        <property name="allowPUTMethod" value="true" />
+        <property name="allowDELETEMethod" value="true" />
+        <property name="entityClass" value="ch.alv.components.iam.model.User" />
+        <property name="dtoClass" value="ch.alv.components.iam.dto.UserDto" />
+        <property name="defaultSearchName" value="userSearch" />
     </bean>
 
 </beans>

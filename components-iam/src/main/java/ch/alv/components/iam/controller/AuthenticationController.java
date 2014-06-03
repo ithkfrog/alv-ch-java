@@ -2,7 +2,7 @@ package ch.alv.components.iam.controller;
 
 import ch.alv.components.core.beans.mapper.BeanMapper;
 import ch.alv.components.core.spring.SecurityContextProvider;
-import ch.alv.components.iam.endpoint.dto.CurrentUserDto;
+import ch.alv.components.iam.dto.CurrentUserDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

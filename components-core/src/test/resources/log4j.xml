@@ -14,7 +14,7 @@
         </layout>
     </appender>
 
-    <logger name="ch.alv.components.core.beans.mapper.internal.BeanUtilsAdapter">
+    <logger name="ch.alv.components.core.beans.mapper.BeanUtilsAdapter">
         <level value="fatal" />
     </logger>
 

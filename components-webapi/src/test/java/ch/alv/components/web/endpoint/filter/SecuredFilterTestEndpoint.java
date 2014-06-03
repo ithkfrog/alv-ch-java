@@ -2,8 +2,8 @@ package ch.alv.components.web.endpoint.filter;
 
 import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.web.dto.Dto;
+import ch.alv.components.web.endpoint.DefaultEndpoint;
 import ch.alv.components.web.endpoint.EndpointHelper;
-import ch.alv.components.web.endpoint.internal.BaseEndpoint;
 import org.springframework.http.HttpMethod;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public class SecuredFilterTestEndpoint extends BaseEndpoint {
+public class SecuredFilterTestEndpoint extends DefaultEndpoint {
 
     @Override
     public String getModuleName() {

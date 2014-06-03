@@ -2,8 +2,8 @@ package ch.alv.components.web.endpoint.filter;
 
 import ch.alv.components.core.beans.ModelItem;
 import ch.alv.components.web.dto.Dto;
+import ch.alv.components.web.endpoint.DefaultEndpoint;
 import ch.alv.components.web.endpoint.EndpointHelper;
-import ch.alv.components.web.endpoint.internal.BaseEndpoint;
 import ch.alv.components.web.mock.MockDto;
 import ch.alv.components.web.mock.MockEntity;
 import org.springframework.http.HttpMethod;
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public class FilterTestEndpoint extends BaseEndpoint {
+public class FilterTestEndpoint extends DefaultEndpoint {
 
     @Override
     public String getModuleName() {
