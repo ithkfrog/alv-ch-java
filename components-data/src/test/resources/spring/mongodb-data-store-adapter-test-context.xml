@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/data/mongo
+                           http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+
+
+    <bean id="contextProvider" class="ch.alv.components.core.spring.DefaultApplicationContextProvider"/>
+
+    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory">
+        <constructor-arg index="0" ref="contextProvider" />
+    </bean>
+
+    <bean class="ch.alv.components.data.mock.MockMongoDbQueryProvider"/>
+
+    <bean id="adapter" class="ch.alv.components.data.adapter.MongoDbDataStoreAdapter">
+        <constructor-arg index="0" ref="mongoTemplate" />
+        <constructor-arg index="1" ref="queryFactory" />
+    </bean>
+
+    <!-- mongoDb -->
+    <!--<mongo:mongo host="127.0.0.1" port="12345" />-->
+
+    <mongo:db-factory id="mongoDbFactory" dbname="ssilogdb" />
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+    </bean>
+
+</beans>

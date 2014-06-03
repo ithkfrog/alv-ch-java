@@ -47,8 +47,21 @@ public class JpaDataStoreAdapterTest {
     }
 
     @Test
-    public void testSave() throws DataLayerException {
+    public void testCreate() throws DataLayerException {
         assertNotNull(adapter.save(new MockJpaEntity(), MockJpaEntity.class).getId());
+    }
+
+    @Test
+    public void testUpdate() throws DataLayerException {
+        MockJpaEntity entity = new MockJpaEntity();
+
+        entity = (MockJpaEntity) adapter.save(entity, MockJpaEntity.class);
+        String id = entity.getId();
+        assertNull(entity.getName());
+        entity.setName("testName");
+        adapter.save(entity, MockJpaEntity.class);
+        entity = (MockJpaEntity) adapter.find(id, MockJpaEntity.class);
+        assertEquals("testName", entity.getName());
     }
 
     @Test

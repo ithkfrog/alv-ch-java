@@ -1,21 +1,16 @@
 package ch.alv.components.data.mock;
 
 import ch.alv.components.data.model.BaseModelItem;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Mock document for jpa tests
+ * Mock document for MongoDb tests
  *
  * @since 1.0.0
  */
-@Entity
-@Table(name = "mock_jpa_entity")
-public class MockJpaEntity extends BaseModelItem {
+@Document(collection = "testDocs")
+public class MockMongoDbDocument extends BaseModelItem {
 
-    @Column
     private String name;
 
     public String getName() {
