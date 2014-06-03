@@ -1,6 +1,5 @@
-package ch.alv.components.core.beans.mapper.internal;
+package ch.alv.components.core.beans.mapper;
 
-import ch.alv.components.core.beans.mapper.MappingException;
 import ch.alv.components.core.mock.MockBeanA;
 import ch.alv.components.core.mock.MockBeanB;
 import org.junit.Rule;
@@ -19,7 +18,7 @@ import static org.junit.Assert.assertNull;
 
 
 /**
- * Unit tests for the {@link ch.alv.components.core.beans.mapper.internal.DozerBeanMapper}.
+ * Unit tests for the {@link ch.alv.components.core.beans.mapper.DozerBeanMapper}.
  *
  * @since 1.0.0
  */

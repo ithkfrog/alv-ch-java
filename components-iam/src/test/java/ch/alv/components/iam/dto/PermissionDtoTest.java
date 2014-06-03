@@ -1,4 +1,4 @@
-package ch.alv.components.iam.endpoint.dto;
+package ch.alv.components.iam.dto;
 
 import org.junit.Test;
 

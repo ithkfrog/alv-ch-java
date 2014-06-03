@@ -1,7 +1,6 @@
-package ch.alv.components.core.spring.internal;
+package ch.alv.components.core.spring;
 
 
-import ch.alv.components.core.spring.SecurityContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

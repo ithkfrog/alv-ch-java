@@ -1,7 +1,6 @@
-package ch.alv.components.core.spring.internal;
+package ch.alv.components.core.spring;
 
 import ch.alv.components.core.beans.mapper.BeanMapper;
-import ch.alv.components.core.spring.ApplicationContextProvider;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

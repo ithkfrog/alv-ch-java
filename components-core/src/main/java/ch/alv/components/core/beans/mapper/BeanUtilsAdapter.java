@@ -1,4 +1,4 @@
-package ch.alv.components.core.beans.mapper.internal;
+package ch.alv.components.core.beans.mapper;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;

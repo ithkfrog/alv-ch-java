@@ -1,7 +1,5 @@
-package ch.alv.components.core.beans.mapper.internal;
+package ch.alv.components.core.beans.mapper;
 
-import ch.alv.components.core.beans.mapper.BeanMapper;
-import ch.alv.components.core.beans.mapper.MappingException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 

@@ -1,4 +1,4 @@
-package ch.alv.components.core.beans.mapper.internal;
+package ch.alv.components.core.beans.mapper;
 
 import ch.alv.components.core.beans.Identifiable;
 import org.junit.Rule;
@@ -12,7 +12,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test cases for the {@link BeanUtilsAdapter} class.
+ * Test cases for the {@link ch.alv.components.core.beans.mapper.BeanUtilsAdapter} class.
  *
  * @since 1.0.0
  */

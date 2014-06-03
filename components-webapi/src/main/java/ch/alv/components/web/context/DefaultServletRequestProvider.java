@@ -1,6 +1,4 @@
-package ch.alv.components.web.context.internal;
-
-import ch.alv.components.web.context.ServletRequestProvider;
+package ch.alv.components.web.context;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

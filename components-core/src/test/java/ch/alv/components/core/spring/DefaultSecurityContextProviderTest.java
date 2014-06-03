@@ -1,6 +1,5 @@
-package ch.alv.components.core.spring.internal;
+package ch.alv.components.core.spring;
 
-import ch.alv.components.core.spring.SecurityContextProvider;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

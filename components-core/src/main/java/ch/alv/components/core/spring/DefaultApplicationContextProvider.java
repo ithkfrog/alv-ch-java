@@ -1,6 +1,5 @@
-package ch.alv.components.core.spring.internal;
+package ch.alv.components.core.spring;
 
-import ch.alv.components.core.spring.ApplicationContextProvider;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 

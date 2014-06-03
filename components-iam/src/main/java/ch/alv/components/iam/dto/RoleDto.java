@@ -1,13 +1,13 @@
-package ch.alv.components.iam.endpoint.dto;
+package ch.alv.components.iam.dto;
 
 import ch.alv.components.web.dto.DtoImpl;
 
 /**
- * WebApi dto for the {@link ch.alv.components.iam.model.Application} entity.
+ * WebApi dto for the {@link ch.alv.components.iam.model.Role} entity.
  *
  * @since 1.0.0
  */
-public class ApplicationDto extends DtoImpl {
+public class RoleDto extends DtoImpl {
 
     private String name;
 
@@ -18,5 +18,4 @@ public class ApplicationDto extends DtoImpl {
     public void setName(String name) {
         this.name = name;
     }
-
 }
