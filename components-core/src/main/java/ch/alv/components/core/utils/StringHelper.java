@@ -113,6 +113,7 @@ public class StringHelper extends StringUtils {
         return hex.toString();
     }
 
+
     public static class StringHelperException extends RuntimeException {
 
         private static final long serialVersionUID = -7953924514343130249L;
@@ -121,5 +122,6 @@ public class StringHelper extends StringUtils {
             super(message, cause);
         }
     }
+
 
 }

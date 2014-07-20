@@ -13,7 +13,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
@@ -184,21 +183,16 @@ public final class FlatFileToObjectsConverter<T> implements StringBeanFactory<T>
      */
     @SuppressWarnings("unchecked")
     private void parse(BufferedReader reader, FlatFileObjectHandle handle) {
-        try {
-            parseLines(reader, handle);
-        } catch (IOException e) {
-            throw new FlatFileConverterException(e);
-        } finally {
-            IoHelper.closeReaderQuietly(reader);
-        }
+        parseLines(reader, handle);
+        IoHelper.closeReaderQuietly(reader);
     }
 
     @SuppressWarnings("unchecked")
-    private void parseLines(BufferedReader reader, FlatFileObjectHandle handle) throws IOException {
+    private void parseLines(BufferedReader reader, FlatFileObjectHandle handle) {
         String line;
         boolean continueReading = true;
         long lineCount = 1;
-        while ((line = reader.readLine()) != null) {
+        while ((line = IoHelper.readLineSilently(reader)) != null) {
             if (skipFirstLine && lineCount == 1) {
                 lineCount++;
                 continue;

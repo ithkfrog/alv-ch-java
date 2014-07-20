@@ -5,7 +5,7 @@ package ch.alv.components.data;
  *
  * @since 1.0.0
  */
-public class DataLayerException extends Exception {
+public class DataLayerException extends RuntimeException {
 
     private static final long serialVersionUID = -866742630189171135L;
 

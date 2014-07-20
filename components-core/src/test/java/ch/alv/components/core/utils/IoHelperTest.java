@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 
 /**
@@ -49,6 +50,15 @@ public class IoHelperTest {
     @Test
     public void testCloseReaderQuietlyWithException() {
         IoHelper.closeReaderQuietly(null);
+    }
+
+    @Test
+    public void testReadLineSilently() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(FILE_NAME)));
+        reader.close();
+        IoHelper.readLineSilently(reader);
+        assertNull(IoHelper.readLineSilently(reader));
+        assertNull(IoHelper.readLineSilently(null));
     }
 
 }

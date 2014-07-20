@@ -2,6 +2,7 @@ package ch.alv.components.web.exception;
 
 import ch.alv.components.data.model.NoSuchTextConstantException;
 import ch.alv.components.web.WebLayerException;
+import ch.alv.components.web.api.config.NoSuchResourceException;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,10 @@ public class GlobalExceptionController {
 
         if (e instanceof WebLayerException) {
             return new ResponseEntity<>(((WebLayerException) e).getBody(), ((WebLayerException) e).getResponseStatus());
+        }
+
+        if (e instanceof NoSuchResourceException) {
+            return new ResponseEntity<>("There's no resource assigned to '" + e.getMessage() + "'", HttpStatus.NOT_FOUND);
         }
 
         UUID uuid = UUID.randomUUID();

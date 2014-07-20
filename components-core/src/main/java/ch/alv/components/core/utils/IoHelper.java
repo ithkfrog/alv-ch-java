@@ -3,6 +3,8 @@ package ch.alv.components.core.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Reader;
 
 /**
@@ -23,6 +25,18 @@ public class IoHelper {
             reader.close();
         } catch (Exception e) {
             LOG.warn("Error while closing reader.", e);
+        }
+    }
+
+    public static String readLineSilently(BufferedReader reader) {
+        if (reader == null) {
+            return null;
+        }
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            LOG.error("Could not read line from BufferedReader.", e);
+            return null;
         }
     }
 

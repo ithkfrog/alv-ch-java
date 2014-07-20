@@ -19,7 +19,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test cases for the {@link ch.alv.components.web.endpoint.EndpointRegistry} class.
+ * Test cases for the {@link ch.alv.components.web.endpoint.SpringBeansEndpointProvider} class.
  *
  * @since 1.0.0
  */

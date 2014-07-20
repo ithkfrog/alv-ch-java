@@ -74,7 +74,6 @@ public class DefaultUserService extends DefaultDataService<String> implements Us
     @Override
     @SuppressWarnings("unchecked")
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        try {
             Map<String, String[]> values = new HashMap<>();
             values.put(IamConstant.PARAM_USER_NAME, new String[] {username});
             ValuesProvider provider = new MapBasedValuesProvider(values);
@@ -84,8 +83,5 @@ public class DefaultUserService extends DefaultDataService<String> implements Us
             } else {
                 return null;
             }
-        } catch (Exception e) {
-            throw new UsernameNotFoundException("No user with username '" + username + "' found.");
-        }
     }
 }

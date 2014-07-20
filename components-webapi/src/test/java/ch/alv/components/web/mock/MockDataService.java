@@ -2,6 +2,7 @@ package ch.alv.components.web.mock;
 
 import ch.alv.components.core.beans.Identifiable;
 import ch.alv.components.core.search.ValuesProvider;
+import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.service.ServiceLayerException;
 import ch.alv.components.service.data.DataService;
 
@@ -18,6 +19,8 @@ public class MockDataService implements DataService<String> {
     private MockEntity entity = new MockEntity();
 
     private List<MockEntity> entities = new ArrayList<>();
+
+
 
     public MockDataService() {
         init();
@@ -52,6 +55,16 @@ public class MockDataService implements DataService<String> {
 
     @Override
     public <T extends Identifiable> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException {
+        String id = params.getStringValue("id");
+        if (StringHelper.isNotEmpty(id)) {
+            List<MockEntity> result = new ArrayList<>();
+            for (MockEntity item : entities) {
+                if (item.getId().equals(id)) {
+                    result.add(item);
+                }
+            }
+            return (List<T>) result;
+        }
         return (List<T>) entities;
     }
 

@@ -9,6 +9,6 @@ public interface WebConstant {
 
     String PARAM_NAME_PAGE = "page";
     String PARAM_NAME_PAGE_SIZE = "pageSize";
-    String PARAM_NAME_SEARCH = "searchName";
+    String PARAM_NAME_QUERY = "query";
 
 }

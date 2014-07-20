@@ -5,5 +5,6 @@ package ch.alv.components.web.endpoint.filter;
  *
  * @since 1.0.0
  */
-public class UnauthorizedException extends Exception {
+public class UnauthorizedException extends RuntimeException {
+    private static final long serialVersionUID = 4288846342187433408L;
 }

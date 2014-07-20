@@ -3,7 +3,7 @@ package ch.alv.components.web.endpoint.filter.internal;
 import ch.alv.components.core.spring.SecurityContextProvider;
 import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.web.endpoint.Endpoint;
-import ch.alv.components.web.endpoint.EndpointRegistry;
+import ch.alv.components.web.endpoint.SpringBeansEndpointProvider;
 import ch.alv.components.web.endpoint.filter.SecurityFilter;
 import ch.alv.components.web.endpoint.filter.SecurityFilterResult;
 import org.slf4j.Logger;
@@ -26,11 +26,11 @@ public class DefaultSecurityFilter implements SecurityFilter {
     private SecurityContextProvider securityContextProvider;
 
     @Resource
-    private EndpointRegistry endpointRegistry;
+    private SpringBeansEndpointProvider springBeansEndpointProvider;
 
     @Override
     public SecurityFilterResult doFilter(HttpServletRequest request, String moduleName, String storeName) {
-        Endpoint endpoint = endpointRegistry.getEndpoint(moduleName, storeName);
+        Endpoint endpoint = springBeansEndpointProvider.getEndpointStore(moduleName, storeName);
 
         if (endpoint == null) {
             throw new IllegalStateException("No endpoint for store '" + moduleName + "/" + storeName + "' found.");

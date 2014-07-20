@@ -1,5 +1,7 @@
 package ch.alv.components.web.dto;
 
+import ch.alv.components.core.beans.Identifiable;
+import ch.alv.components.core.beans.Versionable;
 import org.springframework.hateoas.Link;
 
 import java.util.List;
@@ -9,12 +11,8 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface Dto {
-
-    String getId();
+public interface Dto extends Identifiable<String>, Versionable<Integer> {
 
     List<Link> getLinks();
-
-    Integer getVersion();
 
 }

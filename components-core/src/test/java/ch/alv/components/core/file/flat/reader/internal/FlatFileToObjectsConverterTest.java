@@ -92,6 +92,13 @@ public class FlatFileToObjectsConverterTest {
     }
 
     @Test
+    public void testFirstLineNonSkipping() throws IllegalAccessException, InstantiationException {
+        StringBeanFactory spec = new FlatFileToObjectsConverter<>(MockNonSkippingSemicolonDelimitedBean.class);
+        spec.convert(getClass().getResourceAsStream("non-skipping-semicolon-delimited-test-data.csv"), new FlatFileTestHandle());
+
+    }
+
+    @Test
     public void testNullStreamException() throws InstantiationException, IllegalAccessException {
         exception.expect(FlatFileConverterException.class);
         exception.expectMessage("Cannot read file. Invalid InputStream.");

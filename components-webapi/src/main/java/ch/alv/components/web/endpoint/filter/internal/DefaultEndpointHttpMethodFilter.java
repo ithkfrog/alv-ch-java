@@ -2,7 +2,7 @@ package ch.alv.components.web.endpoint.filter.internal;
 
 import ch.alv.components.web.WebLayerException;
 import ch.alv.components.web.endpoint.Endpoint;
-import ch.alv.components.web.endpoint.EndpointRegistry;
+import ch.alv.components.web.endpoint.SpringBeansEndpointProvider;
 import ch.alv.components.web.endpoint.filter.EndpointHttpMethodFilter;
 import ch.alv.components.web.endpoint.filter.UnSupportedMethodException;
 import org.springframework.http.HttpMethod;
@@ -18,11 +18,11 @@ import javax.annotation.Resource;
 public class DefaultEndpointHttpMethodFilter implements EndpointHttpMethodFilter {
 
     @Resource
-    private EndpointRegistry endpointRegistry;
+    private SpringBeansEndpointProvider springBeansEndpointProvider;
 
     @Override
     public EndpointHttpMethodFilterResult doFilter(String methodString, String moduleName, String storeName) throws UnSupportedMethodException, WebLayerException {
-        Endpoint endpoint = endpointRegistry.getEndpoint(moduleName, storeName);
+        Endpoint endpoint = springBeansEndpointProvider.getEndpointStore(moduleName, storeName);
 
         if (endpoint == null) {
             throw new WebLayerException("No endpoint for store '" + moduleName + "/" + storeName + "' found.", HttpStatus.NOT_FOUND);
