@@ -172,15 +172,6 @@ public class ApiConfiguration {
         throw new NoSuchResourceException("Could not find resource for URI: '" + uri + "'");
     }
 
-/*    public ResourceConfiguration getResourceByUrl(String url) {
-        for (String key : urlResourceMap.keySet()) {
-            if (url.matches(key)) {
-                return urlResourceMap.get(key);
-            }
-        }
-        throw new NoSuchResourceException("Could not find resource for URL: '" + url + "'");
-    }*/
-
     public ResourceConfiguration getResourceByName(String name) {
         if (nameResourceMap.containsKey(name)) {
             return nameResourceMap.get(name);

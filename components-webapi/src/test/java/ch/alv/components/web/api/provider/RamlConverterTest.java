@@ -344,16 +344,16 @@ public class RamlConverterTest {
     public void testConvertActions() {
         Map<ActionType, Action> actions = new HashMap<>();
         actions.put(ActionType.GET, action);
-        List<ActionConfiguration> result = converter.convertActions(actions);
+        List<ActionConfiguration> result = converter.convertActions(actions, new ResourceConfiguration());
         assertEquals(1, result.size());
-        assertEquals(0, converter.convertActions(new HashMap<ActionType, Action>()).size());
-        assertEquals(0, converter.convertActions(null).size());
+        assertEquals(0, converter.convertActions(new HashMap<ActionType, Action>(), new ResourceConfiguration()).size());
+        assertEquals(0, converter.convertActions(null, new ResourceConfiguration()).size());
 
     }
 
     @Test
     public void testConvertAction() {
-        ActionConfiguration target = converter.convertAction(action);
+        ActionConfiguration target = converter.convertAction(action, new ResourceConfiguration());
         assertEquals("testDescription", target.getDescription());
         assertEquals(ch.alv.components.web.api.config.ActionType.GET, target.getType());
     }

@@ -24,7 +24,7 @@ public class DefaultDeleteRequestHandler extends BaseDefaultRequestHandler imple
     @Override
     @SuppressWarnings("unchecked")
     public Object handleRequest(HttpServletRequestWrapper request, ApiConfiguration apiConfiguration) throws ServiceLayerException, WebLayerException {
-        ResourceConfiguration configuration = apiConfiguration.getResourceByUri(request.getRequest().getRequestURI());
+        ResourceConfiguration configuration = apiConfiguration.getResourceForRequest(request.getRequest());
         String[] requestUriTokens = request.getRequest().getRequestURI().split("/");
         String id = requestUriTokens[requestUriTokens.length - 1];
         Class<?> entityClass = getTargetEntity(configuration.getResourceType());

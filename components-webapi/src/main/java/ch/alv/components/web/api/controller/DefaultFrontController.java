@@ -4,6 +4,7 @@ import ch.alv.components.core.utils.StringHelper;
 import ch.alv.components.service.ServiceLayerException;
 import ch.alv.components.web.WebLayerException;
 import ch.alv.components.web.api.config.ApiConfiguration;
+import ch.alv.components.web.api.config.ApiConfigurationProvider;
 import ch.alv.components.web.api.filter.HttpRequestFilter;
 import ch.alv.components.web.api.filter.HttpRequestFilterComparator;
 import ch.alv.components.web.api.filter.HttpRequestFilterException;
@@ -14,8 +15,12 @@ import ch.alv.components.web.api.handler.PutRequestHandler;
 import ch.alv.components.web.api.request.HttpServletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,38 +32,48 @@ import java.util.List;
  *
  * @since 1.0.0
  */
+@Controller
 public class DefaultFrontController implements FrontController {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultFrontController.class);
 
+    @Resource
     private GetRequestHandler getRequestHandler;
+    @Resource
     private PostRequestHandler postRequestHandler;
+    @Resource
     private PutRequestHandler putRequestHandler;
+    @Resource
     private DeleteRequestHandler deleteRequestHandler;
 
-    private ApiConfiguration apiConfiguration;
+    @Resource
+    private ApiConfigurationProvider apiConfigurationProvider;
 
     private List<HttpRequestFilter> filters = new ArrayList<>();
 
     @Override
+    @RequestMapping(value = "/**", method = RequestMethod.GET)
     public Object handleGetRequest(HttpServletRequest request) throws HttpRequestFilterException, ServiceLayerException {
         HttpServletRequestWrapper adapter = createAdapterAndApplyFilters(request);
         return getGetRequestHandler().handleRequest(adapter, getApiConfiguration());
     }
 
     @Override
+    @RequestMapping(value = "/**", method = RequestMethod.POST)
     public Object handlePostRequest(HttpServletRequest request) throws HttpRequestFilterException, IOException, WebLayerException, ServiceLayerException {
         HttpServletRequestWrapper adapter = createAdapterAndApplyFilters(request);
         return getPostRequestHandler().handleRequest(adapter, getApiConfiguration());
     }
 
     @Override
+    @RequestMapping(value = "/**", method = RequestMethod.PUT)
     public Object handlePutRequest(HttpServletRequest request) throws HttpRequestFilterException, IOException, WebLayerException, ServiceLayerException {
         HttpServletRequestWrapper adapter = createAdapterAndApplyFilters(request);
         return getPutRequestHandler().handleRequest(adapter, getApiConfiguration());
     }
 
     @Override
+    @RequestMapping(value = "/**", method = RequestMethod.DELETE)
     public Object handleDeleteRequest(HttpServletRequest request) throws HttpRequestFilterException, ServiceLayerException, WebLayerException {
         HttpServletRequestWrapper adapter = createAdapterAndApplyFilters(request);
         return getDeleteRequestHandler().handleRequest(adapter, getApiConfiguration());
@@ -121,11 +136,7 @@ public class DefaultFrontController implements FrontController {
     }
 
     public ApiConfiguration getApiConfiguration() {
-        return apiConfiguration;
-    }
-
-    public void setApiConfiguration(ApiConfiguration apiConfiguration) {
-        this.apiConfiguration = apiConfiguration;
+        return apiConfigurationProvider.getConfiguration();
     }
 
     public List<HttpRequestFilter> getFilters() {
@@ -148,4 +159,7 @@ public class DefaultFrontController implements FrontController {
         Collections.sort(this.filters, new HttpRequestFilterComparator());
     }
 
+    public void setApiConfigurationProvider(ApiConfigurationProvider apiConfigurationProvider) {
+        this.apiConfigurationProvider = apiConfigurationProvider;
+    }
 }

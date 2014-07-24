@@ -22,6 +22,18 @@ import java.util.*;
  */
 public class RamlConverter {
 
+    private UriToJavaClassMapping classMapping = new UriToJavaClassMapping();
+
+    public RamlConverter() {
+    }
+
+    public RamlConverter(UriToJavaClassMapping classMapping) {
+        if (classMapping == null) {
+            return;
+        }
+        this.classMapping = classMapping;
+    }
+
     public ApiConfiguration convertRamlToInternalConfiguration(Raml raml) {
         ApiConfiguration configuration = new ApiConfiguration();
         configuration.setTitle(convertTitle(raml.getTitle()));
@@ -263,32 +275,36 @@ public class RamlConverter {
         target.setUriParameters(convertUriParameterMap(source.getUriParameters()));
         target.setBaseUriParameters(convertUriParameterListMap(source.getBaseUriParameters()));
         target.setSecurityConfigurations(convertSecurityConstraints(source.getSecuredBy()));
-        List<ActionConfiguration> actions = convertActions(source.getActions());
+        List<ActionConfiguration> actions = convertActions(source.getActions(), target);
         for (ActionConfiguration action : actions) {
             action.setResource(target);
         }
         target.setActions(actions);
         ResourceType type = convertResourceType(source.getType());
         if (type != null) {
-            target.setResourceType(type.getJavaClass());
+            if (type.getJavaClass() != Object.class) {
+                target.setResourceType(type.getJavaClass());
+            } else {
+                target.setResourceType(classMapping.getClassForUri(source.getUri()));
+            }
         }
         target.setDescription(convertDescription(source.getDescription()));
         target.setName(convertName(source.getDisplayName()));
         convertAndAddAppliedTraits(source.getIs(), target.getQueryParameters());
     }
 
-    public List<ActionConfiguration> convertActions(Map<org.raml.model.ActionType, Action> actions) {
+    public List<ActionConfiguration> convertActions(Map<org.raml.model.ActionType, Action> actions, ResourceConfiguration resource) {
         List<ActionConfiguration> list = new ArrayList<>();
         if (actions == null || actions.isEmpty()) {
             return list;
         }
         for (org.raml.model.ActionType key : actions.keySet()) {
-            list.add(convertAction(actions.get(key)));
+            list.add(convertAction(actions.get(key), resource));
         }
         return list;
     }
 
-    public ActionConfiguration convertAction(Action source) {
+    public ActionConfiguration convertAction(Action source, ResourceConfiguration resource) {
         ActionConfiguration target = new ActionConfiguration();
         target.setQueryParameters(convertQueryParameters(source.getQueryParameters()));
         convertAndAddAppliedTraits(source.getIs(), target.getQueryParameters());
@@ -298,7 +314,7 @@ public class RamlConverter {
         target.setDescription(convertDescription(source.getDescription()));
         target.setHeaders(convertHeaders(source.getHeaders()));
         target.setProtocols(convertProtocols(source.getProtocols()));
-        //target.setResource(convertResource(source.getResource()));
+        target.setResource(resource);
         target.setResponses(convertResponses(source.getResponses()));
         target.setType(convertActionType(source.getType()));
         return target;

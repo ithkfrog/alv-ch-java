@@ -24,6 +24,7 @@ public class RamlApiConfigurationProvider implements ApiConfigurationProvider {
     public RamlApiConfigurationProvider(String ramlFile) {
         this.ramlFile = ramlFile;
         this.converter = new RamlConverter();
+        init();
     }
 
     public RamlApiConfigurationProvider(String ramlFile, RamlConverter converter) {
@@ -33,9 +34,9 @@ public class RamlApiConfigurationProvider implements ApiConfigurationProvider {
         } else {
             this.converter = converter;
         }
+        init();
     }
 
-    @PostConstruct
     private void init() {
         if (StringHelper.isEmpty(ramlFile)) {
             return;

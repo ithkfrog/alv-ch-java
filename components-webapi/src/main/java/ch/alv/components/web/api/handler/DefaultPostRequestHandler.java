@@ -35,7 +35,7 @@ public class DefaultPostRequestHandler extends BaseDefaultRequestHandler impleme
         String line = RequestHandlerUtils.getRequestBodyAsString(wrapper);
         ObjectMapper jacksonMapper = new ObjectMapper();
         if (StringHelper.isNotEmpty(line)) {
-            ResourceConfiguration configuration = apiConfiguration.getResourceByUri(wrapper.getRequest().getRequestURI());
+            ResourceConfiguration configuration = apiConfiguration.getResourceForRequest(wrapper.getRequest());
             Class<?> entityClass = getTargetEntity(configuration.getResourceType());
             Object obj = dataService.save((Identifiable) jacksonMapper.readValue(line, entityClass), entityClass);
             if (entityClass == configuration.getResourceType()) {

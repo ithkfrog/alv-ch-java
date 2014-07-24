@@ -10,6 +10,7 @@ import ch.alv.components.web.api.handler.GetRequestHandler;
 import ch.alv.components.web.api.handler.PostRequestHandler;
 import ch.alv.components.web.api.handler.PutRequestHandler;
 import ch.alv.components.web.api.mock.*;
+import ch.alv.components.web.api.provider.RamlApiConfigurationProvider;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Unit tests for the {@link ch.alv.components.web.api.filter.HttpRequestFilterComparator} class.
@@ -41,6 +43,7 @@ public class DefaultFrontControllerTest {
     private final HttpRequestFilter throwingFilter = new MockThrowingHttpRequestFilter("throwingFilter", 2);
 
     private final ApiConfiguration apiConfiguration = new ApiConfiguration();
+    private final RamlApiConfigurationProvider apiConfigurationProvider = new RamlApiConfigurationProvider("raml/testfile.raml");
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -54,7 +57,7 @@ public class DefaultFrontControllerTest {
         controller.setDeleteRequestHandler(deleteRequestHandler);
         filterList.add(filter);
         controller.setFilters(filterList);
-        controller.setApiConfiguration(apiConfiguration);
+        controller.setApiConfigurationProvider(apiConfigurationProvider);
     }
 
     private void resetFilters() {
@@ -66,7 +69,7 @@ public class DefaultFrontControllerTest {
     @Test
     public void testGetters() {
         resetFilters();
-        assertEquals(apiConfiguration, controller.getApiConfiguration());
+        assertNotNull(controller.getApiConfiguration());
         assertEquals(getRequestHandler, controller.getGetRequestHandler());
         assertEquals(postRequestHandler, controller.getPostRequestHandler());
         assertEquals(putRequestHandler, controller.getPutRequestHandler());
