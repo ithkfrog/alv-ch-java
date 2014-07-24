@@ -206,11 +206,12 @@ public class ApiConfigurationTest {
 
     @Test
     public void testResourceForRequest() {
-        request.setRequestURI("/" + NAME_ONE);
+        request.setRequestURI("/api/" + NAME_ONE);
+        request.setServerPort(9999);
         assertEquals(NAME_ONE, configuration.getResourceForRequest(request).getName());
-        request.setRequestURI("/" + NAME_TWO);
+        request.setRequestURI("/api/" + NAME_TWO);
         assertEquals(NAME_TWO, configuration.getResourceForRequest(request).getName());
-        request.setRequestURI("/" + NAME_THREE);
+        request.setRequestURI("/api/" + NAME_THREE);
         assertEquals(NAME_THREE, configuration.getResourceForRequest(request).getName());
 
         exception.expect(NoSuchResourceException.class);

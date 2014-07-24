@@ -134,15 +134,26 @@ public class ApiConfiguration {
         this.urlResourceMap.clear();
         this.nameResourceMap.clear();
         this.typeResourceMap.clear();
-        String pattern = "\\{([^}]*?)\\}";
+
         if (CollectionUtils.isNotEmpty(resources)) {
             for (ResourceConfiguration configuration : resources) {
-                if (!this.resources.contains(configuration)) {
-                    this.resources.add(configuration);
-                    this.uriResourceMap.put(configuration.getUri().replaceAll(pattern, ".*"), configuration);
-                    this.nameResourceMap.put(configuration.getName(), configuration);
-                    this.typeResourceMap.put(configuration.getResourceType(), configuration);
-                }
+                createMapsRecursively(configuration);
+            }
+        }
+    }
+
+    private void createMapsRecursively(ResourceConfiguration configuration) {
+        String pattern = "\\{([^}]*?)\\}";
+        if (!this.resources.contains(configuration)) {
+            this.resources.add(configuration);
+            this.uriResourceMap.put(configuration.getUri().replaceAll(pattern, ".*"), configuration);
+            this.urlResourceMap.put(getBaseUri() + configuration.getUri().replaceAll(pattern, ".*"), configuration);
+            this.nameResourceMap.put(configuration.getName(), configuration);
+            this.typeResourceMap.put(configuration.getResourceType(), configuration);
+        }
+        if (CollectionUtils.isNotEmpty(configuration.getChildren())) {
+            for (ResourceConfiguration kid : configuration.getChildren()) {
+                createMapsRecursively(kid);
             }
         }
     }
@@ -172,6 +183,15 @@ public class ApiConfiguration {
         throw new NoSuchResourceException("Could not find resource for URI: '" + uri + "'");
     }
 
+    public ResourceConfiguration getResourceByUrl(String url) {
+        for (String key : urlResourceMap.keySet()) {
+            if (url.matches(key)) {
+                return urlResourceMap.get(key);
+            }
+        }
+        throw new NoSuchResourceException("Could not find resource for URL: '" + url + "'");
+    }
+
     public ResourceConfiguration getResourceByName(String name) {
         if (nameResourceMap.containsKey(name)) {
             return nameResourceMap.get(name);
@@ -187,6 +207,6 @@ public class ApiConfiguration {
     }
 
     public ResourceConfiguration getResourceForRequest(HttpServletRequest request) {
-        return getResourceByUri(request.getRequestURI());
+        return getResourceByUrl(request.getRequestURL().toString());
     }
 }

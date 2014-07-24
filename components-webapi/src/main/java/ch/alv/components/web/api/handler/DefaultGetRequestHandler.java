@@ -56,7 +56,7 @@ public class DefaultGetRequestHandler extends BaseDefaultRequestHandler implemen
         Object result;
         Class<?> requestEntity = configuration.getResourceType();
         Class<?> targetEntity = getTargetEntity(requestEntity);
-        String id = extractIdFromUri(wrapper.getRequest().getRequestURI(), configuration);
+        String id = extractIdFromUrl(wrapper.getRequest().getRequestURL().toString(), apiConfiguration.getBaseUri() + configuration.getUri());
         result = dataService.find(id, targetEntity);
         if (result == null) {
             return new ResponseEntity<>(configuration.getName() + " not found.", HttpStatus.NOT_FOUND);
@@ -67,8 +67,8 @@ public class DefaultGetRequestHandler extends BaseDefaultRequestHandler implemen
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    private String extractIdFromUri(String requestURI, ResourceConfiguration configuration) {
-        return (String) new UriParamExtractor(configuration.getUri()).guessIdParam(requestURI).getValue();
+    private String extractIdFromUrl(String requestURL, String configurationURL) {
+        return (String) new UriParamExtractor(configurationURL).guessIdParam(requestURL).getValue();
     }
 
     @SuppressWarnings("unchecked")
@@ -76,17 +76,13 @@ public class DefaultGetRequestHandler extends BaseDefaultRequestHandler implemen
         int pageNumber = getPageNumber(request);
         int pageSize = getPageSize(request);
         String queryName = getQueryName(request);
-
         Class<?> requestEntity = apiConfiguration.getResourceForRequest(request).getResourceType();
         Class<?> targetEntity = getTargetEntity(requestEntity);
-
         Page result = dataService.find(new PageRequest(pageNumber, pageSize), queryName, createValuesProvider(request, apiConfiguration), targetEntity);
-
         if (targetEntity != requestEntity) {
             List<?> dtos = result.getContent();
             result = new PageImpl(mapper.mapCollection(dtos, requestEntity), new PageRequest(result.getNumber(), result.getSize()), result.getTotalElements());
         }
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -117,7 +113,7 @@ public class DefaultGetRequestHandler extends BaseDefaultRequestHandler implemen
     private ValuesProvider createValuesProvider(HttpServletRequest request, ApiConfiguration apiConfiguration) {
         Map<String, String[]> params = new HashMap<>();
         params.putAll(request.getParameterMap());
-        params.putAll(new UriParamExtractor(apiConfiguration.getResourceByUri(request.getRequestURI()).getUri()).extractParams(request.getRequestURI()));
+        params.putAll(new UriParamExtractor(apiConfiguration.getResourceByUrl(request.getRequestURL().toString()).getUri()).extractParams(request.getRequestURI()));
         return new MapBasedValuesProvider(params);
     }
 
