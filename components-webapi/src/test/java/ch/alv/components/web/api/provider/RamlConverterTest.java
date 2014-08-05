@@ -133,6 +133,25 @@ public class RamlConverterTest {
     }
 
     @Test
+    public void testNonDefaultConstructor() {
+        Resource source = new Resource();
+        ResourceConfiguration target = new ResourceConfiguration();
+        source.setType("object");
+        source.setRelativeUri("test");
+        RamlConverter con = new RamlConverter(null);
+        con.mapResourceValuesToConfiguration(source, target);
+        assertNull(target.getResourceType());
+
+        UriToJavaClassMapping mapping = new UriToJavaClassMapping();
+        Map<String, Class<?>> map = new HashMap<>();
+        map.put("nulltest", RamlConverterTest.class);
+        mapping.setMapping(map);
+        con = new RamlConverter(mapping);
+        con.mapResourceValuesToConfiguration(source, target);
+        assertEquals(RamlConverterTest.class, target.getResourceType());
+    }
+
+    @Test
     public void convertRamlToInternalConfiguration() {
         ApiConfiguration result = converter.convertRamlToInternalConfiguration(raml);
         assertEquals(raml.getTitle(), result.getTitle());

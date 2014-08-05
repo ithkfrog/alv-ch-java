@@ -12,7 +12,6 @@ import java.util.*;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("unchecked")
 public class MockRepository implements Repository<String> {
 
 
@@ -23,10 +22,10 @@ public class MockRepository implements Repository<String> {
     }
 
     private void initData() {
-        Map<String, MockModelItem<String, Integer>> itemMap = new HashMap<>();
+        Map<String, MockModelItem> itemMap = new HashMap<>();
         inMemoryData.put(MockModelItem.class, itemMap);
         for (int i = 0; i < 50; i++) {
-            MockModelItem<String, Integer> item = new MockModelItem<>(UUID.randomUUID().toString(), 0, "testItem " + i);
+            MockModelItem item = new MockModelItem(UUID.randomUUID().toString(), 0, "testItem " + i);
             itemMap.put(item.getId(), item);
         }
     }

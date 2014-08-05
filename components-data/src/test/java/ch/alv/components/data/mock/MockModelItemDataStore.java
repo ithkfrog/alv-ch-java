@@ -10,23 +10,23 @@ import java.util.*;
  *
  * @since 1.0.0
  */
-public class MockModelItemDataStore<TYPE extends ModelItem<ID, VERSION>, ID extends Serializable, VERSION extends Serializable> {
+public class MockModelItemDataStore<TYPE extends ModelItem, ID extends Serializable> {
 
-    private Map<ID, TYPE> entitiesMap = new HashMap<>();
+    private Map<String, TYPE> entitiesMap = new HashMap<>();
 
     private List<TYPE> entitiesList = new ArrayList<>();
 
-    private IdFactory idFactory = new UUIDFactory();
+    private UUIDFactory idFactory = new UUIDFactory();
 
     public MockModelItemDataStore() {
     }
 
-    public MockModelItemDataStore(Map<ID, TYPE> entitiesMap) {
+    public MockModelItemDataStore(Map<String, TYPE> entitiesMap) {
         this.entitiesMap = entitiesMap;
     }
 
-    public TYPE findOne(ID id) {
-        for (ID key : entitiesMap.keySet()) {
+    public TYPE findOne(String id) {
+        for (String key : entitiesMap.keySet()) {
             if (key.equals(id)) {
                 return entitiesMap.get(id);
             }
@@ -41,7 +41,7 @@ public class MockModelItemDataStore<TYPE extends ModelItem<ID, VERSION>, ID exte
     @SuppressWarnings("unchecked")
     public <S extends TYPE> S save(S entity) {
         if (entity.getId() == null) {
-            entity.setId((ID) idFactory.newId());
+            entity.setId(idFactory.newId());
         }
         entitiesMap.put(entity.getId(), entity);
         refreshEntitiesListFromMap();
@@ -62,16 +62,16 @@ public class MockModelItemDataStore<TYPE extends ModelItem<ID, VERSION>, ID exte
 
     private void refreshEntitiesListFromMap() {
         entitiesList.clear();
-        for (ID key : entitiesMap.keySet()) {
+        for (String key : entitiesMap.keySet()) {
             entitiesList.add(entitiesMap.get(key));
         }
     }
 
-    public Map<ID, TYPE> getEntitiesMap() {
+    public Map<String, TYPE> getEntitiesMap() {
         return entitiesMap;
     }
 
-    public void setEntitiesMap(Map<ID, TYPE> entitiesMap) {
+    public void setEntitiesMap(Map<String, TYPE> entitiesMap) {
         this.entitiesMap.clear();
         if (entitiesMap == null) {
             return;
@@ -80,18 +80,18 @@ public class MockModelItemDataStore<TYPE extends ModelItem<ID, VERSION>, ID exte
         refreshEntitiesListFromMap();
     }
 
-    public IdFactory getIdFactory() {
+    public UUIDFactory getIdFactory() {
         return idFactory;
     }
 
-    public void setIdFactory(IdFactory idFactory) {
+    public void setIdFactory(UUIDFactory idFactory) {
         this.idFactory = idFactory;
     }
 
     public class UUIDFactory implements IdFactory {
 
         @Override
-        public Object newId() {
+        public String newId() {
             return UUID.randomUUID().toString();
         }
     }

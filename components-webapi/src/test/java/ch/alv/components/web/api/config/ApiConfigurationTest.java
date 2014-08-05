@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Unit tests for the {@link ApiConfiguration} class.
@@ -190,9 +191,18 @@ public class ApiConfigurationTest {
         assertEquals(NAME_ONE, configuration.getResourceByName(NAME_ONE).getName());
         assertEquals(NAME_TWO, configuration.getResourceByName(NAME_TWO).getName());
         assertEquals(NAME_THREE, configuration.getResourceByName(NAME_THREE).getName());
-
         exception.expect(NoSuchResourceException.class);
         configuration.getResourceByName("/");
+    }
+
+    @Test
+    public void testResourceByUrl() {
+        assertNotNull(configuration.getResourceByUrl("http://localhost:9999/api/two"));
+
+        ApiConfiguration freshConfig = new ApiConfiguration();
+        exception.expect(NoSuchResourceException.class);
+        freshConfig.getResourceByUrl("/");
+
     }
 
     @Test
@@ -213,7 +223,6 @@ public class ApiConfigurationTest {
         assertEquals(NAME_TWO, configuration.getResourceForRequest(request).getName());
         request.setRequestURI("/api/" + NAME_THREE);
         assertEquals(NAME_THREE, configuration.getResourceForRequest(request).getName());
-
         exception.expect(NoSuchResourceException.class);
         request.setRequestURI("/");
         configuration.getResourceByUri("/");

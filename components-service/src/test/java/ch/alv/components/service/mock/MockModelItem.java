@@ -1,6 +1,7 @@
 package ch.alv.components.service.mock;
 
 import ch.alv.components.core.beans.ModelItem;
+import ch.alv.components.data.model.BaseModelItem;
 
 import java.io.Serializable;
 
@@ -9,11 +10,7 @@ import java.io.Serializable;
  *
  * @since 1.0.0
  */
-public class MockModelItem<ID_TYPE extends Serializable, VERSION_TYPE extends Serializable> implements ModelItem<ID_TYPE, VERSION_TYPE> {
-
-    private ID_TYPE id;
-
-    private VERSION_TYPE version;
+public class MockModelItem extends BaseModelItem {
 
     private String name;
 
@@ -25,35 +22,15 @@ public class MockModelItem<ID_TYPE extends Serializable, VERSION_TYPE extends Se
         this.name = name;
     }
 
-    public MockModelItem(VERSION_TYPE version, String name) {
-        this.version = version;
-        this.name = name;
+    public MockModelItem(Integer version, String name) {
+        setVersion(version);
+        setName(name);
     }
 
-    public MockModelItem(ID_TYPE id, VERSION_TYPE version, String name) {
-        this.id = id;
-        this.version = version;
-        this.name = name;
-    }
-
-    @Override
-    public ID_TYPE getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(ID_TYPE id) {
-        this.id = id;
-    }
-
-    @Override
-    public VERSION_TYPE getVersion() {
-        return version;
-    }
-
-    @Override
-    public void setVersion(VERSION_TYPE version) {
-        this.version = version;
+    public MockModelItem(String id, Integer version, String name) {
+        setId(id);
+        setVersion(version);
+        setName(name);
     }
 
     public String getName() {

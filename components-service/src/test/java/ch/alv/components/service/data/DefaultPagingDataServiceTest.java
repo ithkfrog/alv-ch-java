@@ -25,7 +25,6 @@ import static org.junit.Assert.assertNotNull;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("unchecked")
 public class DefaultPagingDataServiceTest {
 
     @Rule
@@ -51,10 +50,10 @@ public class DefaultPagingDataServiceTest {
     public void testFindById() throws ServiceLayerException {
         MockModelItem item = service.find(pageable, MockModelItem.class).getContent().get(0);
         MockModelItem item2 = service.find(pageable, MockModelItem.class).getContent().get(1);
-        Object idEntity = service.find((String) service.find(pageable, MockModelItem.class).getContent().get(0).getId(), MockModelItem.class);
+        Object idEntity = service.find(service.find(pageable, MockModelItem.class).getContent().get(0).getId(), MockModelItem.class);
         assertNotNull(idEntity);
 
-        List idList = new ArrayList();
+        List<String> idList = new ArrayList<>();
         idList.add(item.getId());
         idList.add(item2.getId());
 
@@ -114,10 +113,10 @@ public class DefaultPagingDataServiceTest {
     @Test
     public void testDeleteOne() throws ServiceLayerException {
         MockModelItem item = new MockModelItem("testItem");
-        service.delete((String) item.getId(), MockModelItem.class);
+        service.delete(item.getId(), MockModelItem.class);
         exception.expect(ServiceLayerException.class);
         exception.expectMessage(MockExceptionThrowingRepository.MSG);
-        exceptionService.delete((String) item.getId(), MockModelItem.class);
+        exceptionService.delete(item.getId(), MockModelItem.class);
     }
 
     @Test

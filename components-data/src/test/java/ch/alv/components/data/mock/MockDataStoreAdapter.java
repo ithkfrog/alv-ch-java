@@ -12,7 +12,6 @@ import java.util.*;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("unchecked")
 public class MockDataStoreAdapter implements DataStoreAdapter<String> {
 
     Map<String, MockModelItem> entitiesMap = new HashMap<>();
