@@ -11,7 +11,7 @@ import javax.persistence.*;
  * @since 1.0.0
  */
 @MappedSuperclass
-public class BaseModelItem implements ModelItem<String, Integer> {
+public class BaseModelItem implements ModelItem {
 
     @org.springframework.data.annotation.Id
     @Id
