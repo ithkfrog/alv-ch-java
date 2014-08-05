@@ -46,7 +46,7 @@
         <guava.version>10.0</guava.version>
         <mongodb-java-driver.version>2.11.0</mongodb-java-driver.version>
         <cglib.version>3.1</cglib.version>
-        <raml-parser.version>0.9-SNAPSHOT</raml-parser.version>
+        <raml-parser.version>0.8.7</raml-parser.version>
     </properties>
 
     <modules>
@@ -454,6 +454,16 @@
             <id>spring-libs-milestone</id>
             <name>Spring Milestone Repository</name>
             <url>http://repo.spring.io/libs-milestone</url>
+        </repository>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Repository</name>
+            <url>https://repository-master.mulesoft.org/releases/</url>
+        </repository>
+        <repository>
+            <id>mulesoft-snapshots</id>
+            <name>MuleSoft Snapshot Repository</name>
+            <url>https://repository-master.mulesoft.org/snapshots/</url>
         </repository>
     </repositories>
 
