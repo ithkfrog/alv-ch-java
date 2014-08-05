@@ -46,7 +46,6 @@ public class JpaDataStoreAdapter<ID extends Serializable> implements DataStoreAd
             em.find(entityClass, entity.getId());
         }
         T newEntity = em.merge(entity);
-        em.flush();
         return newEntity;
     }
 

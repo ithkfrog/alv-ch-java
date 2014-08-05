@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <context:annotation-config />
+
+    <bean id="mapper" class="ch.alv.components.core.beans.mapper.DozerBeanMapper" />
 
     <bean id="contextProvider" class="ch.alv.components.core.spring.DefaultApplicationContextProvider"/>
+
+    <bean class="ch.alv.components.core.spring.AutowireHelper" />
+
+    <bean id="entityListener" class="ch.alv.components.data.listener.AuditableEntityListener" />
 
     <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory">
         <constructor-arg index="0" ref="contextProvider" />
@@ -16,6 +25,10 @@
 
     <bean id="adapter" class="ch.alv.components.data.adapter.JpaDataStoreAdapter">
         <constructor-arg index="0" ref="queryFactory" />
+    </bean>
+
+    <bean id="repository" class="ch.alv.components.data.repository.DefaultRepository">
+        <constructor-arg index="0" ref="adapter" />
     </bean>
 
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
@@ -33,11 +46,12 @@
     <!-- *** EntityManagerFactory *** -->
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="persistenceUnitName" value="sm-iam"/>
+        <property name="persistenceUnitName" value="historyTest"/>
         <property name="packagesToScan">
             <list>
-                <value>ch.alv.components.data.mock</value>
+                <value>ch.alv.components.data.listener</value>
                 <value>ch.alv.components.data.model</value>
+                <value>ch.alv.components.data.mock</value>
             </list>
         </property>
         <property name="jpaVendorAdapter">
