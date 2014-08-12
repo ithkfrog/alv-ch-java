@@ -8,7 +8,7 @@
 
     <bean name="endpointA" id="endpointA" class="ch.alv.components.web.endpoint.filter.FilterTestEndpoint" />
 
-    <bean id="contextProvider" class="ch.alv.components.core.spring.DefaultApplicationContextProvider" />
+    <bean id="contextProvider" class="ch.alv.components.core.spring.ApplicationContextProvider" />
 
     <bean class="ch.alv.components.web.endpoint.SpringBeansEndpointProvider">
         <constructor-arg index="0" ref="contextProvider" />

@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public class DefaultSecurityContextProvider extends DefaultApplicationContextProvider implements SecurityContextProvider {
+public class DefaultSecurityContextProvider extends ApplicationContextProvider implements SecurityContextProvider {
 
     @Override
     public UserDetails getUser() {

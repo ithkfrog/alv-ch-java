@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="contextProvider" class="ch.alv.components.core.spring.DefaultApplicationContextProvider" />
+    <bean id="contextProvider" class="ch.alv.components.core.spring.ApplicationContextProvider" />
 
     <bean class="ch.alv.components.service.ServiceRegistry">
         <constructor-arg index="0" ref="contextProvider" />

@@ -1,5 +1,6 @@
 package ch.alv.components.core.spring;
 
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface SecurityContextProvider extends ApplicationContextProvider {
+public interface SecurityContextProvider extends ApplicationContextAware {
 
     UserDetails getUser();
 

@@ -3,13 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="provider" class="ch.alv.components.core.spring.DefaultApplicationContextProvider"/>
+    <bean id="provider" class="ch.alv.components.core.spring.ApplicationContextProvider"/>
 
     <bean class="ch.alv.components.data.mock.MockQueryProvider"/>
 
-    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory">
-        <constructor-arg index="0" ref="provider" />
-    </bean>
-
+    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory" />
 
 </beans>

@@ -58,9 +58,7 @@
         </property>
     </bean>
 
-    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory">
-        <constructor-arg index="0" ref="securityContextProvider" />
-    </bean>
+    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory" />
 
     <bean class="ch.alv.components.iam.query.JpaUserQuery" />
 

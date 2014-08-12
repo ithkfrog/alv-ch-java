@@ -11,15 +11,13 @@
 
     <bean id="mapper" class="ch.alv.components.core.beans.mapper.DozerBeanMapper" />
 
-    <bean id="contextProvider" class="ch.alv.components.core.spring.DefaultApplicationContextProvider"/>
+    <bean id="contextProvider" class="ch.alv.components.core.spring.ApplicationContextProvider"/>
 
     <bean class="ch.alv.components.core.spring.AutowireHelper" />
 
     <bean id="entityListener" class="ch.alv.components.data.listener.AuditableEntityListener" />
 
-    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory">
-        <constructor-arg index="0" ref="contextProvider" />
-    </bean>
+    <bean id="queryFactory" class="ch.alv.components.data.query.DefaultQueryFactory" />
 
     <bean class="ch.alv.components.data.mock.MockJpaQueryProvider"/>
 
