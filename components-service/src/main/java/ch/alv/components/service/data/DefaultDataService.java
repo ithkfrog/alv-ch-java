@@ -17,17 +17,17 @@ import java.util.List;
  * @since 1.0.0
  */
 @Transactional
-public class DefaultDataService<ID extends Serializable> implements DataService<ID> {
+public class DefaultDataService<TYPE extends Identifiable<ID>, ID extends Serializable> implements DataService<TYPE, ID> {
 
-    protected final Repository<ID> repository;
+    protected final Repository<TYPE, ID> repository;
 
-    public DefaultDataService(Repository<ID> repository) {
+    public DefaultDataService(Repository<TYPE, ID> repository) {
         this.repository = repository;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> T find(ID id, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE find(ID id, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(id, entityClass);
         } catch (DataLayerException e) {
@@ -37,7 +37,7 @@ public class DefaultDataService<ID extends Serializable> implements DataService<
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> List<T> find(Collection<ID> ids, Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> find(Collection<ID> ids, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(ids, entityClass);
         } catch (DataLayerException e) {
@@ -47,7 +47,7 @@ public class DefaultDataService<ID extends Serializable> implements DataService<
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> List<T> find(Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> find(Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(entityClass);
         } catch (DataLayerException e) {
@@ -57,7 +57,7 @@ public class DefaultDataService<ID extends Serializable> implements DataService<
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(queryName, params, entityClass);
         } catch (DataLayerException e) {
@@ -66,7 +66,7 @@ public class DefaultDataService<ID extends Serializable> implements DataService<
     }
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.save(entity, entityClass);
         } catch (DataLayerException e) {
@@ -75,7 +75,7 @@ public class DefaultDataService<ID extends Serializable> implements DataService<
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.save(entities, entityClass);
         } catch (DataLayerException e) {
@@ -84,7 +84,7 @@ public class DefaultDataService<ID extends Serializable> implements DataService<
     }
 
     @Override
-    public <T extends Identifiable<ID>> void delete(ID id, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(ID id, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             repository.delete(id, entityClass);
         } catch (DataLayerException e) {
@@ -93,7 +93,7 @@ public class DefaultDataService<ID extends Serializable> implements DataService<
     }
 
     @Override
-    public <T extends Identifiable<ID>> void delete(Collection<ID> ids, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(Collection<ID> ids, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             repository.delete(ids, entityClass);
         } catch (DataLayerException e) {

@@ -19,7 +19,7 @@ import java.util.UUID;
  *
  * @since 1.0.0
  */
-public class MongoDbDataStoreAdapter implements DataStoreAdapter<String> {
+public class MongoDbDataStoreAdapter<TYPE extends Identifiable<String>> implements DataStoreAdapter<TYPE, String> {
 
     private final MongoOperations ops;
 
@@ -33,7 +33,7 @@ public class MongoDbDataStoreAdapter implements DataStoreAdapter<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID().toString());
         }
@@ -42,13 +42,13 @@ public class MongoDbDataStoreAdapter implements DataStoreAdapter<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> T find(String id, Class<T> entityClass) throws DataLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws DataLayerException {
         Query.query(Criteria.where("id").is(id));
         return ops.findOne(Query.query(Criteria.where("id").is(id)), entityClass);
     }
 
     @Override
-    public <T extends Identifiable<String>> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
         try {
             Query query = queryFactory.createQuery(queryName, params, factoryServices, entityClass);
             return ops.find(query, entityClass);
@@ -58,12 +58,12 @@ public class MongoDbDataStoreAdapter implements DataStoreAdapter<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> List<T> find(Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException {
         return ops.findAll(entityClass);
     }
 
     @Override
-    public void delete(String id, Class<?> entityClass) throws DataLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws DataLayerException {
         ops.remove(Query.query(Criteria.where("id").is(id)), entityClass);
     }
 

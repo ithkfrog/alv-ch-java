@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 public class ElasticDataStoreAdapterTest {
 
     @Resource
-    private DataStoreAdapter<String> adapter;
+    private DataStoreAdapter<MockTestDocument, String> adapter;
 
     @Resource
     private ElasticsearchTemplate template;

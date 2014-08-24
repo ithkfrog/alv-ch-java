@@ -30,9 +30,9 @@ public class DefaultPagingDataServiceTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    private PagingDataService<String> service = new DefaultPagingDataService<>(new MockPagingRepository());
+    private PagingDataService<MockModelItem, String> service = new DefaultPagingDataService<MockModelItem, String>(new MockPagingRepository());
 
-    private PagingDataService<String> exceptionService = new DefaultPagingDataService<>(new MockExceptionThrowingPagingRepository());
+    private PagingDataService<MockModelItem, String> exceptionService = new DefaultPagingDataService<MockModelItem, String>(new MockExceptionThrowingPagingRepository());
 
     private Pageable pageable = new PageRequest(0, 25);
 

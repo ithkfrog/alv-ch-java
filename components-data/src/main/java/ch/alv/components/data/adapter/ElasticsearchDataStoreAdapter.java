@@ -23,7 +23,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
  *
  * @since 1.0.0
  */
-public class ElasticsearchDataStoreAdapter implements DataStoreAdapter<String> {
+public class ElasticsearchDataStoreAdapter<TYPE extends Identifiable<String>> implements DataStoreAdapter<TYPE, String> {
 
     private final ElasticsearchTemplate elasticsearchTemplate;
 
@@ -37,7 +37,7 @@ public class ElasticsearchDataStoreAdapter implements DataStoreAdapter<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         if (!elasticsearchTemplate.indexExists(entityClass)) {
             elasticsearchTemplate.createIndex(entityClass);
             elasticsearchTemplate.putMapping(entityClass);
@@ -54,14 +54,14 @@ public class ElasticsearchDataStoreAdapter implements DataStoreAdapter<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> T find(String id, Class<T> entityClass) throws DataLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws DataLayerException {
         GetQuery query = new GetQuery();
         query.setId(id);
         return elasticsearchTemplate.queryForObject(query, entityClass);
     }
 
     @Override
-    public <T extends Identifiable<String>> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
         try {
             SearchQuery query = queryFactory.createQuery(queryName, params, factoryServices, entityClass);
             return elasticsearchTemplate.queryForList(query, entityClass);
@@ -71,13 +71,13 @@ public class ElasticsearchDataStoreAdapter implements DataStoreAdapter<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> List<T> find(Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException {
         SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
         return elasticsearchTemplate.queryForList(searchQuery, entityClass);
     }
 
     @Override
-    public void delete(String id, Class<?> entityClass) throws DataLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws DataLayerException {
         elasticsearchTemplate.delete(entityClass, id);
     }
 

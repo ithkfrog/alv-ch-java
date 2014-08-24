@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @since 1.0.0
  */
-public class MockRepository implements Repository<String> {
+public class MockRepository<TYPE extends Identifiable<String>> implements Repository<TYPE, String> {
 
 
     private final Map<Class, Map> inMemoryData = new HashMap<>();
@@ -32,7 +32,7 @@ public class MockRepository implements Repository<String> {
 
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         Map classMap = new HashMap();
         if (inMemoryData.containsKey(entityClass)) {
             classMap = inMemoryData.get(entityClass);
@@ -45,34 +45,34 @@ public class MockRepository implements Repository<String> {
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws DataLayerException {
-        List<T> persistedEntities = new ArrayList<>();
-        for (T entity : entities) {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws DataLayerException {
+        List<TYPE> persistedEntities = new ArrayList<>();
+        for (TYPE entity : entities) {
             persistedEntities.add(save(entity, entityClass));
         }
         return persistedEntities;
     }
 
     @Override
-    public <T extends Identifiable> T find(String id, Class<T> entityClass) throws DataLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws DataLayerException {
         if (!inMemoryData.containsKey(entityClass)) {
             return null;
         }
-        return (T) inMemoryData.get(entityClass).get(id);
+        return (TYPE) inMemoryData.get(entityClass).get(id);
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(String searchName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(String searchName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
         return new ArrayList<>();
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException {
         if (!inMemoryData.containsKey(entityClass)) {
             return new ArrayList<>();
         }
-        List<T> entities = new ArrayList<>();
-        Map<String, T> map = inMemoryData.get(entityClass);
+        List<TYPE> entities = new ArrayList<>();
+        Map<String, TYPE> map = inMemoryData.get(entityClass);
         for (String key : map.keySet()) {
             entities.add(map.get(key));
         }
@@ -80,8 +80,8 @@ public class MockRepository implements Repository<String> {
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(Collection<String> ids, Class<T> entityClass) throws DataLayerException {
-        List<T> entities = new ArrayList<>();
+    public List<TYPE> find(Collection<String> ids, Class<TYPE> entityClass) throws DataLayerException {
+        List<TYPE> entities = new ArrayList<>();
         for (String id : ids) {
             entities.add(find(id, entityClass));
         }
@@ -89,7 +89,7 @@ public class MockRepository implements Repository<String> {
     }
 
     @Override
-    public <T extends Identifiable> void delete(String id, Class<T> entityClass) throws DataLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws DataLayerException {
         if (!inMemoryData.containsKey(entityClass)) {
             return;
         }
@@ -97,7 +97,7 @@ public class MockRepository implements Repository<String> {
     }
 
     @Override
-    public <T extends Identifiable> void delete(Collection<String> ids, Class<T> entityClass) throws DataLayerException {
+    public void delete(Collection<String> ids, Class<TYPE> entityClass) throws DataLayerException {
         if (!inMemoryData.containsKey(entityClass)) {
             return;
         }

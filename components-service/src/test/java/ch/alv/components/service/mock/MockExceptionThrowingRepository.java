@@ -14,47 +14,47 @@ import java.util.List;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class MockExceptionThrowingRepository implements Repository<String> {
+public class MockExceptionThrowingRepository<TYPE extends Identifiable<String>> implements Repository<TYPE, String> {
 
     public static final String MSG = "Test data layer exception.";
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 
     @Override
-    public <T extends Identifiable> T find(String id, Class<T> entityClass) throws DataLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(String searchName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(String searchName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(Collection<String> ids, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Collection<String> ids, Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 
     @Override
-    public <T extends Identifiable> void delete(String id, Class<T> entityClass) throws DataLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 
     @Override
-    public <T extends Identifiable> void delete(Collection<String> ids, Class<T> entityClass) throws DataLayerException {
+    public void delete(Collection<String> ids, Class<TYPE> entityClass) throws DataLayerException {
         throw new DataLayerException(MSG);
     }
 }

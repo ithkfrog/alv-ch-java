@@ -14,13 +14,11 @@ import java.util.*;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class MockDataService implements DataService<String> {
+public class MockDataService<TYPE extends Identifiable<String>> implements DataService<TYPE, String> {
 
     private MockEntity entity = new MockEntity();
 
     private List<MockEntity> entities = new ArrayList<>();
-
-
 
     public MockDataService() {
         init();
@@ -34,27 +32,27 @@ public class MockDataService implements DataService<String> {
 
 
     @Override
-    public <T extends Identifiable> T find(String id, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws ServiceLayerException {
         for (MockEntity entity : entities) {
             if (entity.getId().equals(id)) {
-                return (T) entity;
+                return (TYPE) entity;
             }
         }
         return null;
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(Collection<String> id, Class<T> entityClass) throws ServiceLayerException {
-        return (List<T>) entities;
+    public List<TYPE> find(Collection<String> id, Class<TYPE> entityClass) throws ServiceLayerException {
+        return (List<TYPE>) entities;
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(Class<T> entityClass) throws ServiceLayerException {
-        return (List<T>) entities;
+    public List<TYPE> find(Class<TYPE> entityClass) throws ServiceLayerException {
+        return (List<TYPE>) entities;
     }
 
     @Override
-    public <T extends Identifiable> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws ServiceLayerException {
         String id = params.getStringValue("id");
         if (StringHelper.isNotEmpty(id)) {
             List<MockEntity> result = new ArrayList<>();
@@ -63,13 +61,13 @@ public class MockDataService implements DataService<String> {
                     result.add(item);
                 }
             }
-            return (List<T>) result;
+            return (List<TYPE>) result;
         }
-        return (List<T>) entities;
+        return (List<TYPE>) entities;
     }
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws ServiceLayerException {
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID().toString());
         }
@@ -82,16 +80,16 @@ public class MockDataService implements DataService<String> {
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws ServiceLayerException {
-        List<T> persistedEntities = new ArrayList<>();
-        for (T entity : entities) {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws ServiceLayerException {
+        List<TYPE> persistedEntities = new ArrayList<>();
+        for (TYPE entity : entities) {
             persistedEntities.add(save(entity, entityClass));
         }
         return persistedEntities;
     }
 
     @Override
-    public <T extends Identifiable<String>> void delete(String id, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws ServiceLayerException {
         Iterator<MockEntity> it = entities.iterator();
 
         while (it.hasNext()) {
@@ -102,7 +100,7 @@ public class MockDataService implements DataService<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> void delete(Collection<String> ids, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(Collection<String> ids, Class<TYPE> entityClass) throws ServiceLayerException {
         for (String id : ids) {
             delete(id, entityClass);
         }

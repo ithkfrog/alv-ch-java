@@ -17,9 +17,9 @@ import java.util.List;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class DefaultRepository<ID extends Serializable> implements Repository<ID> {
+public class DefaultRepository<TYPE extends Identifiable<ID>, ID extends Serializable> implements Repository<TYPE, ID> {
 
-    private final DataStoreAdapter adapter;
+    private final DataStoreAdapter<TYPE, ID> adapter;
 
     public DefaultRepository(DataStoreAdapter adapter) {
         this.adapter = adapter;
@@ -27,9 +27,9 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         try {
-            return (T) adapter.save(entity, entityClass);
+            return adapter.save(entity, entityClass);
         } catch (Exception e) {
             throw new DataLayerException(e);
         }
@@ -37,10 +37,10 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws DataLayerException {
         try {
-            List<T> savedEntities = new ArrayList<>();
-            for (T entity : entities) {
+            List<TYPE> savedEntities = new ArrayList<>();
+            for (TYPE entity : entities) {
                 savedEntities.add(save(entity, entityClass));
             }
             return savedEntities;
@@ -51,9 +51,9 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> T find(ID id, Class<T> entityClass) throws DataLayerException {
+    public TYPE find(ID id, Class<TYPE> entityClass) throws DataLayerException {
         try {
-            return (T) adapter.find(id, entityClass);
+            return adapter.find(id, entityClass);
         } catch (Exception e) {
             throw new DataLayerException(e);
         }
@@ -61,7 +61,7 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> List<T> find(String searchName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(String searchName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
         try {
             return adapter.find(searchName, params, entityClass);
         } catch (Exception e) {
@@ -71,7 +71,7 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> List<T> find(Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException {
         try {
             return adapter.find(entityClass);
         } catch (Exception e) {
@@ -81,9 +81,9 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> List<T> find(Collection<ID> ids, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Collection<ID> ids, Class<TYPE> entityClass) throws DataLayerException {
         try {
-            List<T> foundEntities = new ArrayList<>();
+            List<TYPE> foundEntities = new ArrayList<>();
             for (ID id : ids) {
                 foundEntities.add(find(id, entityClass));
             }
@@ -95,7 +95,7 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> void delete(ID id, Class<T> entityClass) throws DataLayerException {
+    public void delete(ID id, Class<TYPE> entityClass) throws DataLayerException {
         try {
             adapter.delete(id, entityClass);
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class DefaultRepository<ID extends Serializable> implements Repository<ID
 
     @Override
     @Transactional
-    public <T extends Identifiable> void delete(Collection<ID> ids, Class<T> entityClass) throws DataLayerException {
+    public void delete(Collection<ID> ids, Class<TYPE> entityClass) throws DataLayerException {
         try {
             for (ID id : ids) {
                 delete(id, entityClass);

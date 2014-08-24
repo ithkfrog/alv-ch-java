@@ -18,24 +18,24 @@ public class MockDataStoreAdapterTest {
         MockModelItem item = new MockModelItem();
         item.setId("testId");
 
-        MockDataStoreAdapter adapter = new MockDataStoreAdapter();
-        adapter.save(item, BaseModelItem.class);
+        MockDataStoreAdapter<MockModelItem> adapter = new MockDataStoreAdapter<>();
+        adapter.save(item, MockModelItem.class);
 
-        assertNotNull(adapter.find(BaseModelItem.class));
-        assertEquals("testId", adapter.find(BaseModelItem.class).get(0).getId());
+        assertNotNull(adapter.find(MockModelItem.class));
+        assertEquals("testId", adapter.find(MockModelItem.class).get(0).getId());
 
-        assertNotNull(adapter.find(null, null, BaseModelItem.class));
-        assertEquals("testId", adapter.find(null, null, BaseModelItem.class).get(0).getId());
+        assertNotNull(adapter.find(null, null, MockModelItem.class));
+        assertEquals("testId", adapter.find(null, null, MockModelItem.class).get(0).getId());
 
-        assertNotNull(adapter.find("testId", BaseModelItem.class));
-        assertEquals("testId", adapter.find("testId", BaseModelItem.class).getId());
+        assertNotNull(adapter.find("testId", MockModelItem.class));
+        assertEquals("testId", adapter.find("testId", MockModelItem.class).getId());
 
-        adapter.delete("unknown", BaseModelItem.class);
-        assertNotNull(adapter.find(BaseModelItem.class));
-        assertEquals("testId", adapter.find(BaseModelItem.class).get(0).getId());
+        adapter.delete("unknown", MockModelItem.class);
+        assertNotNull(adapter.find(MockModelItem.class));
+        assertEquals("testId", adapter.find(MockModelItem.class).get(0).getId());
 
-        adapter.delete("testId", BaseModelItem.class);
-        assertEquals(0, adapter.find(BaseModelItem.class).size());
+        adapter.delete("testId", MockModelItem.class);
+        assertEquals(0, adapter.find(MockModelItem.class).size());
     }
 
 }

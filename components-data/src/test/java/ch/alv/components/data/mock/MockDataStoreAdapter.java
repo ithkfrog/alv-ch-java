@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @since 1.0.0
  */
-public class MockDataStoreAdapter implements DataStoreAdapter<String> {
+public class MockDataStoreAdapter<TYPE extends Identifiable<String>> implements DataStoreAdapter<TYPE, String> {
 
     Map<String, MockModelItem> entitiesMap = new HashMap<>();
 
@@ -54,29 +54,29 @@ public class MockDataStoreAdapter implements DataStoreAdapter<String> {
     }
 
     @Override
-    public <T extends Identifiable<String>> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         entitiesList.add((MockModelItem) entity);
         fillMap();
         return entity;
     }
 
     @Override
-    public <T extends Identifiable<String>> T find(String id, Class<T> entityClass) throws DataLayerException {
-        return (T) entitiesMap.get(id);
+    public TYPE find(String id, Class<TYPE> entityClass) throws DataLayerException {
+        return (TYPE) entitiesMap.get(id);
     }
 
     @Override
-    public <T extends Identifiable<String>> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
-        return (List<T>) entitiesList;
+    public List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
+        return (List<TYPE>) entitiesList;
     }
 
     @Override
-    public <T extends Identifiable<String>> List<T> find(Class<T> entityClass) throws DataLayerException {
-        return (List<T>) entitiesList;
+    public List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException {
+        return (List<TYPE>) entitiesList;
     }
 
     @Override
-    public void delete(String id, Class<?> entityClass) throws DataLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws DataLayerException {
         Iterator<MockModelItem> it = entitiesList.iterator();
         boolean fillMap = false;
         while (it.hasNext()) {

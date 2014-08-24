@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  *
  * @since 1.0.0
  */
-public interface UserService extends DataService<String>, UserDetailsService {
+public interface UserService extends DataService<User, String>, UserDetailsService {
 
     User getCurrentUser();
 

@@ -15,22 +15,22 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface PagingDataService<ID extends Serializable> {
+public interface PagingDataService<TYPE extends Identifiable<ID>, ID extends Serializable> {
 
-    <T extends Identifiable> T find(ID id, Class<T> entityClass) throws ServiceLayerException;
+    TYPE find(ID id, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> Page<T> find(Pageable pageable, Collection<ID> id, Class<T> entityClass) throws ServiceLayerException;
+    Page<TYPE> find(Pageable pageable, Collection<ID> id, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> Page<T> find(Pageable pageable, Class<T> entityClass) throws ServiceLayerException;
+    Page<TYPE> find(Pageable pageable, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> Page<T> find(Pageable pageable, String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException;
+    Page<TYPE> find(Pageable pageable, String queryName, ValuesProvider params, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> T save(T entity, Class<T> entityClass) throws ServiceLayerException;
+    TYPE save(TYPE entity, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws ServiceLayerException;
+    List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable<ID>> void delete(ID id, Class<T> entityClass) throws ServiceLayerException;
+    void delete(ID id, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable<ID>> void delete(Collection<ID> ids, Class<T> entityClass) throws ServiceLayerException;
+    void delete(Collection<ID> ids, Class<TYPE> entityClass) throws ServiceLayerException;
 
 }

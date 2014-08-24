@@ -18,47 +18,47 @@ import java.util.List;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class MockPagingDataService implements PagingDataService<String> {
+public class MockPagingDataService<TYPE extends Identifiable<String>> implements PagingDataService<TYPE, String> {
 
-    private DataService<String> internalService = new MockDataService();
+    private DataService<TYPE, String> internalService = new MockDataService();
 
     @Override
-    public <T extends Identifiable> T find(String id, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws ServiceLayerException {
         return internalService.find(id, entityClass);
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Collection<String> id, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, Collection<String> id, Class<TYPE> entityClass) throws ServiceLayerException {
         return RepositoryHelper.createPage(pageable, internalService.find(id, entityClass));
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, Class<TYPE> entityClass) throws ServiceLayerException {
         return RepositoryHelper.createPage(pageable, internalService.find(entityClass));
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, String queryName, ValuesProvider params, Class<TYPE> entityClass) throws ServiceLayerException {
         return RepositoryHelper.createPage(pageable, internalService.find(queryName, params, entityClass));
     }
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws ServiceLayerException {
         return internalService.save(entity, entityClass);
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws ServiceLayerException {
         return internalService.save(entities, entityClass);
     }
 
     @Override
-    public <T extends Identifiable<String>> void delete(String id, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws ServiceLayerException {
         internalService.delete(id, entityClass);
     }
 
     @Override
-    public <T extends Identifiable<String>> void delete(Collection<String> ids, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(Collection<String> ids, Class<TYPE> entityClass) throws ServiceLayerException {
         internalService.delete(ids, entityClass);
     }
 }

@@ -27,9 +27,9 @@ public class DefaultDataServiceTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    private DataService<String> service = new DefaultDataService<>(new MockRepository());
+    private DataService<MockModelItem, String> service = new DefaultDataService<MockModelItem, String>(new MockRepository());
 
-    private DataService<String> exceptionService = new DefaultDataService<>(new MockExceptionThrowingRepository());
+    private DataService<MockModelItem, String> exceptionService = new DefaultDataService<MockModelItem, String>(new MockExceptionThrowingRepository());
 
     @Test
     public void testFindAll() throws ServiceLayerException {

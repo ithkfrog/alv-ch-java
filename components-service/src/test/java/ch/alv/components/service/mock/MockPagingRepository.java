@@ -17,47 +17,47 @@ import java.util.List;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class MockPagingRepository implements PagingRepository<String> {
+public class MockPagingRepository<TYPE extends Identifiable<String>> implements PagingRepository<TYPE, String> {
 
-    private MockRepository internalRepository = new MockRepository();
+    private MockRepository<TYPE> internalRepository = new MockRepository();
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         return internalRepository.save(entity, entityClass);
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws DataLayerException {
         return internalRepository.save(entities, entityClass);
     }
 
     @Override
-    public <T extends Identifiable> T find(String id, Class<T> entityClass) throws DataLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws DataLayerException {
         return internalRepository.find(id, entityClass);
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, String searchName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
+    public Page<TYPE> find(Pageable pageable, String searchName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
         return RepositoryHelper.createPage(pageable, internalRepository.find(searchName, params, entityClass)) ;
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Class<T> entityClass) throws DataLayerException {
+    public Page<TYPE> find(Pageable pageable, Class<TYPE> entityClass) throws DataLayerException {
         return RepositoryHelper.createPage(pageable, internalRepository.find(entityClass)) ;
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Collection<String> ids, Class<T> entityClass) throws DataLayerException {
+    public Page<TYPE> find(Pageable pageable, Collection<String> ids, Class<TYPE> entityClass) throws DataLayerException {
         return RepositoryHelper.createPage(pageable, internalRepository.find(ids, entityClass)) ;
     }
 
     @Override
-    public <T extends Identifiable> void delete(String id, Class<T> entityClass) throws DataLayerException {
+    public void delete(String id, Class<TYPE> entityClass) throws DataLayerException {
         internalRepository.delete(id, entityClass);
     }
 
     @Override
-    public <T extends Identifiable> void delete(Collection<String> ids, Class<T> entityClass) throws DataLayerException {
+    public void delete(Collection<String> ids, Class<TYPE> entityClass) throws DataLayerException {
         internalRepository.delete(ids, entityClass);
     }
 }

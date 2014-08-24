@@ -13,22 +13,22 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface DataService<ID extends Serializable> {
+public interface DataService<TYPE extends Identifiable<ID>, ID extends Serializable> {
 
-    <T extends Identifiable> T find(ID id, Class<T> entityClass) throws ServiceLayerException;
+    TYPE find(ID id, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> List<T> find(Collection<ID> id, Class<T> entityClass) throws ServiceLayerException;
+    List<TYPE> find(Collection<ID> id, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> List<T> find(Class<T> entityClass) throws ServiceLayerException;
+    List<TYPE> find(Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException;
+    List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> T save(T entity, Class<T> entityClass) throws ServiceLayerException;
+    TYPE save(TYPE entity, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws ServiceLayerException;
+    List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable<ID>> void delete(ID id, Class<T> entityClass) throws ServiceLayerException;
+    void delete(ID id, Class<TYPE> entityClass) throws ServiceLayerException;
 
-    <T extends Identifiable<ID>> void delete(Collection<ID> ids, Class<T> entityClass) throws ServiceLayerException;
+    void delete(Collection<ID> ids, Class<TYPE> entityClass) throws ServiceLayerException;
 
 }

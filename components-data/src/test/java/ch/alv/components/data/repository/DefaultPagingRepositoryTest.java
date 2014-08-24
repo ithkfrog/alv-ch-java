@@ -28,8 +28,8 @@ public class DefaultPagingRepositoryTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private final DefaultPagingRepository<String> repository = new DefaultPagingRepository<>(new MockDataStoreAdapter());
-    private final DefaultPagingRepository<String> exceptionRepository = new DefaultPagingRepository<>(new MockExceptionThrowingDataStoreAdapter());
+    private final DefaultPagingRepository<MockModelItem,String> repository = new DefaultPagingRepository<>(new MockDataStoreAdapter());
+    private final DefaultPagingRepository<MockModelItem,String> exceptionRepository = new DefaultPagingRepository<>(new MockExceptionThrowingDataStoreAdapter());
 
     private final Pageable pageable = new PageRequest(0, 5);
 

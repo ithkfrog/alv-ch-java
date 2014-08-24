@@ -19,17 +19,17 @@ import java.util.List;
  * @since 1.0.0
  */
 @Transactional
-public class DefaultPagingDataService<ID extends Serializable> implements PagingDataService<ID> {
+public class DefaultPagingDataService<TYPE extends Identifiable<ID>, ID extends Serializable> implements PagingDataService<TYPE, ID> {
 
-    private final PagingRepository<ID> repository;
+    private final PagingRepository<TYPE, ID> repository;
 
-    public DefaultPagingDataService(PagingRepository<ID> repository) {
+    public DefaultPagingDataService(PagingRepository<TYPE, ID> repository) {
         this.repository = repository;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> T find(ID id, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE find(ID id, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(id, entityClass);
         } catch (DataLayerException e) {
@@ -39,7 +39,7 @@ public class DefaultPagingDataService<ID extends Serializable> implements Paging
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Collection<ID> ids, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, Collection<ID> ids, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(pageable, ids, entityClass);
         } catch (DataLayerException e) {
@@ -49,7 +49,7 @@ public class DefaultPagingDataService<ID extends Serializable> implements Paging
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(pageable, entityClass);
         } catch (DataLayerException e) {
@@ -59,7 +59,7 @@ public class DefaultPagingDataService<ID extends Serializable> implements Paging
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable> Page<T> find(Pageable pageable, String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, String queryName, ValuesProvider params, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.find(pageable, queryName, params, entityClass);
         } catch (DataLayerException e) {
@@ -68,7 +68,7 @@ public class DefaultPagingDataService<ID extends Serializable> implements Paging
     }
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.save(entity, entityClass);
         } catch (DataLayerException e) {
@@ -77,7 +77,7 @@ public class DefaultPagingDataService<ID extends Serializable> implements Paging
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             return repository.save(entities, entityClass);
         } catch (DataLayerException e) {
@@ -86,7 +86,7 @@ public class DefaultPagingDataService<ID extends Serializable> implements Paging
     }
 
     @Override
-    public <T extends Identifiable<ID>> void delete(ID id, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(ID id, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             repository.delete(id, entityClass);
         } catch (DataLayerException e) {
@@ -95,7 +95,7 @@ public class DefaultPagingDataService<ID extends Serializable> implements Paging
     }
 
     @Override
-    public <T extends Identifiable<ID>> void delete(Collection<ID> ids, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(Collection<ID> ids, Class<TYPE> entityClass) throws ServiceLayerException {
         try {
             repository.delete(ids, entityClass);
         } catch (DataLayerException e) {

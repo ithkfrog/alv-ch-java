@@ -24,10 +24,10 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Service(value = "iam.user.service")
-public class DefaultUserService extends DefaultDataService<String> implements UserService {
+public class DefaultUserService extends DefaultDataService<User, String> implements UserService {
 
     @Inject
-    public DefaultUserService(Repository<String> repository) {
+    public DefaultUserService(Repository<User, String> repository) {
         super(repository);
     }
 

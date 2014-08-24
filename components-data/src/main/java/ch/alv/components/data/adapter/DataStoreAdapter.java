@@ -12,16 +12,16 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface DataStoreAdapter<ID extends Serializable> {
+public interface DataStoreAdapter<TYPE extends Identifiable<ID>, ID extends Serializable> {
 
-    <T extends Identifiable<ID>> T save(T entity, Class<T> entityClass) throws DataLayerException;
+    TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException;
 
-    <T extends Identifiable<ID>> T find(ID id, Class<T> entityClass) throws DataLayerException;
+    TYPE find(ID id, Class<TYPE> entityClass) throws DataLayerException;
 
-    <T extends Identifiable<ID>> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws DataLayerException;
+    List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException;
 
-    <T extends Identifiable<ID>> List<T> find(Class<T> entityClass) throws DataLayerException;
+    List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException;
 
-    void delete(ID id, Class<?> entityClass) throws DataLayerException;
+    void delete(ID id, Class<TYPE> entityClass) throws DataLayerException;
 
 }

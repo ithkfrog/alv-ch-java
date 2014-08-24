@@ -21,7 +21,7 @@ import java.util.Map;
  *
  * @since 1.0.0
  */
-public class JpaDataStoreAdapter<ID extends Serializable> implements DataStoreAdapter<ID> {
+public class JpaDataStoreAdapter<TYPE extends Identifiable<ID>, ID extends Serializable> implements DataStoreAdapter<TYPE, ID> {
 
     @PersistenceContext
     private EntityManager em;
@@ -41,26 +41,26 @@ public class JpaDataStoreAdapter<ID extends Serializable> implements DataStoreAd
 
     @Override
     @Transactional
-    public <T extends Identifiable<ID>> T save(T entity, Class<T> entityClass) throws DataLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws DataLayerException {
         if (entity.getId() != null) {
             em.find(entityClass, entity.getId());
         }
-        T newEntity = em.merge(entity);
+        TYPE newEntity = em.merge(entity);
         return newEntity;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable<ID>> T find(ID id, Class<T> entityClass) throws DataLayerException {
+    public TYPE find(ID id, Class<TYPE> entityClass) throws DataLayerException {
         return em.find(entityClass, id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable<ID>> List<T> find(String queryName, ValuesProvider params, Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(String queryName, ValuesProvider params, Class<TYPE> entityClass) throws DataLayerException {
         try {
             String queryString = queryFactory.createQuery(queryName, params, factoryServices, entityClass);
-            TypedQuery<T> query = em.createQuery(queryString, entityClass);
+            TypedQuery<TYPE> query = em.createQuery(queryString, entityClass);
             return query.getResultList();
         } catch (NoSuchQueryProviderException e) {
             throw new DataLayerException("Could not execute query with name '" + queryName + "'.", e);
@@ -69,7 +69,7 @@ public class JpaDataStoreAdapter<ID extends Serializable> implements DataStoreAd
 
     @Override
     @Transactional(readOnly = true)
-    public <T extends Identifiable<ID>> List<T> find(Class<T> entityClass) throws DataLayerException {
+    public List<TYPE> find(Class<TYPE> entityClass) throws DataLayerException {
         String name = entityClass.getSimpleName();
         String token = name.substring(0, 1).toLowerCase();
         return em.createQuery("select " + token + " from " + name + " " + token, entityClass).getResultList();
@@ -77,7 +77,7 @@ public class JpaDataStoreAdapter<ID extends Serializable> implements DataStoreAd
 
     @Override
     @Transactional
-    public void delete(ID id, Class<?> entityClass) throws DataLayerException {
+    public void delete(ID id, Class<TYPE> entityClass) throws DataLayerException {
         Object entity = em.find(entityClass, id);
         if (entity != null) {
             em.remove(entity);

@@ -21,35 +21,35 @@ import java.util.UUID;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class MockPagingDataService implements PagingDataService<String> {
+public class MockPagingDataService<TYPE extends Identifiable<String>> implements PagingDataService<TYPE,String> {
 
     private List<?> data = new ArrayList<>();
 
     @Override
-    public <T extends Identifiable> T find(String id, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE find(String id, Class<TYPE> entityClass) throws ServiceLayerException {
         if ("hasId".equals(id)) {
             Identifiable entity = new MockTargetedResource();
             if (entityClass == MockResource.class) {
                 entity = new MockResource();
             }
             entity.setId("99");
-            return (T) entity;
+            return (TYPE) entity;
         }
         return null;
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Collection<String> id, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, Collection<String> id, Class<TYPE> entityClass) throws ServiceLayerException {
         return null;
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, Class<TYPE> entityClass) throws ServiceLayerException {
         return null;
     }
 
     @Override
-    public <T extends Identifiable> Page<T> find(Pageable pageable, String queryName, ValuesProvider params, Class<T> entityClass) throws ServiceLayerException {
+    public Page<TYPE> find(Pageable pageable, String queryName, ValuesProvider params, Class<TYPE> entityClass) throws ServiceLayerException {
         List list = new ArrayList();
         if ("defaultQuery".equals(queryName)) {
             if (entityClass == MockResource.class) {
@@ -71,7 +71,7 @@ public class MockPagingDataService implements PagingDataService<String> {
     }
 
     @Override
-    public <T extends Identifiable> T save(T entity, Class<T> entityClass) throws ServiceLayerException {
+    public TYPE save(TYPE entity, Class<TYPE> entityClass) throws ServiceLayerException {
         if (StringHelper.isEmpty(entity.getId())) {
             entity.setId(UUID.randomUUID().toString());
         }
@@ -79,17 +79,17 @@ public class MockPagingDataService implements PagingDataService<String> {
     }
 
     @Override
-    public <T extends Identifiable> List<T> save(Collection<T> entities, Class<T> entityClass) throws ServiceLayerException {
+    public List<TYPE> save(Collection<TYPE> entities, Class<TYPE> entityClass) throws ServiceLayerException {
         return null;  // do nothing
     }
 
     @Override
-    public <T extends Identifiable<String>> void delete(String s, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(String s, Class<TYPE> entityClass) throws ServiceLayerException {
         // do nothing
     }
 
     @Override
-    public <T extends Identifiable<String>> void delete(Collection<String> strings, Class<T> entityClass) throws ServiceLayerException {
+    public void delete(Collection<String> strings, Class<TYPE> entityClass) throws ServiceLayerException {
         // do nothing
     }
 
