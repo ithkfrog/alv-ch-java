@@ -6,8 +6,8 @@ jdk:
   - oraclejdk8
 #pending skip artifact deployment:  - openjdk7
 
-addons:
-  postgresql: "9.3"
+#addons:
+#  postgresql: "9.3"
 
 env:
   global:
@@ -17,7 +17,7 @@ env:
 
 before_script:
   - mysql -e 'create database testdatabase;'
-  - psql -c 'create database testdatabase;' -U postgres
+#  - psql -c 'create database testdatabase;' -U postgres
 
 # Build everything in 'script' phase
 install: /bin/true
